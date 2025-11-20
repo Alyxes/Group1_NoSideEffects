@@ -32,11 +32,25 @@ namespace NoSideEffects
             Vector3 camForward = FPViewCamera.forward;
             Vector3 camRight = FPViewCamera.right;
 
+            camForward.y = 0;
+            camRight.y = 0;
+
+            Vector3 forwardRelative = camForward * moveValue.y;
+            Vector3 rightRelative = camRight * moveValue.x;
+
+            if (rigid_Body.angularVelocity.magnitude > 0f)
+                rigid_Body.angularVelocity = Vector3.zero;
+
+            Vector3 relativeMoveDirection = forwardRelative + rightRelative;
+
             //RaycastHit hit;
             //int layerMask = LayerMask.GetMask("Default");
 
-            Vector3 moveDirection = new Vector3(moveValue.x, 0, moveValue.y);
-            transform.position += moveDirection * playerSpeed * Time.deltaTime;
+            Player.position += relativeMoveDirection * playerSpeed * Time.deltaTime;
+            Player.rotation *= Quaternion.Euler(0f, lookValue.x, 0f);
+            FPViewCamera.rotation *= Quaternion.Euler(-lookValue.y, 0f, 0f);
+
+            Debug.Log("FPViewCamera.rotation: " + FPViewCamera.eulerAngles.x);
         }
     }
 }
