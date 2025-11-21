@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 namespace NoSideEffects
 {
@@ -22,6 +21,10 @@ namespace NoSideEffects
             moveAction = InputSystem.actions.FindAction("Move");
             lookAction = InputSystem.actions.FindAction("Look");
             interactButton = InputSystem.actions.FindAction("Interact");
+        }
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         // Update is called once per frame
@@ -49,18 +52,9 @@ namespace NoSideEffects
 
             Player.position += relativeMoveDirection * playerSpeed * Time.deltaTime;
             Player.rotation *= Quaternion.Euler(0f, lookValue.x, 0f);
+            FPViewCamera.rotation *= Quaternion.Euler(-lookValue.y, 0f, 0f);
 
-            if (lookValue.y > 3)
-                lookValue.y = 3;
-            else if (lookValue.y < -3)
-                lookValue.y = -3;
-
-            Quaternion testRotation = FPViewCamera.rotation * Quaternion.Euler(-lookValue.y, 0f, 0f);
-
-            if ((testRotation.eulerAngles.x > 0 && testRotation.eulerAngles.x < 75) || (testRotation.eulerAngles.x < 360 && testRotation.eulerAngles.x > 280))
-                FPViewCamera.rotation *= Quaternion.Euler(-lookValue.y, 0f, 0f);
-
-            Debug.Log("lookValue.y: " + lookValue.y);
+           // Debug.Log("FPViewCamera.rotation: " + FPViewCamera.eulerAngles.x);
         }
     }
 }
