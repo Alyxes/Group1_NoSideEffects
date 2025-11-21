@@ -22,6 +22,10 @@ namespace NoSideEffects
             lookAction = InputSystem.actions.FindAction("Look");
             interactButton = InputSystem.actions.FindAction("Interact");
         }
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
         // Update is called once per frame
         void Update()
@@ -50,7 +54,7 @@ namespace NoSideEffects
             Player.rotation *= Quaternion.Euler(0f, lookValue.x, 0f);
             FPViewCamera.rotation *= Quaternion.Euler(-lookValue.y, 0f, 0f);
 
-            Debug.Log("FPViewCamera.rotation: " + FPViewCamera.eulerAngles.x);
+           // Debug.Log("FPViewCamera.rotation: " + FPViewCamera.eulerAngles.x);
         }
     }
 }
