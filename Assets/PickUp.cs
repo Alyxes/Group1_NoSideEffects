@@ -1,21 +1,24 @@
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PickUp : MonoBehaviour
 {
     public bool isCollected = false;
     public bool inZone = false;
     public GameObject HoldPoint;
+    InputAction interactButton;
 
     private void Start()
     {
+        interactButton = InputSystem.actions.FindAction("Interact");
         HoldPoint.SetActive(false);
     }
 
     private void Update()
     {
-        if (inZone && Input.GetKeyDown(KeyCode.E))
+        if (inZone && interactButton.WasPressedThisFrame())
         {
             if (!isCollected)
             {
