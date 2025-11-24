@@ -2,11 +2,14 @@ using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour
 {
     public bool isCollected = false;
     public bool inZone = false;
+    public Text text;
+    public string ItemName = "TestItem";
     public GameObject HoldPoint;
     InputAction interactButton;
 
@@ -18,17 +21,26 @@ public class PickUp : MonoBehaviour
 
     private void Update()
     {
-        if (inZone && interactButton.WasPressedThisFrame())
+        if (inZone)
         {
-            if (!isCollected)
+            text.text = "Pick up: " + ItemName;
+
+            if (interactButton.WasPressedThisFrame())
             {
-                PickUpItem();
-            }
-            else
-            {
-                DropItem();
+                if (!isCollected)
+                {
+                    PickUpItem();
+                }
+                else
+                {
+                    DropItem();
+                }
             }
         }
+        else {
+            text.text = "";
+        }
+            
     }
 
     private void PickUpItem()
