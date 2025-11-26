@@ -12,26 +12,44 @@ namespace NoSideEffects
         [SerializeField] Transform Player;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-        [SerializeField] CinemachineCamera cameraRotation;
+        // [SerializeField] CinemachineCamera cameraRotation;
         InputAction moveAction, interactButton;
         [NonSerialized] public float playerSpeed = 3f;
         [NonSerialized] public bool canMove, cameraLocked = false;
         private Vector2 moveValue;
         private Vector2 lookValue;
 
+        // Cinemachine input controller (found at runtime)
+        CinemachineInputAxisController inputAxisController;
+
         void Awake()
         {
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
-            Head = GetComponent<Transform>();
-            cameraRotation = GetComponent<CinemachineCamera>();
+            // Head = GetComponent<Transform>();
+            // cameraRotation = GetComponent<CinemachineCamera>();
             moveAction = InputSystem.actions.FindAction("Move");
             interactButton = InputSystem.actions.FindAction("Interact");
+
+            // CinemachineInputAxisController.m_ControllerManager.Controllers.Array.data[0].Enabled;
+
+            if (inputAxisController == null)
+                inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
+
+            //// Ensure controllers are created/populated
+            //inputAxisController.SynchronizeControllers();
+
+            //// Try exact names first (match the inspector labels)
+            //var ctrlX = inputAxisController.GetController("Look X");
+            //var ctrlY = inputAxisController.GetController("Look Y");
+
+            //ctrlX.Enabled = false;
+            //ctrlY.Enabled = false;
         }
         private void Start()
         {
             // cameraLocked = true;
-            // cameraRotation
+            // cameraRotation.GetCinemachineComponent<CinemachineInputAxisController>();
             RiseFromBed();
         }
         void Update()
@@ -67,8 +85,42 @@ namespace NoSideEffects
         }
         public void RiseFromBed()
         {
-            //FPViewCamera.rotation = Quaternion.Euler(0f, 50f, 0f);
+            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            SetControllerEnabledByName("Look X", true);
+            SetControllerEnabledByName("Look Y", true);
             canMove = true;
+        }
+        public void SetControllerEnabledByName(string axisName, bool enabled)
+        {
+            if (inputAxisController == null)
+                inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
+            if (inputAxisController == null)
+            {
+                Debug.LogWarning("No CinemachineInputAxisController found to modify controllers.");
+                return;
+            }
+
+            inputAxisController.SynchronizeControllers();
+
+            var controller = inputAxisController.GetController(axisName);
+            if (controller != null)
+            {
+                controller.Enabled = enabled;
+                return;
+            }
+
+            // Fallback: try case-insensitive contains search
+            foreach (var c in inputAxisController.Controllers)
+            {
+                if (c == null || string.IsNullOrEmpty(c.Name)) continue;
+                if (c.Name.IndexOf(axisName, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                {
+                    c.Enabled = enabled;
+                    return;
+                }
+            }
+
+            Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
         }
     }
 }

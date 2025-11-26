@@ -2460,6 +2460,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3647027783040152257, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[0].Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3647027783040152257, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[1].Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4389446676359402079, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
       propertyPath: NoiseProfile
       value: 
