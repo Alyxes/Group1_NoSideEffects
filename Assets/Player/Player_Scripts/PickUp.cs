@@ -87,8 +87,6 @@ namespace NoSideEffects
 
             // Root trigger is still enabled, no need to touch it
         }
-
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("InteractZone"))
