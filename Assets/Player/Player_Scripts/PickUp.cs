@@ -28,12 +28,12 @@ namespace NoSideEffects
 
             // Get trigger collider
             triggerCollider = GetComponent<Collider>();
+
+            interactButton = InputSystem.actions.FindAction("Interact");
         }
 
         private void Start()
         {
-            interactButton = InputSystem.actions.FindAction("Interact");
-
             // Get hold point from PlayerInventory
             holdPoint = PlayerInventory.holdPoint;
             if (holdPoint == null)
@@ -44,7 +44,7 @@ namespace NoSideEffects
         {
             if (inZone && interactButton.WasPressedThisFrame())
             {
-                if (PlayerInventory.currentHeldItem == null)
+                if (PlayerInventory.currentHeldItem == null && !isHeld)
                 {
                     PickUpItem();
                 }
@@ -72,7 +72,7 @@ namespace NoSideEffects
             model.transform.localPosition = Vector3.zero;
             model.transform.localRotation = Quaternion.identity;
 
-            inZone = false; // prevent pickup while held
+            // inZone = false; // prevent pickup while held
         }
 
         private void DropItem()
@@ -91,22 +91,27 @@ namespace NoSideEffects
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("InteractZone"))
             {
-                inZone = true;
-
-                Debug.Log("Press E to pick up " + itemID);
+                if (!inZone)
+                {
+                    inZone = true;
+                    Debug.Log("Press Interact button (gamepad A, E, left mouseclick) to pick up " + itemID);
+                }
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("InteractZone"))
             {
-                inZone = false;
+                if (inZone)
+                {
+                    inZone = false;
+                    Debug.Log("Left pick up zone");
+                }
             }
         }
-
     }
 }
 
