@@ -40,6 +40,10 @@ namespace NoSideEffects
         {
             pickUptext.text = input;
         }
+        public void ClearPickUpText()
+        {
+            pickUptext.text = "";
+        }
 
         void Update()
         {

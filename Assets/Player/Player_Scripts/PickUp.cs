@@ -23,8 +23,8 @@ namespace NoSideEffects
         private void Awake()
         {
             // Store original location
-            originalPosition = transform.position;
-            originalRotation = transform.rotation;
+            originalPosition = model.transform.position;
+            originalRotation = model.transform.rotation;
 
             // Get trigger collider
             triggerCollider = GetComponent<Collider>();
@@ -72,7 +72,7 @@ namespace NoSideEffects
             model.transform.localPosition = Vector3.zero;
             model.transform.localRotation = Quaternion.identity;
 
-            // inZone = false; // prevent pickup while held
+            HUD.instance.SetPutDownText(itemID);
         }
 
         private void DropItem()
@@ -82,9 +82,10 @@ namespace NoSideEffects
 
             // Move visual model back to root
             model.transform.SetParent(transform);
-            model.transform.localPosition = Vector3.zero;
-            model.transform.localRotation = Quaternion.identity;
+            model.transform.position = originalPosition;
+            model.transform.rotation = originalRotation;
 
+            HUD.instance.SetPickUpText(itemID);
             // Root trigger is still enabled, no need to touch it
         }
         private void OnTriggerEnter(Collider other)
@@ -94,7 +95,11 @@ namespace NoSideEffects
                 if (!inZone)
                 {
                     inZone = true;
-                    Debug.Log("Press Interact button (gamepad A, E, left mouseclick) to pick up " + itemID);
+
+                    if (PlayerInventory.currentHeldItem == this)
+                        HUD.instance.SetPutDownText(itemID);
+                    else
+                        HUD.instance.SetPickUpText(itemID);
                 }
             }
         }
@@ -106,7 +111,7 @@ namespace NoSideEffects
                 if (inZone)
                 {
                     inZone = false;
-                    Debug.Log("Left pick up zone");
+                    HUD.instance.ClearPickUpText();
                 }
             }
         }
