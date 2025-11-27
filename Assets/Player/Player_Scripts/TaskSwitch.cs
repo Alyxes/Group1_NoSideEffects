@@ -3,22 +3,33 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+
 public class TaskSwitch : MonoBehaviour
 {
-    public ItemPickup currentHeldItem;
-    public PlayerInventory playerInventory;
+    public PlayerInventory currentHeldItem;
     bool InTaskZone = false;
     private InputAction interactButton;
+    private string itemIDValue;
     private void Awake()
     {
         interactButton = InputSystem.actions.FindAction("Interact");
+    }
+    
+
+    void Start()
+    {
+        if (currentHeldItem != null)
+        {
+            itemIDValue = currentHeldItem.HeldItemID;
+            Debug.Log("Got itemID: " + itemIDValue);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             InTaskZone = true;
-            Debug.Log("Player entered task zone. Press " + interactButton.WasPressedThisFrame() + " to use the " + currentHeldItem.itemID);
+            Debug.Log("Player entered task zone. Press " + interactButton.WasPressedThisFrame() + " to use the " + itemIDValue);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -33,32 +44,25 @@ public class TaskSwitch : MonoBehaviour
     {
         if (InTaskZone && interactButton.WasPressedThisFrame())
         {
-            switch(currentHeldItem.itemID) 
-                {
-                case "WateringCan":
-                    WaterTask();
-                    break;
-                case "Screwdriver":
-                    Debug.Log("Using Screwdriver to fix screws.");
-                    break;
-            }
+            Tasks();
         }
     }
     private void WaterTask()
     {
         if(InTaskZone && interactButton.WasPressedThisFrame())
         {
-             Debug.Log("Filling the " + currentHeldItem.itemID);
+             Debug.Log("Filling the " + itemIDValue);
 
         }
     }
 
-    TaskSwitch()
+    public void Tasks()
     {
-        switch(currentHeldItem.itemID)
+        switch(itemIDValue)
             {
-            case "Item":
+            case "WaterCan":
                 Debug.Log("I need to water the plants");
+                WaterTask();
 
                 transform.Find("Sink").gameObject.SetActive(true);
                 Debug.Log("Find water");
