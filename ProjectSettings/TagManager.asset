@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Item1
   - Item2
+  - InteractZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerBody
+  - Player
   - Water
   - UI
   - 

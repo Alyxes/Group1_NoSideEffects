@@ -1,0 +1,1 @@
+Here should only the walls, floors, ceiling, doors and windows be, and their building parts.
