@@ -17,7 +17,7 @@ namespace NoSideEffects
         public IEnumerator WaitAndLoadScene(string scene)
         {
             yield return new WaitForSecondsRealtime(0.1f);
-            SceneManager.LoadScene(scene);
+            DSM.instance.StartingNewDay(DSM.Days.Day1);
         }
         public void ExitGame()
         {
@@ -25,7 +25,7 @@ namespace NoSideEffects
         }
         public IEnumerator WaitAndQuitGame()
         {
-            yield return new WaitForSecondsRealtime(0.2f);
+            yield return new WaitForSecondsRealtime(0.1f);
 
             #if UNITY_EDITOR
                 EditorApplication.ExitPlaymode();

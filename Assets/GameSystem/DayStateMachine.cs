@@ -108,9 +108,8 @@ namespace NoSideEffects
         {
 
         }
-        public void EndingDay(Days newDay)
+        public void StartingNewDay(Days newDay)
         {
-            currentDay = Days.Day4;
             CleanupDay();
             currentDay = newDay;
             SwitchDay();

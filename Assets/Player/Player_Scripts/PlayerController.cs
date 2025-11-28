@@ -86,7 +86,7 @@
 //        {
 //            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
 //            canMove = true;
-//            // DSM.instance.EndingDay(DSM.Days.Day2);
+//            // DSM.instance.StartingNewDay(DSM.Days.Day2);
 
 //            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
 //            StartCoroutine(HUD.instance.TextTimerCoroutine(4f));
@@ -171,7 +171,7 @@ namespace NoSideEffects
         {
             // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
             canMove = true;
-            // DSM.instance.EndingDay(DSM.Days.Day2);
+            // DSM.instance.StartingNewDay(DSM.Days.Day2);
 
             // ToggleCameraPanOn();
             // ToggleCameraTiltOn();
