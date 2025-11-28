@@ -1,7 +1,8 @@
+using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
-using System.Collections;
 
 namespace NoSideEffects
 {
@@ -12,7 +13,7 @@ namespace NoSideEffects
         public TMP_Text subTitleText;
         public TMP_Text pressToContinue;
         InputAction interactButton;
-        public bool isSubTitleActive = false;
+        [NonSerialized] public bool isSubTitleActive = false;
         private void Awake()
         {
             if (instance == null)
