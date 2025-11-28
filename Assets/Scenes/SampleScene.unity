@@ -465,7 +465,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1591.5494
+  m_Intensity: 2387.324
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -508,7 +508,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 5150
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 8e-45, z: 0, w: 2.2e-44}
   m_UseBoundingSphereOverride: 0
@@ -2507,7 +2507,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1591.5494
+  m_Intensity: 2387.324
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2550,7 +2550,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 5150
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: NaN, z: 2.7105054e-20, w: 3.67447e-40}
   m_UseBoundingSphereOverride: 0
@@ -3106,6 +3106,34 @@ PrefabInstance:
       propertyPath: m_ControllerManager.Controllers.Array.data[1].Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761074729845616084, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4389446676359402079, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
       propertyPath: NoiseProfile
       value: 
@@ -3409,7 +3437,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 20000
+  m_Intensity: 2387.324
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3452,7 +3480,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 5150
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 10.353554}
   m_UseBoundingSphereOverride: 0
@@ -3460,7 +3488,7 @@ Light:
   m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
-  m_LightUnit: 2
+  m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
 --- !u!114 &1601770347
@@ -4003,7 +4031,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1591.5494
+  m_Intensity: 2387.324
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4046,7 +4074,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 5150
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 2.96e-43, y: 1e-45, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
