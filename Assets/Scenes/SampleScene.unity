@@ -691,7 +691,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b76bd941c3768a4a91ae8b4739b14bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaskSwitch
+  childTriggers:
+  - {fileID: 753821965}
+  - {fileID: 741208449}
   currentHeldItem: {fileID: 1328001842}
+  InTaskZone: 0
 --- !u!1 &278185931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,6 +1929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 741208447}
   - component: {fileID: 741208448}
+  - component: {fileID: 741208449}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -1968,6 +1973,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &741208449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741208446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c66d3046b5404b4ea7c133524ffe850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChildTrigger
+  parentTrigger: {fileID: 116817767}
+  triggerName: Plant
 --- !u!1 &753821962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,6 +1997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 753821963}
   - component: {fileID: 753821964}
+  - component: {fileID: 753821965}
   m_Layer: 0
   m_Name: Sink
   m_TagString: Untagged
@@ -2021,6 +2041,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &753821965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753821962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c66d3046b5404b4ea7c133524ffe850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChildTrigger
+  parentTrigger: {fileID: 116817767}
+  triggerName: Sink
 --- !u!1 &824971367
 GameObject:
   m_ObjectHideFlags: 0
