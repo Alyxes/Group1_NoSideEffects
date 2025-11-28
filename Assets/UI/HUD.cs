@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
 
 namespace NoSideEffects
 {
@@ -20,6 +21,18 @@ namespace NoSideEffects
                 Destroy(gameObject);
 
             interactButton = InputSystem.actions.FindAction("Interact");
+        }
+        void Update()
+        {
+            if (isSubTitleActive)
+            {
+                if (interactButton.WasPressedThisFrame())
+                {
+                    subTitleText.text = "";
+                    pressToContinue.text = "";
+                    isSubTitleActive = false;
+                }
+            }
         }
 
         public void SetSubTitleText(string input)
@@ -44,18 +57,10 @@ namespace NoSideEffects
         {
             pickUptext.text = "";
         }
-
-        void Update()
+        public IEnumerator TextTimerCoroutine(float timer)
         {
-            if (isSubTitleActive)
-            {
-                if (interactButton.WasPressedThisFrame())
-                {
-                    subTitleText.text = "";
-                    pressToContinue.text = "";
-                    isSubTitleActive = false;
-                }
-            }
+            yield return new WaitForSeconds(timer);
+            pickUptext.text = "";
         }
     }
 }

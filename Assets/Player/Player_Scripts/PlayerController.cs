@@ -1,5 +1,5 @@
 using System;
-using Unity.Cinemachine;
+// using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
@@ -20,7 +20,7 @@ namespace NoSideEffects
         private Vector2 lookValue;
 
         // Cinemachine input controller (found at runtime)
-        CinemachineInputAxisController inputAxisController;
+        // CinemachineInputAxisController inputAxisController;
 
         void Awake()
         {
@@ -31,25 +31,12 @@ namespace NoSideEffects
             moveAction = InputSystem.actions.FindAction("Move");
             interactButton = InputSystem.actions.FindAction("Interact");
 
-            // CinemachineInputAxisController.m_ControllerManager.Controllers.Array.data[0].Enabled;
-
-            if (inputAxisController == null)
-                inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
-
-            //// Ensure controllers are created/populated
-            //inputAxisController.SynchronizeControllers();
-
-            //// Try exact names first (match the inspector labels)
-            //var ctrlX = inputAxisController.GetController("Look X");
-            //var ctrlY = inputAxisController.GetController("Look Y");
-
-            //ctrlX.Enabled = false;
-            //ctrlY.Enabled = false;
+            //if (inputAxisController == null)
+            //    inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
         private void Start()
         {
             // cameraLocked = true;
-            // cameraRotation.GetCinemachineComponent<CinemachineInputAxisController>();
             RiseFromBed();
         }
         void Update()
@@ -86,41 +73,74 @@ namespace NoSideEffects
         public void RiseFromBed()
         {
             // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
-            SetControllerEnabledByName("Look X", true);
-            SetControllerEnabledByName("Look Y", true);
             canMove = true;
+            // DSM.instance.EndingDay(DSM.Days.Day2);
+
+            //ToggleCameraPanOn();
+            //ToggleCameraTiltOn();
+
+            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+            StartCoroutine(HUD.instance.TextTimerCoroutine(4f));
         }
-        public void SetControllerEnabledByName(string axisName, bool enabled)
-        {
-            if (inputAxisController == null)
-                inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
-            if (inputAxisController == null)
-            {
-                Debug.LogWarning("No CinemachineInputAxisController found to modify controllers.");
-                return;
-            }
+        //public void SetControllerEnabledByName(string axisName, bool enabled)
+        //{
+        //    if (inputAxisController == null)
+        //        inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
+        //    if (inputAxisController == null)
+        //    {
+        //        Debug.LogWarning("No CinemachineInputAxisController found to modify controllers.");
+        //        return;
+        //    }
 
-            inputAxisController.SynchronizeControllers();
+        //    inputAxisController.SynchronizeControllers();
 
-            var controller = inputAxisController.GetController(axisName);
-            if (controller != null)
-            {
-                controller.Enabled = enabled;
-                return;
-            }
+        //    var controller = inputAxisController.GetController(axisName);
+        //    if (controller != null)
+        //    {
+        //        controller.Enabled = enabled;
+        //        return;
+        //    }
 
-            // Fallback: try case-insensitive contains search
-            foreach (var c in inputAxisController.Controllers)
-            {
-                if (c == null || string.IsNullOrEmpty(c.Name)) continue;
-                if (c.Name.IndexOf(axisName, StringComparison.InvariantCultureIgnoreCase) >= 0)
-                {
-                    c.Enabled = enabled;
-                    return;
-                }
-            }
+        //    // Fallback: try case-insensitive contains search
+        //    foreach (var c in inputAxisController.Controllers)
+        //    {
+        //        if (c == null || string.IsNullOrEmpty(c.Name)) continue;
+        //        if (c.Name.IndexOf(axisName, StringComparison.InvariantCultureIgnoreCase) >= 0)
+        //        {
+        //            c.Enabled = enabled;
+        //            return;
+        //        }
+        //    }
 
-            Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
-        }
+        //    Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
+        //}
+        
+        //public void ToggleCameraPanOff()
+        //{
+        //    SetControllerEnabledByName("Look X", false);
+        //}
+        //public void ToggleCameraPanOn()
+        //{
+        //    SetControllerEnabledByName("Look X", true);
+        //}
+        //public void ToggleCameraTiltOff()
+        //{
+        //    SetControllerEnabledByName("Look Y", false);
+        //}
+        //public void ToggleCameraTiltOn()
+        //{
+        //    SetControllerEnabledByName("Look Y", true);
+        //}
+        //public void ToggleCameraRotationOff()
+        //{
+        //    SetControllerEnabledByName("Look X", false);
+        //    SetControllerEnabledByName("Look Y", false);
+        //}
+        //public void ToggleCameraRotationOn()
+        //{
+        //    SetControllerEnabledByName("Look X", true);
+        //    SetControllerEnabledByName("Look Y", true);
+        //    canMove = true;
+        //}
     }
 }
