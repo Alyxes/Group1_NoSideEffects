@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using System.Collections;
 
 namespace NoSideEffects
 {
@@ -43,11 +42,6 @@ namespace NoSideEffects
         }
         public void ClearPickUpText()
         {
-            pickUptext.text = "";
-        }
-        public IEnumerator TextTimerCoroutine(float timer)
-        {
-            yield return new WaitForSeconds(timer);
             pickUptext.text = "";
         }
 
