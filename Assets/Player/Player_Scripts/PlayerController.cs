@@ -52,7 +52,7 @@ namespace NoSideEffects
             if (rigid_Body.angularVelocity.magnitude > 0f)
                 rigid_Body.angularVelocity = Vector3.zero;
 
-            if (Head.eulerAngles.z != 0)
+            if (Head.eulerAngles.z > 0f)
             {
                 Head.eulerAngles = new Vector3(Head.eulerAngles.x, Head.eulerAngles.y, 0);
                 Debug.Log("Corrected Head.eulerAngles.z");
