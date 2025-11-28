@@ -2,7 +2,6 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static NoSideEffects.DSM;
 using Cursor = UnityEngine.Cursor;
 
 namespace NoSideEffects
@@ -19,7 +18,6 @@ namespace NoSideEffects
         [NonSerialized] public bool canMove, cameraLocked = false;
         private Vector2 moveValue;
         private Vector2 lookValue;
-        private bool risingFromBed = true;
 
         // Cinemachine input controller (found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -33,22 +31,29 @@ namespace NoSideEffects
             moveAction = InputSystem.actions.FindAction("Move");
             interactButton = InputSystem.actions.FindAction("Interact");
 
+            // CinemachineInputAxisController.m_ControllerManager.Controllers.Array.data[0].Enabled;
+
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
+
+            //// Ensure controllers are created/populated
+            //inputAxisController.SynchronizeControllers();
+
+            //// Try exact names first (match the inspector labels)
+            //var ctrlX = inputAxisController.GetController("Look X");
+            //var ctrlY = inputAxisController.GetController("Look Y");
+
+            //ctrlX.Enabled = false;
+            //ctrlY.Enabled = false;
         }
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
             // cameraLocked = true;
+            // cameraRotation.GetCinemachineComponent<CinemachineInputAxisController>();
             RiseFromBed();
         }
         void Update()
         {
-            //if (risingFromBed)
-            //{
-            //    Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
-            //    return;
-            //}
             moveValue = moveAction.ReadValue<Vector2>();
 
             Vector3 camForward = FPViewCamera.forward;
@@ -80,37 +85,10 @@ namespace NoSideEffects
         }
         public void RiseFromBed()
         {
-            // Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            SetControllerEnabledByName("Look X", true);
+            SetControllerEnabledByName("Look Y", true);
             canMove = true;
-            // DSM.instance.EndingDay(DSM.Days.Day2);
-            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
-            StartCoroutine(HUD.instance.TextTimerCoroutine(4f));
-        }
-        public void ToggleCameraPanOff()
-        {
-            SetControllerEnabledByName("Look X", false);
-        }
-        public void ToggleCameraPanOn()
-        {
-            SetControllerEnabledByName("Look X", true);
-        }
-        public void ToggleCameraTiltOff()
-        {
-            SetControllerEnabledByName("Look Y", false);
-        }
-        public void ToggleCameraTiltOn()
-        {
-            SetControllerEnabledByName("Look Y", true);
-        }
-        public void ToggleCameraRotationOff()
-        {
-            SetControllerEnabledByName("Look X", false);
-            SetControllerEnabledByName("Look Y", false);
-        }
-        public void ToggleCameraRotationOn()
-        {
-            SetControllerEnabledByName("Look X", true);
-            SetControllerEnabledByName("Look Y", true);
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {
