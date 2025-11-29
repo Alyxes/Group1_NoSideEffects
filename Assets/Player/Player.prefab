@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 2082260350067955119}
   - component: {fileID: 8452085131142718383}
   - component: {fileID: 977177475327854825}
-  - component: {fileID: 6342386533796314484}
+  - component: {fileID: 4387733020113458865}
   - component: {fileID: 5601832044627968953}
   m_Layer: 3
   m_Name: FirstPersonViewCamera
@@ -448,10 +448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
-  NoiseProfile: {fileID: 11400000, guid: 20a705aea2d80e0478fb89b6f43d8530, type: 2}
+  NoiseProfile: {fileID: 11400000, guid: 554b0ed52734c154eab51f6cedd3a7d7, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 8
-  FrequencyGain: 8
+  AmplitudeGain: 20
+  FrequencyGain: 20
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &8452085131142718383
 MonoBehaviour:
@@ -636,8 +636,8 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!135 &6342386533796314484
-SphereCollider:
+--- !u!136 &4387733020113458865
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -654,9 +654,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.35
-  m_Center: {x: 0, y: 0, z: 0.65}
+  serializedVersion: 2
+  m_Radius: 0.22
+  m_Height: 1.05
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.8}
 --- !u!114 &5601832044627968953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +727,7 @@ Transform:
   m_GameObject: {fileID: 6697806796142633441}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.001, z: 0.986}
+  m_LocalPosition: {x: 0, y: -0.0003, z: 1.3127}
   m_LocalScale: {x: 0.02352353, y: 0.02368036, z: 0.023328884}
   m_ConstrainProportionsScale: 0
   m_Children: []

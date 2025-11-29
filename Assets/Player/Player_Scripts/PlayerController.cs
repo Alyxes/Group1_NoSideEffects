@@ -89,7 +89,7 @@
 //            // DSM.instance.StartingNewDay(DSM.Days.Day2);
 
 //            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
-//            StartCoroutine(HUD.instance.TextTimerCoroutine(4f));
+//            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(4f));
 //        }
 //    }
 //}
@@ -99,6 +99,7 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 using Cursor = UnityEngine.Cursor;
 
 namespace NoSideEffects
@@ -111,8 +112,8 @@ namespace NoSideEffects
         [SerializeField] Transform FPViewCamera;
         // [SerializeField] CinemachineCamera cameraRotation;
         InputAction moveAction, interactButton;
-        [NonSerialized] public float playerSpeed = 3f;
-        [NonSerialized] public bool canMove, cameraLocked = false;
+        [NonSerialized] public float playerSpeed = 2f;
+        [NonSerialized] public bool canMove, cameraLocked, wakingUp = false;
         private Vector2 moveValue;
 
         // Cinemachine input controller(found at runtime)
@@ -133,11 +134,26 @@ namespace NoSideEffects
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
-            // cameraLocked = true;
-            RiseFromBed();
+            ToggleCameraPanOff();
+            ToggleCameraTiltOff();
+            HUD.instance.SetBlackScreenAlpha(1);
+            Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            wakingUp = true;
+            Awakening();
         }
         void Update()
         {
+            if (wakingUp)
+            {
+                if (HUD.instance.blackScreenFadeOut == false)
+                {
+                    RiseFromBed();
+                    wakingUp = false;
+                }
+                else
+                    return;
+            }
+
             moveValue = moveAction.ReadValue<Vector2>();
 
             Vector3 camForward = FPViewCamera.forward;
@@ -167,17 +183,25 @@ namespace NoSideEffects
 
             //Debug.Log("");
         }
+        public void Awakening()
+        {
+            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
+
+            HUD.instance.blackScreenFadeOut = true;
+            HUD.instance.blackScreenFadeSpeed = 0.5f;
+        }
         public void RiseFromBed()
         {
-            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            // DSM.instance.StartingNewDay(DSM.Days.Day2); // Sparad här för att ha till hands senare.
+            Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
             canMove = true;
-            // DSM.instance.StartingNewDay(DSM.Days.Day2);
 
-            // ToggleCameraPanOn();
-            // ToggleCameraTiltOn();
-
-            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
-            StartCoroutine(HUD.instance.TextTimerCoroutine(4f));
+            ToggleCameraPanOn();
+            ToggleCameraTiltOn();
+            // This text will be different or be none at all depending on the day.
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {

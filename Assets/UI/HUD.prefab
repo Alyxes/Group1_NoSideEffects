@@ -120,6 +120,7 @@ MonoBehaviour:
   pickUptext: {fileID: 3336057024729796376}
   subTitleText: {fileID: 7608771420389630346}
   pressToContinue: {fileID: 7559334533029383702}
+  blackScreen: {fileID: 9017552714352274340}
 --- !u!1 &5454706035933465561
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 400.4, y: -24.900047}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 299, y: -24.900047}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4295348706284605645
 CanvasRenderer:
