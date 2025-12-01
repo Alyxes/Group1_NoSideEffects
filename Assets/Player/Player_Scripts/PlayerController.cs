@@ -1,7 +1,105 @@
+// OLD VERSION WITHOUT CINEMACHINE
+//using System;
+//using UnityEngine;
+//using UnityEngine.InputSystem;
+//using UnityEngine.UIElements;
+//using Cursor = UnityEngine.Cursor;
+
+//namespace NoSideEffects
+//{
+//    public class PlayerController : MonoBehaviour
+//    {
+//        [NonSerialized] public Rigidbody rigid_Body;
+//        [SerializeField] Transform Player;
+//        [SerializeField] Transform Head;
+//        [SerializeField] Transform FPViewCamera;
+//        InputAction moveAction, lookAction, interactButton;
+//        [NonSerialized] public float playerSpeed = 3f;
+//        [NonSerialized] public bool canMove = false;
+//        private Vector2 moveValue;
+//        private Vector2 lookValue;
+//        // Start is called once before the first execution of Update after the MonoBehaviour is created
+//        void Awake()
+//        {
+//            rigid_Body = GetComponent<Rigidbody>();
+//            Player = GetComponent<Transform>();
+//            // Head = GetComponent<Transform>();
+//            moveAction = InputSystem.actions.FindAction("Move");
+//            lookAction = InputSystem.actions.FindAction("Look");
+//            interactButton = InputSystem.actions.FindAction("Interact");
+//        }
+
+//        private void Start()
+//        {
+//            Cursor.lockState = CursorLockMode.Locked;
+//            RiseFromBed();
+//        }
+
+//        // Update is called once per frame
+//        void Update()
+//        {
+//            moveValue = moveAction.ReadValue<Vector2>();
+//            lookValue = lookAction.ReadValue<Vector2>();
+
+//            Vector3 camForward = FPViewCamera.forward;
+//            Vector3 camRight = FPViewCamera.right;
+
+//            camForward.y = 0;
+//            camRight.y = 0;
+
+//            Vector3 forwardRelative = camForward * moveValue.y;
+//            Vector3 rightRelative = camRight * moveValue.x;
+
+//            if (rigid_Body.angularVelocity.magnitude > 0f)
+//                rigid_Body.angularVelocity = Vector3.zero;
+
+//            if (Head.eulerAngles.z > 0f)
+//            {
+//                Head.eulerAngles = new Vector3(Head.eulerAngles.x, Head.eulerAngles.y, 0);
+//                Debug.Log("Corrected Head.eulerAngles.z");
+//            }
+
+//            Vector3 relativeMoveDirection = forwardRelative + rightRelative;
+//            Vector3 projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
+
+//            //RaycastHit hit;
+//            //int layerMask = LayerMask.GetMask("Default");
+
+//            if (canMove)
+//                Player.position += projected * playerSpeed * Time.deltaTime;
+
+//            Player.rotation *= Quaternion.Euler(0f, lookValue.x, 0f);
+
+//            if (lookValue.y > 3)
+//                lookValue.y = 3;
+//            else if (lookValue.y < -3)
+//                lookValue.y = -3;
+
+//            Quaternion testRotation = Head.rotation * Quaternion.Euler(-lookValue.y, 0f, 0f);
+
+//            if ((testRotation.eulerAngles.x > 0 && testRotation.eulerAngles.x < 75) || (testRotation.eulerAngles.x < 360 && testRotation.eulerAngles.x > 280))
+//                Head.rotation *= Quaternion.Euler(-lookValue.y, 0f, 0f);
+
+//            // Debug.Log("lookValue.y: " + lookValue.y);
+//        }
+//        public void RiseFromBed()
+//        {
+//            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+//            canMove = true;
+//            // DSM.instance.StartingNewDay(DSM.Days.Day2);
+
+//            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+//            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(4f));
+//        }
+//    }
+//}
+
+//CINEMACHINE VERSION
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 using Cursor = UnityEngine.Cursor;
 
 namespace NoSideEffects
@@ -10,16 +108,18 @@ namespace NoSideEffects
     {
         [NonSerialized] public Rigidbody rigid_Body;
         [SerializeField] Transform Player;
+        [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
         // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, interactButton;
-        [NonSerialized] public float playerSpeed = 3f;
-        [NonSerialized] public bool canMove, cameraLocked = false;
+        InputAction moveAction, crouchButton;
+        [NonSerialized] public float playerDaySpeed = 1.5f;
+        [NonSerialized] public float playerSpeed;
+        [NonSerialized] public bool canMove, cameraLocked, wakingUp, isCrouching = false;
         private Vector2 moveValue;
-        private Vector2 lookValue;
+        private float wantedHeadHeight;
 
-        // Cinemachine input controller (found at runtime)
+        // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
 
         void Awake()
@@ -27,33 +127,66 @@ namespace NoSideEffects
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
             // Head = GetComponent<Transform>();
+            wantedHeadHeight = Head.position.y;
             // cameraRotation = GetComponent<CinemachineCamera>();
             moveAction = InputSystem.actions.FindAction("Move");
-            interactButton = InputSystem.actions.FindAction("Interact");
-
-            // CinemachineInputAxisController.m_ControllerManager.Controllers.Array.data[0].Enabled;
+            // interactButton = InputSystem.actions.FindAction("Interact");
+            crouchButton = InputSystem.actions.FindAction("Crouch");
 
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
-
-            //// Ensure controllers are created/populated
-            //inputAxisController.SynchronizeControllers();
-
-            //// Try exact names first (match the inspector labels)
-            //var ctrlX = inputAxisController.GetController("Look X");
-            //var ctrlY = inputAxisController.GetController("Look Y");
-
-            //ctrlX.Enabled = false;
-            //ctrlY.Enabled = false;
         }
         private void Start()
         {
-            // cameraLocked = true;
-            // cameraRotation.GetCinemachineComponent<CinemachineInputAxisController>();
-            RiseFromBed();
+            Cursor.lockState = CursorLockMode.Locked;
+            playerSpeed = playerDaySpeed;
+            ToggleCameraPanOff();
+            ToggleCameraTiltOff();
+            HUD.instance.SetBlackScreenAlpha(1);
+            Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            wakingUp = true;
+            Awakening();
         }
         void Update()
         {
+            if (wakingUp)
+            {
+                if (HUD.instance.blackScreenFadeOut == false)
+                {
+                    RiseFromBed();
+                    wakingUp = false;
+                }
+                else
+                    return;
+            }
+
+            if (crouchButton.WasPressedThisFrame())
+            {
+                if (!isCrouching)
+                {
+                    isCrouching = true;
+                    playerBody.GetComponent<CapsuleCollider>().height = 1f;
+                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+                    // Player.position = new Vector3(Player.position.x, Player.position.y - 0.5f, Player.position.z);
+                    wantedHeadHeight = Head.position.y - 0.9f;
+                    playerSpeed = 0.8f;
+                }
+                else
+                {
+                    isCrouching = false;
+                    playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+                    // Player.position = new Vector3(Player.position.x, Player.position.y + 0.5f, Player.position.z);
+                    wantedHeadHeight = Head.position.y + 0.9f;
+                    playerSpeed = playerDaySpeed;
+                }
+            }
+
+            if (wantedHeadHeight != Head.position.y)
+            {
+                Head.position = Vector3.MoveTowards(Head.position, new Vector3(Head.position.x, wantedHeadHeight, Head.position.z), Time.deltaTime * 2f);
+            }
+
             moveValue = moveAction.ReadValue<Vector2>();
 
             Vector3 camForward = FPViewCamera.forward;
@@ -83,12 +216,25 @@ namespace NoSideEffects
 
             //Debug.Log("");
         }
+        public void Awakening()
+        {
+            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
+
+            HUD.instance.blackScreenFadeOut = true;
+            HUD.instance.blackScreenFadeSpeed = 0.5f;
+        }
         public void RiseFromBed()
         {
-            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
-            SetControllerEnabledByName("Look X", true);
-            SetControllerEnabledByName("Look Y", true);
+            // DSM.instance.StartingNewDay(DSM.Days.Day2); // Sparad här för att ha till hands senare.
+            Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
             canMove = true;
+
+            ToggleCameraPanOn();
+            ToggleCameraTiltOn();
+            // This text will be different or be none at all depending on the day.
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {
@@ -121,6 +267,34 @@ namespace NoSideEffects
             }
 
             Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
+        }
+
+        public void ToggleCameraPanOff()
+        {
+            SetControllerEnabledByName("Look X", false);
+        }
+        public void ToggleCameraPanOn()
+        {
+            SetControllerEnabledByName("Look X", true);
+        }
+        public void ToggleCameraTiltOff()
+        {
+            SetControllerEnabledByName("Look Y", false);
+        }
+        public void ToggleCameraTiltOn()
+        {
+            SetControllerEnabledByName("Look Y", true);
+        }
+        public void ToggleCameraRotationOff()
+        {
+            SetControllerEnabledByName("Look X", false);
+            SetControllerEnabledByName("Look Y", false);
+        }
+        public void ToggleCameraRotationOn()
+        {
+            SetControllerEnabledByName("Look X", true);
+            SetControllerEnabledByName("Look Y", true);
+            canMove = true;
         }
     }
 }
