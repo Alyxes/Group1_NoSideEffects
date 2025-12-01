@@ -112,11 +112,13 @@ namespace NoSideEffects
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
         // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, crouchButton;
+        InputAction moveAction, lookAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
         [NonSerialized] public bool canMove, cameraLocked, wakingUp, isCrouching = false;
         private Vector2 moveValue;
+        private Vector2 lookValue;
+        private Vector3 projected;
         private float wantedHeadHeight;
 
         // Cinemachine input controller(found at runtime)
@@ -189,11 +191,9 @@ namespace NoSideEffects
 
             moveValue = moveAction.ReadValue<Vector2>();
 
-            Vector3 camForward = FPViewCamera.forward;
-            Vector3 camRight = FPViewCamera.right;
-
-            camForward.y = 0;
-            camRight.y = 0;
+            // Computing planar camera axes. This makes sure that movement force is correctly applied even when looking up or down.
+            Vector3 camForward = Vector3.ProjectOnPlane(FPViewCamera.forward, Vector3.up).normalized;
+            Vector3 camRight = Vector3.ProjectOnPlane(FPViewCamera.right, Vector3.up).normalized;
 
             Vector3 forwardRelative = camForward * moveValue.y;
             Vector3 rightRelative = camRight * moveValue.x;
@@ -209,12 +209,34 @@ namespace NoSideEffects
             //RaycastHit hit;
             //int layerMask = LayerMask.GetMask("Default");
 
+            //if (Physics.Raycast(Player.position, Player.forward, out hit, 0.36f, layerMask))
+            //{
+            //    canMove = false;
+            //}
+            //else
+            //{
+            //    if (!canMove)
+            //        canMove = true;
+            //}
+
             // Vector3 moveDirection = new Vector3(moveValue.x, 0f, moveValue.y);
-            Vector3 projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
-            if (canMove)
-                Player.position += projected * playerSpeed * Time.deltaTime;
+            projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
 
             //Debug.Log("");
+        }
+        void LateUpdate()
+        {
+            if (canMove)
+            {
+                rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
+                // Player.position += projected * playerSpeed * Time.deltaTime;
+            }
+
+            DampingPlanarMovement(0.97f);
+        }
+        public void DampingPlanarMovement(float amount)
+        {
+            rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
         }
         public void Awakening()
         {
