@@ -108,13 +108,16 @@ namespace NoSideEffects
     {
         [NonSerialized] public Rigidbody rigid_Body;
         [SerializeField] Transform Player;
+        [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
         // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, interactButton;
-        [NonSerialized] public float playerSpeed = 2f;
-        [NonSerialized] public bool canMove, cameraLocked, wakingUp = false;
+        InputAction moveAction, crouchButton;
+        [NonSerialized] public float playerDaySpeed = 1.5f;
+        [NonSerialized] public float playerSpeed;
+        [NonSerialized] public bool canMove, cameraLocked, wakingUp, isCrouching = false;
         private Vector2 moveValue;
+        private float wantedHeadHeight;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -124,9 +127,11 @@ namespace NoSideEffects
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
             // Head = GetComponent<Transform>();
+            wantedHeadHeight = Head.position.y;
             // cameraRotation = GetComponent<CinemachineCamera>();
             moveAction = InputSystem.actions.FindAction("Move");
-            interactButton = InputSystem.actions.FindAction("Interact");
+            // interactButton = InputSystem.actions.FindAction("Interact");
+            crouchButton = InputSystem.actions.FindAction("Crouch");
 
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
@@ -134,6 +139,7 @@ namespace NoSideEffects
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            playerSpeed = playerDaySpeed;
             ToggleCameraPanOff();
             ToggleCameraTiltOff();
             HUD.instance.SetBlackScreenAlpha(1);
@@ -152,6 +158,33 @@ namespace NoSideEffects
                 }
                 else
                     return;
+            }
+
+            if (crouchButton.WasPressedThisFrame())
+            {
+                if (!isCrouching)
+                {
+                    isCrouching = true;
+                    playerBody.GetComponent<CapsuleCollider>().height = 1f;
+                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+                    // Player.position = new Vector3(Player.position.x, Player.position.y - 0.5f, Player.position.z);
+                    wantedHeadHeight = Head.position.y - 0.9f;
+                    playerSpeed = 0.8f;
+                }
+                else
+                {
+                    isCrouching = false;
+                    playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+                    // Player.position = new Vector3(Player.position.x, Player.position.y + 0.5f, Player.position.z);
+                    wantedHeadHeight = Head.position.y + 0.9f;
+                    playerSpeed = playerDaySpeed;
+                }
+            }
+
+            if (wantedHeadHeight != Head.position.y)
+            {
+                Head.position = Vector3.MoveTowards(Head.position, new Vector3(Head.position.x, wantedHeadHeight, Head.position.z), Time.deltaTime * 2f);
             }
 
             moveValue = moveAction.ReadValue<Vector2>();

@@ -1001,7 +1001,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.05
   far clip plane: 5000
   field of view: 45
   orthographic: 0
@@ -3087,6 +3087,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 581585668374655645, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: Lens.NearClipPlane
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082260350067955119, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: NoiseProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 20a705aea2d80e0478fb89b6f43d8530, type: 2}
+    - target: {fileID: 2082260350067955119, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: AmplitudeGain
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082260350067955119, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: FrequencyGain
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2419550440057724488, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3198,6 +3214,10 @@ PrefabInstance:
     - target: {fileID: 7205787009759541108, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
       propertyPath: m_AllowMSAA
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205787009759541108, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: near clip plane
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4151355769332878434, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
