@@ -5,6 +5,7 @@ namespace NoSideEffects
 {
     public class Pushing : MonoBehaviour
     {
+        public bool IsMovable = true;
         private InputAction interactButton;
         private Collider triggerCollider;
         private bool inZone = false;
