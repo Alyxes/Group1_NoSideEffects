@@ -99,6 +99,7 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using UnityEngine.Windows;
 using Cursor = UnityEngine.Cursor;
 
@@ -135,6 +136,8 @@ namespace NoSideEffects
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
 
+            // StopAnimation();
+
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
@@ -145,7 +148,7 @@ namespace NoSideEffects
             ToggleCameraPanOff();
             ToggleCameraTiltOff();
             HUD.instance.SetBlackScreenAlpha(1);
-            Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
             wakingUp = true;
             Awakening();
         }
@@ -155,14 +158,13 @@ namespace NoSideEffects
             {
                 if (HUD.instance.blackScreenFadeOut == false)
                 {
-                    RiseFromBed();
-                    wakingUp = false;
+                    StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 2f));
                 }
                 else
                     return;
             }
 
-            if (crouchButton.WasPressedThisFrame())
+            if (canMove && crouchButton.WasPressedThisFrame())
             {
                 if (!isCrouching)
                 {
@@ -206,20 +208,6 @@ namespace NoSideEffects
 
             Vector3 relativeMoveDirection = forwardRelative + rightRelative;
 
-            //RaycastHit hit;
-            //int layerMask = LayerMask.GetMask("Default");
-
-            //if (Physics.Raycast(Player.position, Player.forward, out hit, 0.36f, layerMask))
-            //{
-            //    canMove = false;
-            //}
-            //else
-            //{
-            //    if (!canMove)
-            //        canMove = true;
-            //}
-
-            // Vector3 moveDirection = new Vector3(moveValue.x, 0f, moveValue.y);
             projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
 
             //Debug.Log("");
@@ -229,7 +217,6 @@ namespace NoSideEffects
             if (canMove)
             {
                 rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
-                // Player.position += projected * playerSpeed * Time.deltaTime;
             }
 
             DampingPlanarMovement(0.97f);
@@ -238,25 +225,32 @@ namespace NoSideEffects
         {
             rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
         }
+        public IEnumerator WaitAndRunFuncton(Func<object> function, float time)
+        {
+            yield return new WaitForSeconds(time);
+            function();
+        }
         public void Awakening()
         {
             HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
             StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
 
             HUD.instance.blackScreenFadeOut = true;
-            HUD.instance.blackScreenFadeSpeed = 0.5f;
+            HUD.instance.blackScreenFadeSpeed = 0.4f;
         }
         public void RiseFromBed()
         {
             // DSM.instance.StartingNewDay(DSM.Days.Day2); // Sparad här för att ha till hands senare.
-            Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            // Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
             canMove = true;
 
             ToggleCameraPanOn();
             ToggleCameraTiltOn();
+
+            wakingUp = false;
             // This text will be different or be none at all depending on the day.
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(3f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {
@@ -290,7 +284,6 @@ namespace NoSideEffects
 
             Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
         }
-
         public void ToggleCameraPanOff()
         {
             SetControllerEnabledByName("Look X", false);
