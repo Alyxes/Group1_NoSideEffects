@@ -2396,6 +2396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: Watering Can
   model: {fileID: 111792364}
+  pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!1001 &352359166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11480,6 +11481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: Journal
   model: {fileID: 751196668}
+  pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!135 &2020212922
 SphereCollider:
   m_ObjectHideFlags: 0
