@@ -1,5 +1,3 @@
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,6 +71,15 @@ namespace NoSideEffects
             model.transform.localRotation = Quaternion.identity;
 
             HUD.instance.SetPutDownText(itemID);
+
+            // -----------------------------
+            // NEW: Start Task in TaskSwitch
+            // -----------------------------
+            TaskSwitch taskSwitch = Object.FindFirstObjectByType<TaskSwitch>();
+            if (taskSwitch != null)
+            {
+                taskSwitch.StartTaskForCurrentItem();
+            }
         }
 
         private void DropItem()
@@ -85,9 +92,9 @@ namespace NoSideEffects
             model.transform.position = originalPosition;
             model.transform.rotation = originalRotation;
 
-            HUD.instance.SetPickUpText(itemID);
             // Root trigger is still enabled, no need to touch it
         }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("InteractZone"))
@@ -117,4 +124,3 @@ namespace NoSideEffects
         }
     }
 }
-
