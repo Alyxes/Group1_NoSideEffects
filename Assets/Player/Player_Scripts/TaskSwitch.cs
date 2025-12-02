@@ -1,114 +1,177 @@
-using NoSideEffects;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using NoSideEffects;
 
 public class TaskSwitch : MonoBehaviour
 {
+    [Header("Child Triggers")]
     public List<ChildTrigger> childTriggers;
-    public PlayerInventory currentHeldItem;
-    public bool InTaskZone = false;
+
+    [Header("Player Inventory")]
+    public PlayerInventory playerInventory; // Assign in inspector (optional, mostly for HeldItemID property)
+
     private InputAction interactButton;
     private string itemIDValue;
+
+    private string currentTrigger = "";
+    public bool InTaskZone = false;
+
+    private enum WaterState
+    {
+        None,
+        GoToSink,
+        Filled,
+        GoToPlant,
+        Done
+    }
+
+    private WaterState waterState = WaterState.None;
 
     private void Awake()
     {
         interactButton = InputSystem.actions.FindAction("Interact");
     }
 
-    public void PlayerEntered(string triggerName)
+    private void Start()
     {
-        Debug.Log("Player entered trigger: " + triggerName);
-        switch (triggerName)
-        {
-            case "Sink":
-                Debug.Log("Do action for Trigger 1");
-                break;
-            case "Plant":
-                Debug.Log("Do action for Trigger 2");
-                break;
-            default:
-                Debug.Log("Unknown trigger");
-                break;
-        }
-    }
-
-    public void PlayerExited(string triggerName)
-    {
-        Debug.Log("Player exited trigger: " + triggerName);
-    }
-
-    void Start()
-    {
-        if (currentHeldItem != null)
-        {
-            itemIDValue = currentHeldItem.HeldItemID;
-            Debug.Log("Got itemID: " + itemIDValue);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InTaskZone = true;
-            Debug.Log("Player entered task zone. Press " + interactButton.WasPressedThisFrame() + " to use the " + itemIDValue);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InTaskZone = false;
-            Debug.Log("Player exited task zone.");
-        }
+        DisableAllTriggers();
     }
 
     private void Update()
     {
-        if (InTaskZone && interactButton.WasPressedThisFrame())
-        {
+        if (!InTaskZone) return;
+
+        if (interactButton.WasPressedThisFrame())
             Tasks();
-        }
     }
 
-    private void WaterTask()
+    public void PlayerEntered(string triggerName)
     {
-        if (InTaskZone && interactButton.WasPressedThisFrame())
+        currentTrigger = triggerName;
+        InTaskZone = true;
+    }
+
+    public void PlayerExited(string triggerName)
+    {
+        if (currentTrigger == triggerName)
+            currentTrigger = "";
+
+        InTaskZone = false;
+    }
+
+    // -----------------------------
+    // Start task when an item is picked up
+    // -----------------------------
+    public void StartTaskForCurrentItem()
+    {
+        // Use static variable directly
+        if (PlayerInventory.currentHeldItem == null) return;
+
+        // Get item ID
+        itemIDValue = PlayerInventory.currentHeldItem.itemID;
+
+        switch (itemIDValue)
         {
-            transform.Find("Sink").gameObject.SetActive(true);
-            Debug.Log("Filling the " + itemIDValue);
+            case "WaterCan":
+                Debug.Log("Starting Water Task automatically");
+                waterState = WaterState.None;
+                WaterTask(); // Activate Sink trigger immediately
+                break;
+
+            case "Screwdriver":
+                Debug.Log("Starting Screwdriver Task automatically");
+                // Add Screwdriver logic
+                break;
+
+            default:
+                Debug.Log("No task assigned for this item");
+                break;
         }
     }
 
     public void Tasks()
     {
+        if (PlayerInventory.currentHeldItem != null)
+            itemIDValue = PlayerInventory.currentHeldItem.itemID;
+
         switch (itemIDValue)
         {
             case "WaterCan":
-                Debug.Log("I need to water the plants");
                 WaterTask();
-                Debug.Log("Find water");
-                break;
-            case "item2":
-                Debug.Log("Using Screwdriver to fix screws.");
                 break;
         }
     }
 
-    // <-- New method to activate/deactivate any trigger by name
-    public void SetTriggerActiveByName(string triggerName, bool isActive)
+    private void WaterTask()
+    {
+        switch (waterState)
+        {
+            case WaterState.None:
+                ActivateTrigger("Sink");
+                waterState = WaterState.GoToSink;
+                Debug.Log("Go to the Sink to start filling water.");
+                break;
+
+            case WaterState.GoToSink:
+                if (currentTrigger != "Sink")
+                {
+                    Debug.Log("You must be at the Sink to fill water.");
+                    return;
+                }
+
+                Debug.Log("Filling watering can...");
+                DeactivateTrigger("Sink");
+                ActivateTrigger("Plant");
+                waterState = WaterState.Filled;
+                break;
+
+            case WaterState.Filled:
+                if (currentTrigger != "Plant")
+                {
+                    Debug.Log("Go to the Plant to water it.");
+                    return;
+                }
+
+                Debug.Log("Watering the plant...");
+                DeactivateTrigger("Plant");
+                waterState = WaterState.Done;
+                Debug.Log("Water Task Complete!");
+                break;
+
+            case WaterState.Done:
+                Debug.Log("Task already completed.");
+                break;
+        }
+    }
+
+    private void ActivateTrigger(string triggerName)
     {
         foreach (var child in childTriggers)
         {
             if (child.triggerName == triggerName)
             {
-                child.SetTriggerActive(isActive);
-                Debug.Log($"Trigger {triggerName} is now {(isActive ? "active" : "inactive")}");
+                child.SetTriggerActive(true);
                 return;
             }
         }
-        Debug.LogWarning($"Trigger {triggerName} not found!");
+    }
+
+    private void DeactivateTrigger(string triggerName)
+    {
+        foreach (var child in childTriggers)
+        {
+            if (child.triggerName == triggerName)
+            {
+                child.SetTriggerActive(false);
+                return;
+            }
+        }
+    }
+
+    public void DisableAllTriggers()
+    {
+        foreach (var child in childTriggers)
+            child.SetTriggerActive(false);
     }
 }
