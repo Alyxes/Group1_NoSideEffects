@@ -8,6 +8,8 @@ namespace NoSideEffects
         [Header("Item Data")]
         public string itemID;              // unique ID or name
         public GameObject model;           // visual model only (child object)
+        [Header("Pickup Rotation")]
+        public Vector3 pickupRotation = Vector3.zero;
 
         private Vector3 originalPosition;
         private Quaternion originalRotation;
@@ -68,7 +70,7 @@ namespace NoSideEffects
             // Move only the visual model
             model.transform.SetParent(holdPoint);
             model.transform.localPosition = Vector3.zero;
-            model.transform.localRotation = Quaternion.identity;
+            model.transform.localRotation = Quaternion.Euler(pickupRotation);
 
             HUD.instance.SetPutDownText(itemID);
 
@@ -110,7 +112,6 @@ namespace NoSideEffects
                 }
             }
         }
-
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("InteractZone"))

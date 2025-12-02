@@ -391,6 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: Item2
   model: {fileID: 56553827}
+  pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &81869652
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: CapsuleThingy
   model: {fileID: 546951595}
+  pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &116817765
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +839,7 @@ MonoBehaviour:
   childTriggers:
   - {fileID: 753821965}
   - {fileID: 741208449}
-  currentHeldItem: {fileID: 1328001842}
+  playerInventory: {fileID: 0}
   InTaskZone: 0
 --- !u!1 &278185931
 GameObject:
@@ -1528,6 +1530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.PickUp
   itemID: WaterCan
   model: {fileID: 1721739083}
+  pickupRotation: {x: 0, y: -90, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,17 +3071,6 @@ Transform:
   - {fileID: 1766462980}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1328001842 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1789959669480824083, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-  m_PrefabInstance: {fileID: 1581962121}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2405115617eda640bafe03309213455, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.PlayerInventory
 --- !u!1001 &1581962121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3673,8 +3665,8 @@ Transform:
   m_GameObject: {fileID: 1721739083}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.056, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 391475327}
@@ -3704,7 +3696,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 767232bf059e188438f4db6102b07f19, type: 2}
+  - {fileID: 2100000, guid: 92fde07194b15874d942055be2d64277, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3734,7 +3726,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721739083}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4068373912626513877, guid: 2475912d8640732429b81510ac3a4c84, type: 3}
 --- !u!1 &1731006538
 GameObject:
   m_ObjectHideFlags: 0
