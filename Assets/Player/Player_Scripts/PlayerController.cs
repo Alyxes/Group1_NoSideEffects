@@ -99,6 +99,7 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using UnityEngine.Windows;
 using Cursor = UnityEngine.Cursor;
 
@@ -112,11 +113,13 @@ namespace NoSideEffects
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
         // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, crouchButton;
+        InputAction moveAction, lookAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
         [NonSerialized] public bool canMove, cameraLocked, wakingUp, isCrouching = false;
         private Vector2 moveValue;
+        private Vector2 lookValue;
+        private Vector3 projected;
         private float wantedHeadHeight;
 
         // Cinemachine input controller(found at runtime)
@@ -133,6 +136,8 @@ namespace NoSideEffects
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
 
+            // StopAnimation();
+
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
@@ -143,7 +148,7 @@ namespace NoSideEffects
             ToggleCameraPanOff();
             ToggleCameraTiltOff();
             HUD.instance.SetBlackScreenAlpha(1);
-            Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
             wakingUp = true;
             Awakening();
         }
@@ -153,14 +158,13 @@ namespace NoSideEffects
             {
                 if (HUD.instance.blackScreenFadeOut == false)
                 {
-                    RiseFromBed();
-                    wakingUp = false;
+                    StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 2f));
                 }
                 else
                     return;
             }
 
-            if (crouchButton.WasPressedThisFrame())
+            if (canMove && crouchButton.WasPressedThisFrame())
             {
                 if (!isCrouching)
                 {
@@ -189,11 +193,9 @@ namespace NoSideEffects
 
             moveValue = moveAction.ReadValue<Vector2>();
 
-            Vector3 camForward = FPViewCamera.forward;
-            Vector3 camRight = FPViewCamera.right;
-
-            camForward.y = 0;
-            camRight.y = 0;
+            // Computing planar camera axes. This makes sure that movement force is correctly applied even when looking up or down.
+            Vector3 camForward = Vector3.ProjectOnPlane(FPViewCamera.forward, Vector3.up).normalized;
+            Vector3 camRight = Vector3.ProjectOnPlane(FPViewCamera.right, Vector3.up).normalized;
 
             Vector3 forwardRelative = camForward * moveValue.y;
             Vector3 rightRelative = camRight * moveValue.x;
@@ -206,15 +208,27 @@ namespace NoSideEffects
 
             Vector3 relativeMoveDirection = forwardRelative + rightRelative;
 
-            //RaycastHit hit;
-            //int layerMask = LayerMask.GetMask("Default");
-
-            // Vector3 moveDirection = new Vector3(moveValue.x, 0f, moveValue.y);
-            Vector3 projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
-            if (canMove)
-                Player.position += projected * playerSpeed * Time.deltaTime;
+            projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
 
             //Debug.Log("");
+        }
+        void LateUpdate()
+        {
+            if (canMove)
+            {
+                rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
+            }
+
+            DampingPlanarMovement(0.97f);
+        }
+        public void DampingPlanarMovement(float amount)
+        {
+            rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
+        }
+        public IEnumerator WaitAndRunFuncton(Func<object> function, float time)
+        {
+            yield return new WaitForSeconds(time);
+            function();
         }
         public void Awakening()
         {
@@ -222,19 +236,21 @@ namespace NoSideEffects
             StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
 
             HUD.instance.blackScreenFadeOut = true;
-            HUD.instance.blackScreenFadeSpeed = 0.5f;
+            HUD.instance.blackScreenFadeSpeed = 0.4f;
         }
         public void RiseFromBed()
         {
             // DSM.instance.StartingNewDay(DSM.Days.Day2); // Sparad här för att ha till hands senare.
-            Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            // Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
             canMove = true;
 
             ToggleCameraPanOn();
             ToggleCameraTiltOn();
+
+            wakingUp = false;
             // This text will be different or be none at all depending on the day.
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(3f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {
@@ -268,7 +284,6 @@ namespace NoSideEffects
 
             Debug.LogWarning($"Controller with name '{axisName}' not found. Use LogControllerNames() to inspect available names.");
         }
-
         public void ToggleCameraPanOff()
         {
             SetControllerEnabledByName("Look X", false);
