@@ -13,10 +13,13 @@ public class TaskSwitch : MonoBehaviour
     public bool InTaskZone = false;
     public static bool ItemTaskDone = false;
     public static bool Item2TaskDone = false;
+    public MeshChange meshChange;
 
     private InputAction interactButton;
     private string itemIDValue;
     private string currentTrigger = "";
+
+    
 
     private enum TaskState
     {
@@ -39,7 +42,7 @@ public class TaskSwitch : MonoBehaviour
     {
         DisableAllTriggers();
     }
-
+        
     private void Update()
     {
         if (!InTaskZone) return;
@@ -195,6 +198,8 @@ public class TaskSwitch : MonoBehaviour
                 Debug.Log("Filling watering can...");
                 DeactivateTrigger("Sink");
                 ActivateTrigger("Plant");
+                meshChange.DeactivateChild("plant_alive");
+                meshChange.ActivateChild("plant_dead");
                 taskState = TaskState.StepFour;
                 break;
             case TaskState.StepFour:
@@ -206,7 +211,6 @@ public class TaskSwitch : MonoBehaviour
 
                 Debug.Log("Watering the plant... Task Complete!");
                 DeactivateTrigger("Plant");
-
                 taskState = TaskState.Done;
                 break;
 

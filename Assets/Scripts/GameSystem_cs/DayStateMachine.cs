@@ -78,7 +78,7 @@ namespace NoSideEffects
         private void SetupDay1()
         {
             SceneManager.LoadScene("Day1");
-
+            AudioManager.instance.StartLoopingSound(SoundType.APARTMENTBUZZING);
         }
         private void SetupDay2()
         {

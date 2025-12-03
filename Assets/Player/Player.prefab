@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.PlayerInventory
   holdPointReference: {fileID: 3605709051766250681}
+  holdPoint2Reference: {fileID: 0}
+  taskSwitch: {fileID: 0}
 --- !u!1 &2189317257153110625
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +312,7 @@ Transform:
   m_Children:
   - {fileID: 1713937852271698741}
   - {fileID: 3605709051766250681}
+  - {fileID: 5885102224039138793}
   m_Father: {fileID: 3761074729845616084}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7205787009759541108
@@ -766,6 +769,53 @@ MonoBehaviour:
         DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
+--- !u!1 &5399150659091928637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5885102224039138793}
+  - component: {fileID: 7884620620924248896}
+  m_Layer: 3
+  m_Name: HoldPointL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5885102224039138793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399150659091928637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.129, y: -0.29, z: 0.652}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6846272917935288821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7884620620924248896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399150659091928637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2405115617eda640bafe03309213455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.PlayerInventory
+  holdPointReference: {fileID: 0}
+  holdPoint2Reference: {fileID: 5885102224039138793}
+  taskSwitch: {fileID: 0}
 --- !u!1 &6697806796142633441
 GameObject:
   m_ObjectHideFlags: 0
