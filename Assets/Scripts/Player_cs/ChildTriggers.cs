@@ -18,7 +18,7 @@ public class ChildTrigger : MonoBehaviour
     {
         if (!triggerCollider.enabled) return;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("InteractZone"))
         {
             parentTrigger.InTaskZone = true;
             parentTrigger.PlayerEntered(triggerName);
@@ -29,7 +29,7 @@ public class ChildTrigger : MonoBehaviour
     {
         if (!triggerCollider.enabled) return;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("InteractZone"))
         {
             parentTrigger.InTaskZone = false;
             parentTrigger.PlayerExited(triggerName);
