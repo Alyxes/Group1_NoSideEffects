@@ -119,6 +119,12 @@ public class TaskSwitch : MonoBehaviour
                 Item2Task(); // Activate TriggerA immediately
                 break;
 
+            case "Tools":
+                Debug.Log("Starting FuseBox Task automatically");
+                taskState = TaskState.None;
+                FuseBoxTask(); // Activate FuseBox trigger immediately
+                break;
+
             default:
                 Debug.Log("No task assigned for this item");
                 break;
@@ -148,6 +154,14 @@ public class TaskSwitch : MonoBehaviour
                     return;
                 }
                 Item2Task();
+                break;
+                case "Tools":
+                if (Item2TaskDone)
+                {
+                    Debug.Log("FuseBox Task already completed.");
+                    return;
+                }
+                FuseBoxTask();
                 break;
         }
     }
@@ -229,6 +243,65 @@ public class TaskSwitch : MonoBehaviour
                 ActivateTrigger("TriggerA");
                 taskState = TaskState.StepOne;
                 Debug.Log("Go to TriggerA to start Item2 task.");
+                break;
+        }
+    }
+    private void FuseBoxTask()
+    {
+        switch (taskState)
+        {
+        case TaskState.None:
+                ActivateTrigger("FuseBox");
+                taskState = TaskState.StepOne;
+                Debug.Log("Go to the FuseBox to start the task.");
+                break;
+
+        case TaskState.StepOne:
+                if (currentTrigger != "FuseBox")
+                {
+                    Debug.Log("You must be at the FuseBox to fix it.");
+                    return;
+                }
+                Debug.Log("I need to find and replace the fuses");
+                DeactivateTrigger("FuseBox");
+                ActivateTrigger("Fuse1");
+                ActivateTrigger("Fuse2");
+                taskState = TaskState.StepTwo;
+                break;
+
+        case TaskState.StepTwo:
+                if (currentTrigger == "Fuse1")
+                {
+                    DeactivateTrigger("Fuse1");
+                    Destroy(GameObject.FindWithTag("Fuse1"));
+                }
+                if (currentTrigger == "Fuse2")
+                {
+                    DeactivateTrigger("Fuse2");
+                    Destroy(GameObject.FindWithTag("Fuse2"));
+                }
+                if (GameObject.FindWithTag("Fuse1") == null && GameObject.FindWithTag("Fuse2") == null)
+                {
+                    Debug.Log("All fuses found. Now back to the fusebox");
+                    taskState = TaskState.StepThree;
+                    ActivateTrigger("FuseBox");
+                }
+                else
+                {
+                    Debug.Log("Replace both fuses to complete the task.");
+                }
+                break;
+
+        case TaskState.StepThree:
+                if (currentTrigger != "FuseBox")
+                {
+                    Debug.Log("You must be at the FuseBox to complete the task.");
+                    return;
+                }
+                Debug.Log("Fixing the FuseBox... Task Complete!");
+                DeactivateTrigger("FuseBox");
+                taskState = TaskState.Done;
+                ItemTaskDone = true;
                 break;
         }
     }
