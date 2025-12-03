@@ -1,7 +1,9 @@
-using System.Threading;
 using System.Collections;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,8 +11,16 @@ namespace NoSideEffects
 {
     public class StartScreen : MonoBehaviour
     {
+        void Start()
+        {
+            AudioManager.instance.StartLoopingSound(SoundType.TITLESONG);
+        }
         public void StartGame()
         {
+            AudioManager.instance.StopSound(false, 1f);
+            // Stop title music and play button click sound
+            AudioManager.PlaySound(SoundType.BUTTONCLICK);
+
             StartCoroutine(WaitAndLoadScene("Day1"));
         }
 
@@ -21,6 +31,7 @@ namespace NoSideEffects
         }
         public void ExitGame()
         {
+            AudioManager.instance.StopSound(false, 1f);
             StartCoroutine(WaitAndQuitGame());
         }
         public IEnumerator WaitAndQuitGame()

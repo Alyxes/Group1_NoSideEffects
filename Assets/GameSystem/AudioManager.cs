@@ -1,18 +1,28 @@
+using System.Collections;
 using UnityEngine;
 
+public enum SoundType
+{
+    TITLESONG,
+    BUTTONCLICK,
+    APARTMENTBUZZING,
+    GETTINGUPFROMBED
+}
+
+[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
-    public AudioSource sfxSource;
+    [SerializeField] private AudioClip[] soundList;
 
-    public AudioClip StartScreenMusic;
-    public AudioClip buttonClick;
+    public static AudioManager instance;
+
+    private AudioSource audioSource;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -22,21 +32,32 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        PlayLoopingSound(StartScreenMusic);
+        audioSource = GetComponent<AudioSource>();
     }
-    
-    public void PlayLoopingSound(AudioClip clip)
-    {   
-        sfxSource.clip = clip;
-        sfxSource.loop = true;
-        sfxSource.Play();
-    }
-    public void PlaySFX(AudioClip clip)
+    public static void PlaySound(SoundType sound, float volume = 1)
     {
-        sfxSource.PlayOneShot(clip);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
     }
-    public void SetSoundVolume(float volume)
+    public void StartLoopingSound(SoundType sound, float volume = 1)
     {
-        sfxSource.volume = volume;
+        instance.audioSource.clip = instance.soundList[(int)sound];
+        instance.audioSource.loop = true;
+        instance.audioSource.volume = volume;
+        instance.audioSource.Play();
+    }
+    // function to stop playing sound, giving option to fade out.
+    public void StopSound(bool fadeOut = false, float fadeDuration = 1f)
+    {
+        if (fadeOut)
+        {
+            // Same until i make fade possible.
+            instance.audioSource.Stop();
+            instance.audioSource.loop = false;
+        }
+        else
+        {
+            instance.audioSource.Stop();
+            instance.audioSource.loop = false;
+        }
     }
 }

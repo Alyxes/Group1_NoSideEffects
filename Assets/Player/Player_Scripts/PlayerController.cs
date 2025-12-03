@@ -237,6 +237,8 @@ namespace NoSideEffects
 
             HUD.instance.blackScreenFadeOut = true;
             HUD.instance.blackScreenFadeSpeed = 0.4f;
+
+            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED);
         }
         public void RiseFromBed()
         {
