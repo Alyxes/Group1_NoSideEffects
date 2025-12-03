@@ -29,6 +29,7 @@ namespace NoSideEffects
         // Update is called once per frame
         void Update()
         {
+
             if (interactButton.WasPressedThisFrame())
             {
                 if (GetComponent<Rigidbody>().isKinematic == true)
