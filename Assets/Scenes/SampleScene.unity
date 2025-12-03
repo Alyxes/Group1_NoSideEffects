@@ -841,6 +841,7 @@ MonoBehaviour:
   - {fileID: 741208449}
   playerInventory: {fileID: 0}
   InTaskZone: 0
+  meshChange: {fileID: 0}
 --- !u!1 &278185931
 GameObject:
   m_ObjectHideFlags: 0
