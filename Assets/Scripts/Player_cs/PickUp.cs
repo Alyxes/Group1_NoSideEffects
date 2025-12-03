@@ -17,110 +17,115 @@ public class ItemPickup : MonoBehaviour
     private bool isHeld = false;
     private bool inZone = false;
     private InputAction interactButton;
+    private Transform holdPoint;
+    private Collider triggerCollider;
 
     private void Awake()
     {
         originalPosition = model.transform.position;
         originalRotation = model.transform.rotation;
 
+        triggerCollider = GetComponent<Collider>();
+
         interactButton = InputSystem.actions.FindAction("Interact");
+    }
+
+    private void Start()
+    {
+        holdPoint = PlayerInventory.holdPoint;
+        if (holdPoint == null)
+            Debug.LogError("ItemPickup: No HoldPoint found in PlayerInventory!");
     }
 
     private void Update()
     {
         if (inZone && interactButton.WasPressedThisFrame())
         {
-            if (!isHeld)
+            if (PlayerInventory.currentHeldItem == null && !isHeld)
             {
-                TryPickUp();
+                PickUpItem();
+            }
+            else if (PlayerInventory.currentHeldItem == this)
+            {
+                DropItem();
             }
             else
             {
-                DropItem();
+                Debug.Log("You're already holding something else!");
             }
         }
     }
 
-    private void TryPickUp()
+    private void PickUpItem()
     {
-        // Determine target hand and check if it's free
-        Transform targetHoldPoint = PlayerInventory.holdPoint;
-        bool handFree = false;
+        if (PlayerInventory.currentHeldItem != null || holdPoint == null || isHeld)
+            return;
 
+        PlayerInventory.currentHeldItem = this;
+        isHeld = true;
+
+        // -----------------------------
+        // Select correct hold point
+        // -----------------------------
+        Transform targetHoldPoint = PlayerInventory.holdPoint;
+
+        // If item is "Flashlight" → use HoldPoint2
         if (itemID == "Flashlight" && PlayerInventory.holdPoint2 != null)
         {
             targetHoldPoint = PlayerInventory.holdPoint2;
-            handFree = PlayerInventory.rightHandItem == null;
-        }
-        else
-        {
-            handFree = PlayerInventory.leftHandItem == null;
         }
 
-        if (!handFree)
-        {
-            Debug.Log($"Cannot pick up {itemID}, hand is already occupied!");
-            return;
-        }
-
-        // Attach item to hold point
+        // Move model to the selected hold point
         model.transform.SetParent(targetHoldPoint);
         model.transform.localPosition = Vector3.zero;
         model.transform.localRotation = Quaternion.Euler(pickupRotation);
 
-        isHeld = true;
-
-        // Assign to the correct hand
-        if (itemID == "Flashlight")
-            PlayerInventory.rightHandItem = this;
-        else
-            PlayerInventory.leftHandItem = this;
-
         HUD.instance.SetPutDownText(itemID);
 
-        // Start task if applicable
+        // Start Task in TaskSwitch
         TaskSwitch taskSwitch = Object.FindFirstObjectByType<TaskSwitch>();
         if (taskSwitch != null)
+        {
             taskSwitch.StartTaskForCurrentItem();
+        }
     }
+
 
     private void DropItem()
     {
-        // Clear hand reference
-        if (itemID == "Flashlight")
-            PlayerInventory.rightHandItem = null;
-        else
-            PlayerInventory.leftHandItem = null;
-
+        PlayerInventory.currentHeldItem = null;
         isHeld = false;
 
-        // Reset position and parent
         model.transform.SetParent(transform);
         model.transform.position = originalPosition;
         model.transform.rotation = originalRotation;
-
-        HUD.instance.ClearPickUpText();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("InteractZone") && !inZone)
+        if (other.CompareTag("InteractZone"))
         {
-            inZone = true;
+            if (!inZone)
+            {
+                inZone = true;
 
-            if (isHeld)
-                HUD.instance.SetPutDownText(itemID);
-            else
-                HUD.instance.SetPickUpText(itemID);
+                if (PlayerInventory.currentHeldItem == this)
+                    HUD.instance.SetPutDownText(itemID);
+                else
+                    HUD.instance.SetPickUpText(itemID);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("InteractZone") && inZone)
+        if (other.CompareTag("InteractZone"))
         {
-            inZone = false;
-            HUD.instance.ClearPickUpText();
+            if (inZone)
+            {
+                inZone = false;
+                HUD.instance.ClearPickUpText();
+            }
         }
     }
 }

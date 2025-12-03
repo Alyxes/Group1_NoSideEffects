@@ -8,8 +8,6 @@ TagManager:
   - Item2
   - InteractZone
   - PushZone
-  - Fuse1
-  - Fuse2
   layers:
   - Default
   - TransparentFX

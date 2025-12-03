@@ -7,10 +7,7 @@ public class PlayerInventory : MonoBehaviour
 
     // Hold points
     public static Transform holdPoint;
-    public static Transform holdPoint2; 
-    public static ItemPickup leftHandItem;
-    public static ItemPickup rightHandItem;
-
+    public static Transform holdPoint2; // ADDED
 
     [Header("Hold Point References")]
     [SerializeField] private Transform holdPointReference;   // Assign in Inspector
