@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ namespace NoSideEffects
         public string objectID;
         public string infoText;
         public bool oneTimeUse = false;
+        [NonSerialized] public bool hasBeenChecked = false;
 
         private bool inZone = false;
         private InputAction interactButton;
@@ -21,8 +23,8 @@ namespace NoSideEffects
         {
             if (inZone && interactButton.WasPressedThisFrame())
             {
-                Debug.Log("You did press interact...");
                 HUD.instance.SetSubTitleText(infoText);
+                hasBeenChecked = true;
 
                 if (oneTimeUse)
                 {
