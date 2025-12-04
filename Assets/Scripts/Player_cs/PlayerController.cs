@@ -136,8 +136,6 @@ namespace NoSideEffects
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
 
-            // StopAnimation();
-
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
@@ -171,7 +169,6 @@ namespace NoSideEffects
                     isCrouching = true;
                     playerBody.GetComponent<CapsuleCollider>().height = 1f;
                     playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
-                    // Player.position = new Vector3(Player.position.x, Player.position.y - 0.5f, Player.position.z);
                     wantedHeadHeight = Head.position.y - 0.9f;
                     playerSpeed = 0.8f;
                 }
@@ -180,7 +177,6 @@ namespace NoSideEffects
                     isCrouching = false;
                     playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
                     playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                    // Player.position = new Vector3(Player.position.x, Player.position.y + 0.5f, Player.position.z);
                     wantedHeadHeight = Head.position.y + 0.9f;
                     playerSpeed = playerDaySpeed;
                 }
