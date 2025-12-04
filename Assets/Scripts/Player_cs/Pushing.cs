@@ -8,7 +8,8 @@ namespace NoSideEffects
         public bool IsMovable = true;
         private InputAction interactButton;
         private Collider triggerCollider;
-        private bool inZone = false;
+        public bool inZone = false;
+        public string name;
 
         private void DisableKinematic()
         {
@@ -29,41 +30,42 @@ namespace NoSideEffects
         // Update is called once per frame
         void Update()
         {
-
-            if (interactButton.WasPressedThisFrame())
+            
+            if (interactButton.IsPressed()&&inZone==true)
             {
                 if (GetComponent<Rigidbody>().isKinematic == true)
                 {
                     DisableKinematic();
                 }
-                else if(GetComponent<Rigidbody>().isKinematic == false)
-                {
-                    EnableKinematic();
-                }
-                    Debug.Log("button pressed");
-                
+               
+                    Debug.Log("button pressed");               
+            }
+            else
+            {
+                EnableKinematic();
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("PushZone"))
+            if (other.CompareTag("InteractZone"))
             {
                 if (!inZone)
                 {
                     inZone = true;
-                    Debug.Log("Is in pushing zone");
+                    HUD.instance.SetUniqueItemText("Push "+name);
                 }
             }
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("PushZone"))
+            if (other.CompareTag("InteractZone"))
             {
                 if (inZone)
                 {
                     inZone = false;
                     Debug.Log("left the pushing zone");
+                    HUD.instance.ClearPickUpText();
                 }
             }
         }
