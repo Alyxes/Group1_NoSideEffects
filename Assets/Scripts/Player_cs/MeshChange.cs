@@ -1,38 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.VisualScripting.Metadata;
+// using static Unity.VisualScripting.Metadata;
 
-public class MeshChange : MonoBehaviour
+namespace NoSideEffects
 {
-    private void Start()
+    public class MeshChange : MonoBehaviour
     {
-        DeactivateChild("plant_dead");
-    }
-    [Header("Child GameObjects")]
-    public List<GameObject> children = new List<GameObject>();
-    public void SetChildrenActive(bool active)
-    {
-        foreach (GameObject child in children)
+        private void Start()
         {
-            child.SetActive(active);
+            DeactivateChild("plant_dead");
         }
-    }
-    public void ActivateChild(string childName)
-    {
-        Transform child = transform.Find(childName); // searches the children of this parent
-
-        if (child != null)
+        [Header("Child GameObjects")]
+        public List<GameObject> children = new List<GameObject>();
+        public void SetChildrenActive(bool active)
         {
-            child.gameObject.SetActive(true);  // turn on
+            foreach (GameObject child in children)
+            {
+                child.SetActive(active);
+            }
         }
-    }
-    public void DeactivateChild(string childName)
-    {
-        Transform child = transform.Find(childName);
-
-        if (child != null)
+        public void ActivateChild(string childName)
         {
-            child.gameObject.SetActive(false);  // turn off
+            Transform child = transform.Find(childName); // searches the children of this parent
+
+            if (child != null)
+            {
+                child.gameObject.SetActive(true);  // turn on
+            }
+        }
+        public void DeactivateChild(string childName)
+        {
+            Transform child = transform.Find(childName);
+
+            if (child != null)
+            {
+                child.gameObject.SetActive(false);  // turn off
+            }
         }
     }
 }

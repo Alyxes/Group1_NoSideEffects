@@ -1,45 +1,48 @@
 using UnityEngine;
 
-public class ChildTrigger : MonoBehaviour
+namespace NoSideEffects
 {
-    public TaskSwitch parentTrigger;
-    public string triggerName;
-
-    private Collider triggerCollider;
-
-    private void Awake()
+    public class ChildTrigger : MonoBehaviour
     {
-        triggerCollider = GetComponent<Collider>();
-        if (triggerCollider == null)
-            Debug.LogError("No Collider found on ChildTrigger!");
-    }
+        public TaskSwitch parentTrigger;
+        public string triggerName;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!triggerCollider.enabled) return;
+        private GameObject triggerCollider;
 
-        if (other.CompareTag("InteractZone"))
+        private void Awake()
         {
-            parentTrigger.InTaskZone = true;
-            parentTrigger.PlayerEntered(triggerName);
+            triggerCollider = GetComponent<GameObject>();
+            if (triggerCollider == null)
+                Debug.LogError("No Collider found on ChildTrigger!");
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!triggerCollider.enabled) return;
-
-        if (other.CompareTag("InteractZone"))
+        private void OnTriggerEnter(Collider other)
         {
-            parentTrigger.InTaskZone = false;
-            parentTrigger.PlayerExited(triggerName);
-        }
-    }
+            if (!triggerCollider.activeSelf) return;
 
-    // <-- New method to enable/disable the trigger
-    public void SetTriggerActive(bool isActive)
-    {
-        if (triggerCollider != null)
-            triggerCollider.enabled = isActive;
+            if (other.CompareTag("InteractZone"))
+            {
+                parentTrigger.InTaskZone = true;
+                parentTrigger.PlayerEntered(triggerName);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!triggerCollider.activeSelf) return;
+
+            if (other.CompareTag("InteractZone"))
+            {
+                parentTrigger.InTaskZone = false;
+                parentTrigger.PlayerExited(triggerName);
+            }
+        }
+
+        // <-- New method to enable/disable the trigger
+        public void SetTriggerActive(bool isActive)
+        {
+            if (triggerCollider != null)
+                triggerCollider.SetActive(false);
+        }
     }
 }
