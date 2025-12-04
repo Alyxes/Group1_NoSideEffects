@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +20,7 @@ public class TaskSwitch : MonoBehaviour
     private string itemIDValue;
     private string currentTrigger = "";
 
-    
+
 
     private enum TaskState
     {
@@ -42,7 +43,7 @@ public class TaskSwitch : MonoBehaviour
     {
         DisableAllTriggers();
     }
-        
+
     private void Update()
     {
         if (!InTaskZone) return;

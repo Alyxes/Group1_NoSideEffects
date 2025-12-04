@@ -4305,6 +4305,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 281383506150797830, guid: 7f7fa105139a2f9499c966d852a68d9e, type: 3}
   m_PrefabInstance: {fileID: 489668239}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &494873799 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5399150659091928637, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &494873800 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5885102224039138793, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &494873801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494873799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2405115617eda640bafe03309213455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  holdPointReference: {fileID: 1978292453}
+  holdPoint2Reference: {fileID: 494873800}
+  taskSwitch: {fileID: 0}
 --- !u!1001 &501428553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12784,7 +12809,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 734305814025428189, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1978292454}
+    - targetCorrespondingSourceObject: {fileID: 5399150659091928637, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 494873801}
   m_SourcePrefab: {fileID: 100100000, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
 --- !u!4 &1523921966 stripped
 Transform:
@@ -16798,6 +16829,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 281383506150797830, guid: 7f7fa105139a2f9499c966d852a68d9e, type: 3}
   m_PrefabInstance: {fileID: 1977977519}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1978292452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 734305814025428189, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1978292453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3605709051766250681, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1978292454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978292452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2405115617eda640bafe03309213455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  holdPointReference: {fileID: 1978292453}
+  holdPoint2Reference: {fileID: 494873800}
+  taskSwitch: {fileID: 0}
 --- !u!1001 &1979846030
 PrefabInstance:
   m_ObjectHideFlags: 0
