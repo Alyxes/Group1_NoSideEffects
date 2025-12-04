@@ -1,5 +1,4 @@
-﻿using NoSideEffects;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace NoSideEffects
@@ -57,7 +56,6 @@ namespace NoSideEffects
                 }
             }
         }
-
         private void PickUpItem()
         {
             if (PlayerInventory.currentHeldItem != null || holdPoint == null || isHeld)

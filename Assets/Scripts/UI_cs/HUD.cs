@@ -32,14 +32,6 @@ namespace NoSideEffects
         }
         void Update()
         {
-            if (isSubTitleActive)
-            {
-                if (interactButton.WasPressedThisFrame())
-                {
-                    ClearSubTitleText();
-                }
-            }
-
             if (blackScreenFadeOut)
             {
                 FadeOutBlackScreen(blackScreenFadeSpeed);
@@ -49,12 +41,27 @@ namespace NoSideEffects
                 FadeInBlackScreen(blackScreenFadeSpeed);
             }
         }
+        private void LateUpdate()
+        {
+            if (isSubTitleActive)
+            {
+                if (interactButton.WasPressedThisFrame())
+                {
+                    Debug.Log("CLEAR!");
+                    ClearSubTitleText();
+                }
+            }
+        }
 
         public void SetSubTitleText(string input)
         {
+            if (isSubTitleActive)
+            {
+                ClearSubTitleText();
+            }
+
             subTitleText.text = input;
-            isSubTitleActive = true;
-            pressToContinue.text = "(gamepad)A/(k&m)E/left mouseclick"; // We should make it so it differs depending on controller type used.
+            StartCoroutine(SubTitleBooleanTrueCoroutine());
         }
         public void ClearSubTitleText()
         {
@@ -77,6 +84,12 @@ namespace NoSideEffects
         public void ClearPickUpText()
         {
             pickUptext.text = "";
+        }
+        public IEnumerator SubTitleBooleanTrueCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+            isSubTitleActive = true;
+            pressToContinue.text = "(gamepad)A/(k&m)E/left mouseclick"; // We should make it so it differs depending on controller type used.
         }
         public IEnumerator PickUpTimeOutCoroutine(float timer)
         {
