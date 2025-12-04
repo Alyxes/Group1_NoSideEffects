@@ -291,6 +291,28 @@ MonoBehaviour:
   blueOutBlueIn:
     m_OverrideState: 1
     m_Value: 100
+--- !u!114 &-7337618412392010527
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125869d65201d074aa147336b48c9f84, type: 3}
+  m_Name: NewPostProcessVolume
+  m_EditorClassIdentifier: Assembly-CSharp::NewPostProcessVolume
+  active: 1
+  <displayName>k__BackingField: 
+  m_IsInitialized: 0
+  typeName: 
+  <passName>k__BackingField: 
+  intensity:
+    <fieldHash>k__BackingField: 1635982024
+    m_OverrideState: 1
+    m_Value: 0
+  m_Material: {fileID: 0}
 --- !u!114 &-7089757308646879465
 MonoBehaviour:
   m_ObjectHideFlags: 3
