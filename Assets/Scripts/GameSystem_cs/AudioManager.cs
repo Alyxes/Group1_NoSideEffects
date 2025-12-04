@@ -34,11 +34,8 @@ public class AudioManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
-    public static void PlaySound(SoundType sound, float volume = 1)
-    {
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
-    }
-    public void StartLoopingSound(SoundType sound, float volume = 1)
+    public static void PlaySound(SoundType sound, float volume = 1) => instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
+    public static void StartLoopingSound(SoundType sound, float volume = 1)
     {
         instance.audioSource.clip = instance.soundList[(int)sound];
         instance.audioSource.loop = true;
@@ -46,7 +43,7 @@ public class AudioManager : MonoBehaviour
         instance.audioSource.Play();
     }
     // function to stop playing sound, giving option to fade out.
-    public void StopSound(bool fadeOut = false, float fadeDuration = 1f)
+    public static void StopSound(bool fadeOut = false, float fadeDuration = 1f)
     {
         if (fadeOut)
         {

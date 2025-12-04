@@ -158,7 +158,7 @@ namespace NoSideEffects
             {
                 if (HUD.instance.blackScreenFadeOut == false)
                 {
-                    StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 2f));
+                    StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 1f));
                 }
                 else
                     return;
@@ -219,7 +219,7 @@ namespace NoSideEffects
                 rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
             }
 
-            DampingPlanarMovement(0.97f);
+            DampingPlanarMovement(0.96f);
         }
         public void DampingPlanarMovement(float amount)
         {
