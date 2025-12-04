@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: 041272d49f2cf9c4aa571a95a2265d3b
+guid: 4502e8d318aa98f4e8a2cd11e4f88de8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Doorframe_mat
-    second: {fileID: 2100000, guid: 3057786e2d9702046889fe308f3ba3b3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Doorsill_mat
-    second: {fileID: 2100000, guid: ca9f82eb883e35345a896d83be865cfa, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Wallpaper_mat
-    second: {fileID: 2100000, guid: 847ec5972d5617a4c9c036258bd175a7, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

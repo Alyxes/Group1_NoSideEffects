@@ -3,7 +3,32 @@ guid: 3ca622e8a40dd0c4ca7ec6ed021c395b
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wallpaper_mat
+    second: {fileID: 2100000, guid: 847ec5972d5617a4c9c036258bd175a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowFrames_mat
+    second: {fileID: 2100000, guid: 4003744b049efa641af3af6c29f81043, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowGlass_mat
+    second: {fileID: 2100000, guid: 21197472319b84c448449974d7debd23, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowMetals_mat
+    second: {fileID: 2100000, guid: ed05f8fce5dc9b845b9e78d1b56aff74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowPane_mat
+    second: {fileID: 2100000, guid: 83130a0ea82f2984486173ce35a7155a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
