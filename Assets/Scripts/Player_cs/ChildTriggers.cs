@@ -7,18 +7,18 @@ namespace NoSideEffects
         public TaskSwitch parentTrigger;
         public string triggerName;
 
-        private GameObject triggerCollider;
+        private Collider triggerCollider;
 
         private void Awake()
         {
-            triggerCollider = GetComponent<GameObject>();
+            triggerCollider = GetComponent<Collider>();
             if (triggerCollider == null)
                 Debug.LogError("No Collider found on ChildTrigger!");
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!triggerCollider.activeSelf) return;
+            if (!triggerCollider.enabled) return;
 
             if (other.CompareTag("InteractZone"))
             {
@@ -29,7 +29,7 @@ namespace NoSideEffects
 
         private void OnTriggerExit(Collider other)
         {
-            if (!triggerCollider.activeSelf) return;
+            if (!triggerCollider.enabled) return;
 
             if (other.CompareTag("InteractZone"))
             {
@@ -42,7 +42,7 @@ namespace NoSideEffects
         public void SetTriggerActive(bool isActive)
         {
             if (triggerCollider != null)
-                triggerCollider.SetActive(false);
+                triggerCollider.enabled = isActive;
         }
     }
 }

@@ -219,7 +219,7 @@ namespace NoSideEffects
                 rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
             }
 
-            DampingPlanarMovement(0.96f);
+            DampingPlanarMovement(0.9f);
         }
         public void DampingPlanarMovement(float amount)
         {

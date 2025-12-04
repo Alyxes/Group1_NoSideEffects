@@ -36,7 +36,10 @@ namespace NoSideEffects
         {
             audioSource = GetComponent<AudioSource>();
         }
-        public static void PlaySound(SoundType sound, float volume = 1) => instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
+        public static void PlaySound(SoundType sound, float volume = 1)
+        {
+            instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
+        }
         public static void StartLoopingSound(SoundType sound, float volume = 1)
         {
             instance.audioSource.clip = instance.soundList[(int)sound];
