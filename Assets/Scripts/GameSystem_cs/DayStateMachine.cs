@@ -77,36 +77,40 @@ namespace NoSideEffects
         }
         private void SetupDay1()
         {
-            SceneManager.LoadScene("Day1");
-            AudioManager.StartLoopingSound(SoundType.APARTMENTBUZZING);
+            BaseStartOfDay("Day1");
         }
         private void SetupDay2()
         {
-            SceneManager.LoadScene("Day2");
+            BaseStartOfDay("Day2");
         }
         private void SetupDay3()
         {
-            SceneManager.LoadScene("Day3");
+            BaseStartOfDay("Day3");
         }
         private void SetupDay4()
         {
-            SceneManager.LoadScene("Day4");
+            BaseStartOfDay("Day4");
         }
         private void SetupDay5()
         {
-            SceneManager.LoadScene("Day5");
+            BaseStartOfDay("Day5");
         }
         private void SetupDay6()
         {
-            SceneManager.LoadScene("Day6");
+            BaseStartOfDay("Day6");
         }
         private void SetupDay7()
         {
-            SceneManager.LoadScene("Day7");
+            BaseStartOfDay("Day7");
+        }
+        private void BaseStartOfDay(string dayName)
+        {
+            SceneManager.LoadScene(dayName);
+            AudioManager.StartLoopingSound(SoundType.APARTMENTBUZZING);
         }
         private void CleanupDay()
         {
-
+            // Possible code for cleaning up the day before starting a new one. Not sure this will be needed.
         }
         public void StartingNewDay(Days newDay)
         {
