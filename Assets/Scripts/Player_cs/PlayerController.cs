@@ -182,11 +182,6 @@ namespace NoSideEffects
                 }
             }
 
-            if (wantedHeadHeight != Head.position.y)
-            {
-                Head.position = Vector3.MoveTowards(Head.position, new Vector3(Head.position.x, wantedHeadHeight, Head.position.z), Time.deltaTime * 2f);
-            }
-
             moveValue = moveAction.ReadValue<Vector2>();
 
             // Computing planar camera axes. This makes sure that movement force is correctly applied even when looking up or down.
@@ -208,11 +203,16 @@ namespace NoSideEffects
 
             //Debug.Log("");
         }
-        void LateUpdate()
+        void FixedUpdate()
         {
             if (canMove)
             {
-                rigid_Body.AddForce(projected * 800f * Time.deltaTime * playerSpeed, ForceMode.Impulse);
+                rigid_Body.AddForce(projected * 800f * Time.fixedDeltaTime * playerSpeed, ForceMode.Impulse);
+            }
+
+            if (wantedHeadHeight != Head.position.y)
+            {
+                Head.position = Vector3.MoveTowards(Head.position, new Vector3(Head.position.x, wantedHeadHeight, Head.position.z), Time.fixedDeltaTime * 2f);
             }
 
             DampingPlanarMovement(0.9f);
@@ -248,7 +248,7 @@ namespace NoSideEffects
 
             wakingUp = false;
             // This text will be different or be none at all depending on the day.
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(3f, "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect."));
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {

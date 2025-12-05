@@ -1,8 +1,9 @@
 
+using NoSideEffects;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using NoSideEffects;
+using UnityEngine.Windows;
 
 namespace NoSideEffects
 {
@@ -111,13 +112,16 @@ namespace NoSideEffects
             {
                 case "WaterCan":
                     Debug.Log("Starting Water Task automatically");
-                    taskState = TaskState.None;
+                    if (taskState != TaskState.Done)
+                        taskState = TaskState.None;
+
                     WaterTask(); // Activate Sink trigger immediately
                     break;
 
                 case "Item2":
                     Debug.Log("Starting Screwdriver Task automatically");
-                    taskState = TaskState.None;
+                    if (taskState != TaskState.Done)
+                        taskState = TaskState.None;
                     Item2Task(); // Activate TriggerA immediately
                     break;
 
@@ -162,8 +166,8 @@ namespace NoSideEffects
                     ActivateTrigger("Sink");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to the Sink to start filling water.");
+                    HUD.instance.SetSubTitleText("Let's give the plants some water.\nGotta fill this up in the kitchen.");
                     break;
-
                 case TaskState.StepOne:
                     if (currentTrigger != "Sink")
                     {
@@ -174,6 +178,7 @@ namespace NoSideEffects
                     Debug.Log("Filling watering can...");
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
+                    HUD.instance.SetSubTitleText("Some nice water for my little planties...");
                     taskState = TaskState.StepTwo;
                     break;
 
@@ -187,6 +192,7 @@ namespace NoSideEffects
                     Debug.Log("Watering the plant...");
                     DeactivateTrigger("Plant");
                     ActivateTrigger("Sink");
+                    HUD.instance.SetSubTitleText("Oh, water's out. They'll need a little more...\nLet's fill this up again.");
                     taskState = TaskState.StepThree;
                     Debug.Log("I need more water");
                     break;
@@ -202,6 +208,7 @@ namespace NoSideEffects
                     ActivateTrigger("Plant");
                     meshChange.DeactivateChild("plant_alive");
                     meshChange.ActivateChild("plant_dead");
+                    HUD.instance.SetSubTitleText("Theeere we go.");
                     taskState = TaskState.StepFour;
                     break;
                 case TaskState.StepFour:
@@ -212,11 +219,11 @@ namespace NoSideEffects
                     }
 
                     Debug.Log("Watering the plant... Task Complete!");
+                    HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
                     DeactivateTrigger("Plant");
                     taskState = TaskState.Done;
+                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day3, 10f));
                     break;
-
-
                 case TaskState.Done:
                     ItemTaskDone = true;
                     Debug.Log("Task already completed.");

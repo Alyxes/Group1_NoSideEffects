@@ -1,0 +1,86 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace NoSideEffects
+{
+    public class Door : MonoBehaviour
+    {
+        public Transform doorTransform;
+        public float currentRotation;
+        public float openRotationAngle;
+        public float closedRotationAngle;
+        public float turnSpeed;
+        public float wantedRotation;
+        
+        private bool open = true;
+        private bool inZone = false;
+
+        private InputAction interactButton;
+
+        private void Awake()
+        {
+            currentRotation = transform.rotation.eulerAngles.y;
+            wantedRotation = currentRotation;
+            interactButton = InputSystem.actions.FindAction("Interact");
+        }
+        void FixedUpdate()
+        {
+            if (open)
+            {
+                if (currentRotation != openRotationAngle)
+                    wantedRotation = openRotationAngle;
+            }
+            else
+            {
+                if (currentRotation != closedRotationAngle)
+                    wantedRotation = closedRotationAngle;
+            }
+
+            if (currentRotation != wantedRotation)
+            {
+                currentRotation = Mathf.MoveTowards(currentRotation, wantedRotation, turnSpeed * Time.fixedDeltaTime);
+                doorTransform.rotation = Quaternion.Euler(0, currentRotation, 0);
+            }
+
+            if (inZone && interactButton.WasPressedThisFrame())
+            {
+                open = !open;
+
+                if (open)
+                    HUD.instance.SetUniqueItemText("Close door");
+                else
+                    HUD.instance.SetUniqueItemText("Open door");
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("InteractZone"))
+            {
+                Debug.Log("In zone");
+                if (!inZone)
+                {
+                    inZone = true;
+
+                    if (open)
+                        HUD.instance.SetUniqueItemText("Close door");
+                    else
+                        HUD.instance.SetUniqueItemText("Open door");
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("InteractZone"))
+            {
+                Debug.Log("In zone");
+                if (inZone)
+                {
+                    inZone = false;
+                    HUD.instance.ClearPickUpText();
+                }
+            }
+        }
+    }
+}

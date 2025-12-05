@@ -6,10 +6,13 @@ namespace NoSideEffects
 {
     public class MeshChange : MonoBehaviour
     {
-        private void Start()
-        {
-            DeactivateChild("plant_dead");
-        }
+        // Jag tog bort detta, då det gör denna kod oanvändbar för andra objekt än just dag 1-pusslet.
+        // Istället är den döda plantan avaktiverad i editorn från början.
+        //private void Start()
+        //{
+        //    DeactivateChild("plant_dead");
+        //}
+
         [Header("Child GameObjects")]
         public List<GameObject> children = new List<GameObject>();
         public void SetChildrenActive(bool active)

@@ -41,13 +41,13 @@ namespace NoSideEffects
                 FadeInBlackScreen(blackScreenFadeSpeed);
             }
         }
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             if (isSubTitleActive)
             {
                 if (interactButton.WasPressedThisFrame())
                 {
-                    Debug.Log("CLEAR!");
+                    Debug.Log("clear subtitle");
                     ClearSubTitleText();
                 }
             }

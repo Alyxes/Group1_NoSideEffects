@@ -2,7 +2,7 @@
 - Project name: Group1_NoSideEffects
 - Unity version: Unity 6000.2.12f1
 - Active game object:
-  - Name: Wall1 (9)
+  - Name: Text (TMP) (1)
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

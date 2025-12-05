@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,9 @@ namespace NoSideEffects
             Day7
         }
         public Days currentDay = Days.Day1;
+        [NonSerialized] public string wakeUpMonologue = "";
+        [NonSerialized] public float monolougeTimer = 2f;
+        [NonSerialized] public bool isDoneForTheDay = false;
 
         private void Awake()
         {
@@ -28,7 +32,9 @@ namespace NoSideEffects
                 DontDestroyOnLoad(gameObject);
             }
             else
+            {
                 Destroy(gameObject);
+            }
         }
 
         private void SwitchDay()
@@ -78,30 +84,44 @@ namespace NoSideEffects
         private void SetupDay1()
         {
             BaseStartOfDay("Day1");
+            wakeUpMonologue = "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect.";
+            monolougeTimer = 3f;
         }
         private void SetupDay2()
         {
             BaseStartOfDay("Day2");
+            wakeUpMonologue = "I think I feel even more nimble today.\nI should call the doctor to tell him about the results.";
+            monolougeTimer = 2f;
         }
         private void SetupDay3()
         {
             BaseStartOfDay("Day3");
+            wakeUpMonologue = "Even though I can walk, my legs are really weak after this long...\nGuess I shouldn't have quit the neuro rehab.";
+            monolougeTimer = 2f;
         }
         private void SetupDay4()
         {
             BaseStartOfDay("Day4");
+            wakeUpMonologue = "Power outage? Crap..";
+            monolougeTimer = 2f;
         }
         private void SetupDay5()
         {
             BaseStartOfDay("Day5");
+            wakeUpMonologue = "What? No! My legs...!? They're... not responding!";
+            monolougeTimer = 2f;
         }
         private void SetupDay6()
         {
             BaseStartOfDay("Day6");
+            wakeUpMonologue = "Oh my god... What do they want!?";
+            monolougeTimer = 2f;
         }
         private void SetupDay7()
         {
             BaseStartOfDay("Day7");
+            wakeUpMonologue = "I'm back home...\nBack to being paralyzed...\nShould I be happy to be alive?";
+            monolougeTimer = 2f;
         }
         private void BaseStartOfDay(string dayName)
         {
@@ -110,13 +130,18 @@ namespace NoSideEffects
         }
         private void CleanupDay()
         {
-            // Possible code for cleaning up the day before starting a new one. Not sure this will be needed.
+            // Possible code for cleaning up the day before starting a new one. Not sure if this will be needed.
         }
         public void StartingNewDay(Days newDay)
         {
             CleanupDay();
             currentDay = newDay;
             SwitchDay();
+        }
+        public IEnumerator WaitAndStartNewDay(Days newDay, float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            StartingNewDay(newDay);
         }
         public string GetCurrentDayString()
         {

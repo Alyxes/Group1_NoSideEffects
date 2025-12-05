@@ -71,8 +71,6 @@ namespace NoSideEffects
             yield return new WaitForSeconds(1f);
             normalApartmentAfter.SetActive(true);
             puzzledApartment.SetActive(false);
-            // yield return new WaitForSeconds(5f);
-            // doorPivot.rotation = Quaternion.Euler(0, 90f, 0);
         }
     }
 }

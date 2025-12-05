@@ -9,7 +9,7 @@ namespace NoSideEffects
         private InputAction interactButton;
         private Collider triggerCollider;
         public bool inZone = false;
-        public string name;
+        public string furnitureName;
 
         private void DisableKinematic()
         {
@@ -31,7 +31,7 @@ namespace NoSideEffects
         void Update()
         {
             
-            if (interactButton.IsPressed()&&inZone==true)
+            if (interactButton.IsPressed() && inZone == true)
             {
                 if (GetComponent<Rigidbody>().isKinematic == true)
                 {
@@ -53,7 +53,7 @@ namespace NoSideEffects
                 if (!inZone)
                 {
                     inZone = true;
-                    HUD.instance.SetUniqueItemText("Push "+name);
+                    HUD.instance.SetUniqueItemText("Push " + furnitureName);
                 }
             }
         }
