@@ -19,8 +19,6 @@ namespace NoSideEffects
 
         private void Awake()
         {
-            currentRotation = transform.rotation.eulerAngles.y;
-            wantedRotation = currentRotation;
             interactButton = InputSystem.actions.FindAction("Interact");
         }
         void FixedUpdate()
@@ -38,7 +36,7 @@ namespace NoSideEffects
 
             if (currentRotation != wantedRotation)
             {
-                currentRotation = Mathf.MoveTowards(currentRotation, wantedRotation, turnSpeed * Time.fixedDeltaTime);
+                currentRotation = Mathf.MoveTowardsAngle(currentRotation, wantedRotation, turnSpeed * Time.fixedDeltaTime);
                 doorTransform.rotation = Quaternion.Euler(0, currentRotation, 0);
             }
 
