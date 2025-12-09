@@ -3,22 +3,7 @@ guid: f9e588ff290034f4791bbab725ef92a7
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Brass_mat
-    second: {fileID: 2100000, guid: 0e52451a7dad02e4e961791247075b86, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: InsideDoorMetals_mat
-    second: {fileID: 2100000, guid: bbcbd12707482a841b5378faa6426923, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: StrangeDoor2_mat
-    second: {fileID: 2100000, guid: 13d6bec585dbee14f8cb65cba956ba24, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

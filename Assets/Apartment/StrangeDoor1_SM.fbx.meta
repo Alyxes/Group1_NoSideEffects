@@ -3,22 +3,7 @@ guid: 3f5b7ff6d7045004dbc42d903b7184e5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ApartmentDoorMetals_mat
-    second: {fileID: 2100000, guid: 41f1debea75d033408428ff3674e391d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: InsideDoorMetals_mat
-    second: {fileID: 2100000, guid: bbcbd12707482a841b5378faa6426923, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: StrangeDoor2_mat
-    second: {fileID: 2100000, guid: dfba1456a32c226458be78645496d589, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
