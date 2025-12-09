@@ -39,6 +39,13 @@ namespace NoSideEffects
             {
                 currentRotation = Mathf.MoveTowardsAngle(currentRotation, wantedRotation, turnSpeed * Time.fixedDeltaTime);
                 doorTransform.rotation = Quaternion.Euler(0, currentRotation, 0);
+
+                if (Mathf.Approximately(currentRotation, wantedRotation))
+                {
+                    currentRotation = wantedRotation;
+                    if (!open)
+                        AudioManager.PlaySound(SoundType.BUTTONCLICK);
+                }
             }
 
             if (inZone && interactButton.WasPressedThisFrame())

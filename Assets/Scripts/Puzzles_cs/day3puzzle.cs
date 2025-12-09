@@ -14,9 +14,6 @@ namespace NoSideEffects
         private bool isPuzzleOn, isPuzzleDone = false;
         void Awake()
         {
-            //puzzledApartment = GetComponent<GameObject>();
-            //normalStartApartment = GetComponent<GameObject>();
-            //normalApartmentAfter = GetComponent<GameObject>();
             puzzledApartment.SetActive(false);
             normalApartmentAfter.SetActive(false);
 
