@@ -12,7 +12,7 @@ namespace NoSideEffects
         public float turnSpeed;
         public float wantedRotation;
         
-        private bool open = true;
+        public bool open = true;
         private bool inZone = false;
 
         private InputAction interactButton;
@@ -27,12 +27,12 @@ namespace NoSideEffects
         {
             if (open)
             {
-                if (currentRotation != openRotationAngle)
+                if (wantedRotation != openRotationAngle)
                     wantedRotation = openRotationAngle;
             }
             else
             {
-                if (currentRotation != closedRotationAngle)
+                if (wantedRotation != closedRotationAngle)
                     wantedRotation = closedRotationAngle;
             }
 
