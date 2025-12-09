@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 3c480687c5c173046aca77bd52dd64e9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3fdd772a2bbac3f44b3d189a75ecd959, type: 2}
+      objectReference: {fileID: 2100000, guid: d53c7214b5fa3dd4aae657f951594b61, type: 2}
     - target: {fileID: 919132149155446097, guid: 3c480687c5c173046aca77bd52dd64e9, type: 3}
       propertyPath: m_Name
       value: Chair
