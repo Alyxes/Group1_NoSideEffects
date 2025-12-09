@@ -248,7 +248,8 @@ namespace NoSideEffects
 
             wakingUp = false;
             // This text will be different or be none at all depending on the day.
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
+            if (DSM.instance.wakeUpMonologue != "")
+                StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {

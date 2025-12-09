@@ -130,7 +130,8 @@ namespace NoSideEffects
         }
         private void CleanupDay()
         {
-            // Possible code for cleaning up the day before starting a new one. Not sure if this will be needed.
+            wakeUpMonologue = "";
+            monolougeTimer = 0;
         }
         public void StartingNewDay(Days newDay)
         {
