@@ -17,11 +17,14 @@ namespace NoSideEffects
         public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
         public static bool Item2TaskDone = false;
+        public static bool Item3TaskDone = false;
         public MeshChange meshChange;
 
         private InputAction interactButton;
         private string itemIDValue;
         private string currentTrigger = "";
+        private bool fuse1Collected, fuse2Collected = false;
+
 
 
         private enum TaskState
@@ -31,6 +34,7 @@ namespace NoSideEffects
             StepTwo,
             StepThree,
             StepFour,
+            StepFive,
             Done
         }
 
@@ -118,12 +122,18 @@ namespace NoSideEffects
                     WaterTask(); // Activate Sink trigger immediately
                     break;
 
-                case "Item2":
-                    Debug.Log("Starting Screwdriver Task automatically");
+                case "ToolBox":
+                    Debug.Log("Starting ToolBox Task automatically");
                     if (taskState != TaskState.Done)
                         taskState = TaskState.None;
                     Item2Task(); // Activate TriggerA immediately
                     break;
+                case "Key":
+                        Debug.Log("Starting Key Task automatically");
+                        if (taskState != TaskState.Done)
+                            taskState = TaskState.None;
+                        Item3Task(); // Activate TriggerA immediately
+                        break;
 
                 default:
                     Debug.Log("No task assigned for this item");
@@ -147,14 +157,23 @@ namespace NoSideEffects
                     WaterTask();
                     break;
 
-                case "Item2":
+                case "ToolBox":
                     if (Item2TaskDone)
                     {
-                        Debug.Log("Item2 Task already completed.");
+                        Debug.Log("ToolBox Task already completed.");
                         return;
                     }
                     Item2Task();
                     break;
+                    case "Key":
+                    if (Item3TaskDone)
+                    {
+                        Debug.Log("Key Task already completed.");
+                        return;
+                    }
+                    Item3Task();
+                    break;
+
             }
         }
 
@@ -235,11 +254,189 @@ namespace NoSideEffects
             switch (taskState)
             {
                 case TaskState.None:
-                    ActivateTrigger("TriggerA");
+                    ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
-                    Debug.Log("Go to TriggerA to start Item2 task.");
+                    Debug.Log("Go to Fusebox to start ToolBox task.");
+                    break;
+                case TaskState.StepOne:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the FuseBox to proceed.");
+                        return;
+                    }
+                    Debug.Log("I need to find the fuses...");
+                    DeactivateTrigger("FuseBox");
+                    ActivateTrigger("Fuse1");
+                    ActivateTrigger("Fuse2");
+                    taskState = TaskState.StepTwo;
+                    break;
+                case TaskState.StepTwo:
+                    if (currentTrigger != "Fuse1" && currentTrigger != "Fuse2")
+                    {
+                        Debug.Log("Go to one of the fuses to pick it up.");
+                        return;
+                    }
+
+                    Debug.Log("Picking up fuse...");
+
+                    if (currentTrigger == "Fuse1")
+                    {
+                        fuse1Collected = true;
+                        DeactivateTrigger("Fuse1");
+                        Transform child = transform.Find("Fuse1");
+                        if (child != null)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+                    else if (currentTrigger == "Fuse2")
+                    {
+                        fuse2Collected = true;
+                        DeactivateTrigger("Fuse2");
+                        Transform child = transform.Find("Fuse2");
+                        if (child != null)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
+                    // Only proceed when both are collected
+                    if (fuse1Collected && fuse2Collected)
+                    {
+                        ActivateTrigger("FuseBox");
+                        taskState = TaskState.StepThree;
+                        HUD.instance.SetSubTitleText("Got the fuses. Let's put them back in the box.");
+                    }
+                    else
+                    {
+                        HUD.instance.SetSubTitleText("You picked up a fuse. Find the other one.");
+                    }
+                    break;
+                    case TaskState.StepThree:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the FuseBox to proceed.");
+                        return;
+                    }
+                    Debug.Log("Inserting fuse into FuseBox... Task Complete!");
+                    DeactivateTrigger("FuseBox");
+                    taskState = TaskState.Done;
+                    Item2TaskDone = true;
+                    HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
+                    break;
+                    case TaskState.Done:
+                    Debug.Log("Task already completed.");
                     break;
             }
         }
+        private void Item3Task()
+        {
+            switch (taskState)
+            {
+                case TaskState.None:
+                    ActivateTrigger("Door");
+                    taskState = TaskState.StepOne;
+                    Debug.Log("Go to the Door to use the Key.");
+                    break;
+                case TaskState.StepOne:
+                    if (currentTrigger != "Door")
+                    {
+                        Debug.Log("You must be at the Door to proceed.");
+                        return;
+                    }
+                    Debug.Log("I need to remove the eyes");
+                    DeactivateTrigger("Door");
+                    ActivateTrigger("Eye1");
+
+                    taskState = TaskState.StepTwo;
+                    break;
+                case TaskState.StepTwo:
+                    if (currentTrigger != "Eye1")
+                    {
+                        Debug.Log("You must be at the Eye to proceed.");
+                        return;
+                    }
+                    Debug.Log("Removing eye... Task Complete!");
+                    DeactivateTrigger("Eye1");
+                    Transform child = transform.Find("Eye1");
+                    if (child != null)
+                    {
+                        Destroy(child.gameObject);
+                    }
+                    ActivateTrigger("Eye2");
+                    taskState = TaskState.StepThree;
+                    break;
+                case TaskState.StepThree:
+                    if (currentTrigger != "Eye2")
+                    {
+                        Debug.Log("You must be at the Eye to proceed.");
+                        return;
+                    }
+                    Debug.Log("Removing eye... Task Complete!");
+                    DeactivateTrigger("Eye2");
+                    Transform child2 = transform.Find("Eye2");
+                    if (child2 != null)
+                    {
+                        Destroy(child2.gameObject);
+                    }
+                    ActivateTrigger("Eye3");
+                    ActivateTrigger("eye4");
+                    taskState = TaskState.StepFour;
+                    break;
+                    case TaskState.StepFour:
+                    if (currentTrigger != "Eye3" && currentTrigger != "Eye4")
+                    {
+                        Debug.Log("Go to one of the eyes and destroy it");
+                        return;
+                    }
+
+                    Debug.Log("Destroying Eye");
+
+                    if (currentTrigger == "Eye3")
+                    {
+                        fuse1Collected = true;
+                        DeactivateTrigger("Eye3");
+                        Transform child3 = transform.Find("Eye3");
+                        if (child3 != null)
+                        {
+                            Destroy(child3.gameObject);
+                        }
+                    }
+                    else if (currentTrigger == "Eye4")
+                    {
+                        fuse2Collected = true;
+                        DeactivateTrigger("Eye4");
+                        Transform child4 = transform.Find("Eye4");
+                        if (child4 != null)
+                        {
+                            Destroy(child4.gameObject);
+                        }
+                    }
+
+                    // Only proceed when both are collected
+                    if (fuse1Collected && fuse2Collected)
+                    {
+                        ActivateTrigger("Door");
+                        taskState = TaskState.StepFive;
+                        HUD.instance.SetSubTitleText("Alright let's try the door again");
+                    }
+                    else
+                    {
+                        HUD.instance.SetSubTitleText("You got more eyes to destroy");
+                    }
+                    break;
+                    case TaskState.StepFive:
+                    Item3TaskDone = true;
+                    HUD.instance.SetSubTitleText("The door creaks open, revealing a path to freedom.\nMaybe there's hope after all.");
+                    // Proceed to next scene or day
+                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day4, 10f));
+                    break;
+                case TaskState.Done:
+                    Debug.Log("Task already completed.");
+                    break;
+
+            }
+        }
+        
     }
 }
