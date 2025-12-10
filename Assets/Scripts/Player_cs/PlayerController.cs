@@ -112,13 +112,11 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-        // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, lookAction, crouchButton;
+        InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
-        [NonSerialized] public float playerSpeed;
-        [NonSerialized] public bool canMove, wakingUp, isCrouching = false;
-        private Vector2 moveValue;
-        private Vector2 lookValue;
+        [SerializeField] public float playerSpeed;
+        [SerializeField] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
+        [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
 
