@@ -116,7 +116,7 @@ namespace NoSideEffects
         InputAction moveAction, lookAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
-        [NonSerialized] public bool canMove, cameraLocked, wakingUp, isCrouching = false;
+        [NonSerialized] public bool canMove, wakingUp, isCrouching = false;
         private Vector2 moveValue;
         private Vector2 lookValue;
         private Vector3 projected;
@@ -143,8 +143,7 @@ namespace NoSideEffects
         {
             Cursor.lockState = CursorLockMode.Locked;
             playerSpeed = playerDaySpeed;
-            ToggleCameraPanOff();
-            ToggleCameraTiltOff();
+            ToggleCameraRotationOff();
             HUD.instance.SetBlackScreenAlpha(1);
             // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
             wakingUp = true;
@@ -164,22 +163,7 @@ namespace NoSideEffects
 
             if (canMove && crouchButton.WasPressedThisFrame())
             {
-                if (!isCrouching)
-                {
-                    isCrouching = true;
-                    playerBody.GetComponent<CapsuleCollider>().height = 1f;
-                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
-                    wantedHeadHeight = Head.position.y - 0.9f;
-                    playerSpeed = 0.8f;
-                }
-                else
-                {
-                    isCrouching = false;
-                    playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
-                    playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                    wantedHeadHeight = Head.position.y + 0.9f;
-                    playerSpeed = playerDaySpeed;
-                }
+                ToggleCrouch();
             }
 
             moveValue = moveAction.ReadValue<Vector2>();
@@ -217,6 +201,27 @@ namespace NoSideEffects
 
             DampingPlanarMovement(0.9f);
         }
+        public void ToggleCrouch()
+        {
+            if (!isCrouching)
+            {
+                Debug.Log(Head.position.y);
+                isCrouching = true;
+                playerBody.GetComponent<CapsuleCollider>().height = 1f;
+                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+                wantedHeadHeight = 0.885f;
+                playerSpeed = 0.8f;
+            }
+            else
+            {
+                Debug.Log(Head.position.y);
+                isCrouching = false;
+                playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+                wantedHeadHeight = 1.785f;
+                playerSpeed = playerDaySpeed;
+            }
+        }
         public void DampingPlanarMovement(float amount)
         {
             rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
@@ -243,8 +248,7 @@ namespace NoSideEffects
 
             canMove = true;
 
-            ToggleCameraPanOn();
-            ToggleCameraTiltOn();
+            ToggleCameraRotationOn();
 
             wakingUp = false;
             // This text will be different or be none at all depending on the day.
@@ -308,7 +312,6 @@ namespace NoSideEffects
         {
             SetControllerEnabledByName("Look X", true);
             SetControllerEnabledByName("Look Y", true);
-            canMove = true;
         }
     }
 }

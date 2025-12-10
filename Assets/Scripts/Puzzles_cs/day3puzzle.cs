@@ -7,13 +7,20 @@ namespace NoSideEffects
     public class day3puzzle : MonoBehaviour
     {
         public InfoZone triggerZone;
-        public Transform doorPivot;
+        public Door doorPivot;
         public GameObject puzzledApartment;
         public GameObject normalStartApartment;
         public GameObject normalApartmentAfter;
+        public PlayerController player;
         private bool isPuzzleOn, isPuzzleDone = false;
         void Awake()
         {
+            if (player == null)
+                player = GetComponentInChildren<PlayerController>();
+
+            if (doorPivot == null)
+                doorPivot = GetComponentInChildren<Door>();
+
             puzzledApartment.SetActive(false);
             normalApartmentAfter.SetActive(false);
 
@@ -26,6 +33,9 @@ namespace NoSideEffects
 
             if (triggerZone == null)
                 Debug.LogWarning($"{nameof(day3puzzle)}: {nameof(triggerZone)} (InfoZone) not found or assigned on {gameObject.name}");
+
+            if (doorPivot == null)
+                Debug.LogWarning($"{nameof(day3puzzle)}: {nameof(doorPivot)} (Door) not found as child/parent of {gameObject.name}. OnTriggerEnter will be ignored until you assign it.");
         }
         void Update()
         {
@@ -36,6 +46,7 @@ namespace NoSideEffects
             {
                 isPuzzleOn = true;
                 HUD.instance.ClearPickUpText();
+                player.ToggleCameraRotationOff();
                 StartCoroutine(ActivateDay3Puzzle());
             }
         }
@@ -46,10 +57,17 @@ namespace NoSideEffects
                 if (other.CompareTag("Player"))
                 {
                     // And sounds here too.
-                    doorPivot.rotation = Quaternion.Euler(0, 0, 0);
-                    Debug.Log("DOOR SLAM");
+                    doorPivot.turnSpeed = 500f;
+                    doorPivot.ToggleDoor(false);
+                    doorPivot.canBeOpened = false;
+                    doorPivot.showInteractionText = false;
+                    
+                    //doorPivot.rotation = Quaternion.Euler(0, 0, 0);
+                    //Debug.Log("DOOR SLAM");
+
                     isPuzzleOn = false;
                     isPuzzleDone = true;
+
                     StartCoroutine(RemoveDay3Puzzle());
                 }
             }
@@ -61,11 +79,12 @@ namespace NoSideEffects
             
             puzzledApartment.SetActive(true);
             normalStartApartment.SetActive(false);
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(2f, "Woah! What's going on!?"));
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1f, "Woah! What's going on!?"));
+            player.ToggleCameraRotationOn();
         }
         private IEnumerator RemoveDay3Puzzle()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
             normalApartmentAfter.SetActive(true);
             puzzledApartment.SetActive(false);
         }

@@ -13,7 +13,8 @@ namespace NoSideEffects
         public float turnSpeed = 200f;
         public float wantedRotation;
         
-        public bool open = true;
+        public bool open, canBeOpened = true;
+        public bool showInteractionText = true;
         private bool inZone = false;
 
         private InputAction interactButton;
@@ -44,21 +45,23 @@ namespace NoSideEffects
                 {
                     currentRotation = wantedRotation;
                     if (!open)
-                        AudioManager.PlaySound(SoundType.BUTTONCLICK);
+                        AudioManager.PlaySound(SoundType.DOORCLOSE);
                 }
             }
 
-            if (inZone && interactButton.WasPressedThisFrame())
+            if (inZone && canBeOpened && interactButton.WasPressedThisFrame())
             {
                 if (open)
                 {
                     ToggleDoor(false);
-                    HUD.instance.SetUniqueItemText("Open door");
+                    if (showInteractionText)
+                        HUD.instance.SetUniqueItemText("Open door");
                 }
                 else
                 {
                     ToggleDoor(true);
-                    HUD.instance.SetUniqueItemText("Close door");
+                    if (showInteractionText)
+                        HUD.instance.SetUniqueItemText("Close door");
                 }
             }
         }
@@ -67,15 +70,18 @@ namespace NoSideEffects
         {
             if (other.CompareTag("InteractZone"))
             {
-                Debug.Log("In zone");
+                // Debug.Log("In zone");
                 if (!inZone)
                 {
                     inZone = true;
 
-                    if (open)
-                        HUD.instance.SetUniqueItemText("Close door");
-                    else
-                        HUD.instance.SetUniqueItemText("Open door");
+                    if (showInteractionText)
+                    {
+                        if (open)
+                            HUD.instance.SetUniqueItemText("Close door");
+                        else
+                            HUD.instance.SetUniqueItemText("Open door");
+                    }
                 }
             }
         }
@@ -84,7 +90,7 @@ namespace NoSideEffects
         {
             if (other.CompareTag("InteractZone"))
             {
-                Debug.Log("In zone");
+                // Debug.Log("Not in zone");
                 if (inZone)
                 {
                     inZone = false;

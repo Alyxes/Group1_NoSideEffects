@@ -309,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_Name
-      value: Doorway (3)
+      value: DoorwayBathroom
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -393,26 +393,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 802478121}
     m_Modifications:
-    - target: {fileID: 610236641253048020, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1219802375131819191, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1491223735689975451, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1992362763990119949, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8019760806643419739, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 2785332580892566851, guid: e216997f2672b444fa01cc8afc54d737, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.12243757
@@ -458,6 +438,26 @@ PrefabInstance:
       value: StrangeDoor
       objectReference: {fileID: 0}
     - target: {fileID: 8711166917174947025, guid: e216997f2672b444fa01cc8afc54d737, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 610236641253048020, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219802375131819191, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1491223735689975451, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992362763990119949, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019760806643419739, guid: a63c63783689fff4f8b4073da6318daa, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1142,7 +1142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_Name
-      value: Doorway (2)
+      value: DoorwayFrontdoor
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14166,7 +14166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_Name
-      value: Doorway (1)
+      value: DoorwayLivingroom
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14759,87 +14759,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1525271596793899813, guid: 4a8e4a1694f96bb4b809bb3e000e98d3, type: 3}
   m_PrefabInstance: {fileID: 1659946610}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1667629097
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3882036351980396421, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_Name
-      value: DoorSystemBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: frontDoor
-      value: 
-      objectReference: {fileID: 1745349596}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: bedroomDoor
-      value: 
-      objectReference: {fileID: 7296879831642460651}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: strangeDoor
-      value: 
-      objectReference: {fileID: 1262885024}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: bathroomDoor
-      value: 
-      objectReference: {fileID: 1968807197}
-    - target: {fileID: 6558393026706070349, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: livingroomDoor
-      value: 
-      objectReference: {fileID: 438377960}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8205327087187537454, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e95130a15dbcdfa468c911b79d18aaf2, type: 3}
 --- !u!1001 &1673691339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15090,6 +15009,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: soundList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: 'soundList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d4985b01c5d27f14193afb9cb2ac1e00, type: 3}
     - target: {fileID: 7070216211405653924, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
       propertyPath: m_Name
       value: SoundSystemBox
@@ -16518,7 +16445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_Name
-      value: Doorway
+      value: DoorwayBedroom
       objectReference: {fileID: 0}
     - target: {fileID: 1129474677098380061, guid: e65e8925a619c6745be8399ea95f97da, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17319,6 +17246,8 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 225
   open: 1
+  canBeOpened: 1
+  showInteractionText: 1
 --- !u!1001 &1977977519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17846,6 +17775,8 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 315
   open: 1
+  canBeOpened: 1
+  showInteractionText: 1
 --- !u!4 &2045592707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8613246688739774776, guid: 6e0e12dc0f590dc46b5ab2e018d4f886, type: 3}
@@ -19913,6 +19844,8 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 225
   open: 1
+  canBeOpened: 1
+  showInteractionText: 1
 --- !u!1001 &7868734375653612801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20047,26 +19980,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 133071747}
     m_Modifications:
-    - target: {fileID: 1047181838189968642, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1315418720370315966, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303439992488612192, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 4892346344192965966, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 8166836791552885595, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 3636128784008682179, guid: 6418e5554ae267a4491d9bd6018e43d6, type: 3}
       propertyPath: m_Name
       value: FrontDoor
@@ -20114,6 +20027,26 @@ PrefabInstance:
     - target: {fileID: 6341026786601978966, guid: 6418e5554ae267a4491d9bd6018e43d6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047181838189968642, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1315418720370315966, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303439992488612192, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892346344192965966, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166836791552885595, guid: 88d1ac74fd0a7c849a7748f70f820461, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20319,4 +20252,3 @@ SceneRoots:
   - {fileID: 1183180226}
   - {fileID: 1936979279}
   - {fileID: 1951401863}
-  - {fileID: 1667629097}

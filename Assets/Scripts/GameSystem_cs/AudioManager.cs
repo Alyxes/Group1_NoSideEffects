@@ -8,7 +8,8 @@ namespace NoSideEffects
         TITLESONG,
         BUTTONCLICK,
         APARTMENTBUZZING,
-        GETTINGUPFROMBED
+        GETTINGUPFROMBED,
+        DOORCLOSE
     }
 
     [RequireComponent(typeof(AudioSource))]
