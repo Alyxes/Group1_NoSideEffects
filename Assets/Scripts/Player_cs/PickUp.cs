@@ -8,7 +8,7 @@ namespace NoSideEffects
         [Header("Item Data")]
         public string itemID;
         public GameObject model;
-
+        public PlayerController FlashLight;
         [Header("Pickup Rotation")]
         public Vector3 pickupRotation = Vector3.zero;
 
@@ -45,11 +45,21 @@ namespace NoSideEffects
                 if (PlayerInventory.currentHeldItem == null && !isHeld)
                 {
                     PickUpItem();
+                    if (PlayerInventory.currentHeldItemLeft != null &&
+                        PlayerInventory.currentHeldItemLeft.itemID == "Flashlight")
+                    {
+                        FlashLight.FlashLight.SetActive(true);
+                    }
+
                 }
                 else if (PlayerInventory.currentHeldItem == this ||
                         PlayerInventory.currentHeldItemLeft == this)
                 {
                     DropItem();
+                    if (itemID == "Flashlight")
+                    {
+                        FlashLight.FlashLight.SetActive(false);
+                    }
                 }
 
                 else

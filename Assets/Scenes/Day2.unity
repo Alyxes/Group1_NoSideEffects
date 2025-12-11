@@ -8328,6 +8328,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &821436659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7254147695259941831, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &830809538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14389,6 +14394,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: FlashLight
+      value: 
+      objectReference: {fileID: 821436659}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19795,8 +19804,6 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 225
   open: 1
-  canBeOpened: 1
-  showInteractionText: 1
 --- !u!1001 &1977977519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20460,8 +20467,6 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 315
   open: 1
-  canBeOpened: 1
-  showInteractionText: 1
 --- !u!4 &2045592707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8613246688739774776, guid: 6e0e12dc0f590dc46b5ab2e018d4f886, type: 3}
@@ -22912,8 +22917,6 @@ MonoBehaviour:
   turnSpeed: 200
   wantedRotation: 225
   open: 1
-  canBeOpened: 1
-  showInteractionText: 1
 --- !u!1001 &7868734375653612801
 PrefabInstance:
   m_ObjectHideFlags: 0

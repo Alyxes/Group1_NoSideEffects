@@ -112,6 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
+        [SerializeField] public  GameObject FlashLight;
         // [SerializeField] CinemachineCamera cameraRotation;
         InputAction moveAction, lookAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
@@ -141,6 +142,7 @@ namespace NoSideEffects
         }
         private void Start()
         {
+            FlashLight.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             playerSpeed = playerDaySpeed;
             ToggleCameraPanOff();

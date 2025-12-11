@@ -29,6 +29,7 @@ namespace NoSideEffects
                 else
                     return null;
             }
+
         }
 
         private void Awake()

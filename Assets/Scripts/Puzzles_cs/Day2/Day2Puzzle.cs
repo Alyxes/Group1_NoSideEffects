@@ -14,7 +14,7 @@ namespace NoSideEffects
 
         private InputAction interactButton;
         private bool InZone = false;
-        private bool HasCombination = false;
+        
 
         private void Awake()
         {
