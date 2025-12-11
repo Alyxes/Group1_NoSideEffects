@@ -7,7 +7,7 @@ namespace NoSideEffects
     {
         // Currently held item (static so ItemPickup can access it)
         public static ItemPickup currentHeldItem;
-
+        public static ItemPickup currentHeldItemLeft;
         // Hold points
         public static Transform holdPoint;
         public static Transform holdPoint2; // ADDED
