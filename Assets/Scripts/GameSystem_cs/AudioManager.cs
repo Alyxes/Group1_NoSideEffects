@@ -9,7 +9,8 @@ namespace NoSideEffects
         BUTTONCLICK,
         APARTMENTBUZZING,
         GETTINGUPFROMBED,
-        DOORCLOSE
+        DOORCLOSE,
+        FURNITUREMOVE
     }
 
     [RequireComponent(typeof(AudioSource))]
@@ -51,6 +52,7 @@ namespace NoSideEffects
         // function to stop playing sound, giving option to fade out.
         public static void StopSound(bool fadeOut = false, float fadeDuration = 1f)
         {
+            // I still don't know which sound this will stop if multiple are played... Probably all sound?
             if (fadeOut)
             {
                 // Same until i make fade possible.

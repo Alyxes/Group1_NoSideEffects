@@ -11,7 +11,8 @@ namespace NoSideEffects
         public PlayerController player;
         public Transform playerPosition;
 
-        private bool inZone = false;
+        private bool inZone, isPlayingSound = false;
+        private Vector3 OldPos;
         private Rigidbody furniture_rb;
         private InputAction interactButton;
 
@@ -24,34 +25,54 @@ namespace NoSideEffects
             playerPosition = player.transform;
 
             furniture_rb = GetComponent<Rigidbody>();
+            OldPos = furniture_rb.position;
             interactButton = InputSystem.actions.FindAction("Interact");
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!inZone)
-                return;
-
-            if (interactButton.IsPressed())
+            if (inZone)
             {
-                if (IsMovable)
+                if (interactButton.IsPressed())
                 {
-                    EnablePulling();
-                    HUD.instance.SetUniqueItemText("Pulling " + furnitureName);
-                }             
+                    if (IsMovable)
+                    {
+                        EnablePulling();
+                        HUD.instance.SetUniqueItemText("Pulling " + furnitureName);
+                    }
+                }
+                else
+                {
+                    DisablePulling();
+                    HUD.instance.SetUniqueItemText("Move towards to push - Interact to pull " + furnitureName);
+                }
+
+                if (isBeingPulled)
+                {
+                    Vector3 newPos = Vector3.MoveTowards(furniture_rb.position, playerPosition.position, player.moveValue.sqrMagnitude / 1.7f * player.playerSpeed * Time.deltaTime);
+                    furniture_rb.MovePosition(newPos);
+                }
+            }
+            
+            Vector3 currentPos = furniture_rb.position;
+
+            if (currentPos != OldPos)
+            {
+                if (!isPlayingSound)
+                {
+                    isPlayingSound = true;
+                    Debug.Log("Scraping sound begin");
+                    AudioManager.StartLoopingSound(SoundType.FURNITUREMOVE);
+                }
+                Debug.Log("Scraping sound continues");
+                OldPos = currentPos;
             }
             else
             {
-                DisablePulling();
-                HUD.instance.SetUniqueItemText("Move towards to push - Interact to pull " + furnitureName);
+                EndFurnitureSounds();
             }
-
-            if (isBeingPulled)
-            {
-                Vector3 newPos = Vector3.MoveTowards(furniture_rb.position, playerPosition.position, player.moveValue.sqrMagnitude * player.playerSpeed * Time.deltaTime);
-                furniture_rb.MovePosition(newPos);
-            } 
+            
         }
 
         private void OnTriggerEnter(Collider other)
@@ -74,6 +95,7 @@ namespace NoSideEffects
                     inZone = false;
                     Debug.Log("left the pushing zone");
                     DisablePulling();
+                    EndFurnitureSounds();
                     // EnableKinematic();
                     HUD.instance.ClearPickUpText();
                 }
@@ -92,11 +114,8 @@ namespace NoSideEffects
             if (!isBeingPulled)
             {
                 isBeingPulled = true;
-                player.playerSpeed = player.playerSpeed/4;
+                player.playerSpeed = player.playerSpeed/2.3f;
             }
-
-            if (!IsMoving)
-                IsMoving = true;
         }
         public void DisablePulling()
         {
@@ -105,9 +124,15 @@ namespace NoSideEffects
                 isBeingPulled = false;
                 player.playerSpeed = player.playerDaySpeed;
             }
-
-            if (IsMoving)
-                IsMoving = false;
+        }
+        private void EndFurnitureSounds()
+        {
+            if (isPlayingSound)
+            {
+                isPlayingSound = false;
+                Debug.Log("Scraping sound stops.");
+                AudioManager.StopSound();
+            }
         }
     }
 }

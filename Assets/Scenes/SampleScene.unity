@@ -2045,7 +2045,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554910439}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c61c69318f2205b489083cec343150b1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2491,7 +2491,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721477629}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 197b7d4c428bbd94d852d465644517c9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2573,8 +2573,7 @@ Transform:
   m_LocalPosition: {x: -0.82, y: 0.5, z: 5.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 739082097}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &721477634
@@ -2622,59 +2621,6 @@ MonoBehaviour:
   isBeingPulled: 0
   player: {fileID: 228226133}
   playerPosition: {fileID: 228226134}
---- !u!1 &739082096
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 739082097}
-  - component: {fileID: 739082098}
-  m_Layer: 0
-  m_Name: PushingZone
-  m_TagString: PushZone
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &739082097
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739082096}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 721477633}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &739082098
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739082096}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &741208446
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,6 +3295,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: soundList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: 'soundList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d4985b01c5d27f14193afb9cb2ac1e00, type: 3}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: 'soundList.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 40817093f04298f45a53c99f4c5ffd6e, type: 3}
     - target: {fileID: 7070216211405653924, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
       propertyPath: m_Name
       value: SoundSystemBox
