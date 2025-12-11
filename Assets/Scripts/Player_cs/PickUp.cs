@@ -8,7 +8,7 @@ namespace NoSideEffects
         [Header("Item Data")]
         public string itemID;
         public GameObject model;
-
+        public PlayerController FlashLight;
         [Header("Pickup Rotation")]
         public Vector3 pickupRotation = Vector3.zero;
 
@@ -45,11 +45,23 @@ namespace NoSideEffects
                 if (PlayerInventory.currentHeldItem == null && !isHeld)
                 {
                     PickUpItem();
+                    if (PlayerInventory.currentHeldItemLeft != null &&
+                        PlayerInventory.currentHeldItemLeft.itemID == "Flashlight")
+                    {
+                        FlashLight.FlashLight.SetActive(true);
+                    }
+
                 }
-                else if (PlayerInventory.currentHeldItem == this)
+                else if (PlayerInventory.currentHeldItem == this ||
+                        PlayerInventory.currentHeldItemLeft == this)
                 {
                     DropItem();
+                    if (itemID == "Flashlight")
+                    {
+                        FlashLight.FlashLight.SetActive(false);
+                    }
                 }
+
                 else
                 {
                     Debug.Log("You're already holding something else!");
@@ -58,48 +70,69 @@ namespace NoSideEffects
         }
         private void PickUpItem()
         {
-            if (PlayerInventory.currentHeldItem != null || holdPoint == null || isHeld)
-                return;
+            bool isFlashlight = (itemID == "Flashlight");
 
-            PlayerInventory.currentHeldItem = this;
-            isHeld = true;
-
-            // -----------------------------
-            // Select correct hold point
-            // -----------------------------
-            Transform targetHoldPoint = PlayerInventory.holdPoint;
-
-            // If item is "Flashlight" → use HoldPoint2
-            if (itemID == "Flashlight" && PlayerInventory.holdPoint2 != null)
+            // BLOCK incorrect hand logic:
+            if (isFlashlight)
             {
-                targetHoldPoint = PlayerInventory.holdPoint2;
+                // If flashlight already held, do nothing
+                if (PlayerInventory.currentHeldItemLeft != null)
+                    return;
+            }
+            else
+            {
+                // If holding another item in RIGHT hand, block pickup
+                if (PlayerInventory.currentHeldItem != null)
+                    return;
             }
 
-            // Move model to the selected hold point
+            // Assign to correct hand
+            if (isFlashlight)
+                PlayerInventory.currentHeldItemLeft = this;
+            else
+                PlayerInventory.currentHeldItem = this;
+
+            isHeld = true;
+
+            // Choose correct hold point
+            Transform targetHoldPoint = isFlashlight ?
+                PlayerInventory.holdPoint2 :      // left hand
+                PlayerInventory.holdPoint;        // right hand
+
+            // Attach model to hand
             model.transform.SetParent(targetHoldPoint);
             model.transform.localPosition = Vector3.zero;
             model.transform.localRotation = Quaternion.Euler(pickupRotation);
 
             HUD.instance.SetPutDownText(itemID);
 
-            // Start Task in TaskSwitch
-            TaskSwitch taskSwitch = Object.FindFirstObjectByType<TaskSwitch>();
-            if (taskSwitch != null)
+            // Only start tasks for RIGHT-HAND items
+            if (!isFlashlight)
             {
-                taskSwitch.StartTaskForCurrentItem();
+                TaskSwitch taskSwitch = Object.FindFirstObjectByType<TaskSwitch>();
+                if (taskSwitch != null)
+                    taskSwitch.StartTaskForCurrentItem();
             }
         }
 
 
+
         private void DropItem()
         {
-            PlayerInventory.currentHeldItem = null;
+            bool isFlashlight = (itemID == "Flashlight");
+
+            if (isFlashlight)
+                PlayerInventory.currentHeldItemLeft = null;
+            else
+                PlayerInventory.currentHeldItem = null;
+
             isHeld = false;
 
             model.transform.SetParent(transform);
             model.transform.position = originalPosition;
             model.transform.rotation = originalRotation;
         }
+
 
         private void OnTriggerEnter(Collider other)
         {
