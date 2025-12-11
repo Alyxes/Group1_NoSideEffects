@@ -46,10 +46,12 @@ namespace NoSideEffects
                 {
                     PickUpItem();
                 }
-                else if (PlayerInventory.currentHeldItem == this)
+                else if (PlayerInventory.currentHeldItem == this ||
+                        PlayerInventory.currentHeldItemLeft == this)
                 {
                     DropItem();
                 }
+
                 else
                 {
                     Debug.Log("You're already holding something else!");
