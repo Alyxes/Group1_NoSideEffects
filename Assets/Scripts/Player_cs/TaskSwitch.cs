@@ -128,20 +128,13 @@ namespace NoSideEffects
                         taskState = TaskState.None;
                     Item2Task(); // Activate TriggerA immediately
                     break;
+
                 case "Key":
-<<<<<<< Updated upstream
                         Debug.Log("Starting Key Task automatically");
                         if (taskState != TaskState.Done)
                             taskState = TaskState.None;
                         Item3Task(); // Activate TriggerA immediately
                         break;
-=======
-                    Debug.Log("Starting Key Task automatically");
-                    if (taskState != TaskState.Done)
-                        taskState = TaskState.None;
-                    Item3Task(); // Activate TriggerA immediately
-                    break;
->>>>>>> Stashed changes
 
                 default:
                     Debug.Log("No task assigned for this item");
@@ -173,11 +166,9 @@ namespace NoSideEffects
                     }
                     Item2Task();
                     break;
-<<<<<<< Updated upstream
-                    case "Key":
-=======
+
                 case "Key":
->>>>>>> Stashed changes
+
                     if (Item3TaskDone)
                     {
                         Debug.Log("Key Task already completed.");
@@ -324,11 +315,10 @@ namespace NoSideEffects
                         HUD.instance.SetSubTitleText("You picked up a fuse. Find the other one.");
                     }
                     break;
-<<<<<<< Updated upstream
-                    case TaskState.StepThree:
-=======
+
                 case TaskState.StepThree:
->>>>>>> Stashed changes
+
+
                     if (currentTrigger != "FuseBox")
                     {
                         Debug.Log("You must be at the FuseBox to proceed.");
@@ -340,11 +330,8 @@ namespace NoSideEffects
                     Item2TaskDone = true;
                     HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
                     break;
-<<<<<<< Updated upstream
-                    case TaskState.Done:
-=======
+
                 case TaskState.Done:
->>>>>>> Stashed changes
                     Debug.Log("Task already completed.");
                     break;
             }
@@ -403,11 +390,9 @@ namespace NoSideEffects
                     ActivateTrigger("eye4");
                     taskState = TaskState.StepFour;
                     break;
-<<<<<<< Updated upstream
-                    case TaskState.StepFour:
-=======
+
                 case TaskState.StepFour:
->>>>>>> Stashed changes
+
                     if (currentTrigger != "Eye3" && currentTrigger != "Eye4")
                     {
                         Debug.Log("Go to one of the eyes and destroy it");
@@ -449,11 +434,10 @@ namespace NoSideEffects
                         HUD.instance.SetSubTitleText("You got more eyes to destroy");
                     }
                     break;
-<<<<<<< Updated upstream
-                    case TaskState.StepFive:
-=======
+
                 case TaskState.StepFive:
->>>>>>> Stashed changes
+
+
                     Item3TaskDone = true;
                     HUD.instance.SetSubTitleText("The door creaks open, revealing a path to freedom.\nMaybe there's hope after all.");
                     // Proceed to next scene or day
@@ -465,10 +449,5 @@ namespace NoSideEffects
 
             }
         }
-<<<<<<< Updated upstream
-        
-=======
-
->>>>>>> Stashed changes
     }
 }
