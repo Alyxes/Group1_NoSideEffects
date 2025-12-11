@@ -112,13 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-<<<<<<< HEAD
         InputAction moveAction, crouchButton;
-=======
-        [SerializeField] public  GameObject FlashLight;
-        // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, lookAction, crouchButton;
->>>>>>> Leos-day-4-6-
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [SerializeField] public float playerSpeed;
         [SerializeField] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
@@ -145,7 +139,6 @@ namespace NoSideEffects
         }
         private void Start()
         {
-            FlashLight.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             playerSpeed = playerDaySpeed;
             ToggleCameraRotationOff();
