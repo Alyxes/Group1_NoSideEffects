@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace NoSideEffects
 {
-    public class Pushing : MonoBehaviour
+    public class Movable : MonoBehaviour
     {
         public string furnitureName;
         public bool IsMovable = true;

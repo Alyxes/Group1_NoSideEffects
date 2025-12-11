@@ -52,18 +52,29 @@ namespace NoSideEffects
         // function to stop playing sound, giving option to fade out.
         public static void StopSound(bool fadeOut = false, float fadeDuration = 1f)
         {
-            // I still don't know which sound this will stop if multiple are played... Probably all sound?
             if (fadeOut)
             {
-                // Same until i make fade possible.
-                instance.audioSource.Stop();
-                instance.audioSource.loop = false;
+                instance.StartCoroutine(FadeOutSound(fadeDuration));
             }
             else
             {
                 instance.audioSource.Stop();
                 instance.audioSource.loop = false;
             }
+        }
+        private static IEnumerator FadeOutSound(float fadeDuration)
+        {
+            float startVolume = instance.audioSource.volume;
+            float time = 0;
+            while (time < fadeDuration)
+            {
+                time += Time.deltaTime;
+                instance.audioSource.volume = Mathf.Lerp(startVolume, 0, time / fadeDuration);
+                yield return null;
+            }
+            instance.audioSource.Stop();
+            instance.audioSource.loop = false;
+            instance.audioSource.volume = startVolume; // Reset volume for future use
         }
     }
 }

@@ -2475,8 +2475,8 @@ GameObject:
   - component: {fileID: 721477632}
   - component: {fileID: 721477631}
   - component: {fileID: 721477630}
-  - component: {fileID: 721477635}
   - component: {fileID: 721477634}
+  - component: {fileID: 721477635}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2614,7 +2614,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c643732fa207be54fa1f2c31df5277cd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Pushing
+  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Movable
   furnitureName: this weird box
   IsMovable: 1
   IsMoving: 0
