@@ -228,8 +228,8 @@ namespace NoSideEffects
                     Debug.Log("Filling watering can...");
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
-                    meshChange.DeactivateChild("plant_alive");
-                    meshChange.ActivateChild("plant_dead");
+                    meshChange.DeactivateChild("plant_alive"); meshChange.DeactivateChild("plant_alive2"); meshChange.DeactivateChild("plant_alive3");
+                    meshChange.ActivateChild("plant_dead"); meshChange.ActivateChild("plant_dead2"); meshChange.ActivateChild("plant_dead3");
                     HUD.instance.SetSubTitleText("Theeere we go.");
                     taskState = TaskState.StepFour;
                     break;
