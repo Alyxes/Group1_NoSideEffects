@@ -347,5 +347,25 @@ namespace NoSideEffects
             SetControllerEnabledByName("Look X", true);
             SetControllerEnabledByName("Look Y", true);
         }
+        public IEnumerator SwitchCameraRotationOnTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOn();
+        }
+        public IEnumerator SwitchCameraRotationOffTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOff();
+        }
+        public IEnumerator SwitchOnPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = true;
+        }
+        public IEnumerator SwitchOffPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = false;
+        }
     }
 }
