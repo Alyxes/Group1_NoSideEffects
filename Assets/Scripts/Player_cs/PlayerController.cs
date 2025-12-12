@@ -115,7 +115,8 @@ namespace NoSideEffects
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
-        [NonSerialized] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
+        [NonSerialized] public bool canMove, wakingUp, isMovingFurniture = false;
+        [NonSerialized] public int isCrouching = 0;
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
@@ -201,23 +202,25 @@ namespace NoSideEffects
         }
         public void ToggleCrouch()
         {
-            if (!isCrouching)
+            isCrouching++;
+            if (isCrouching > 2)
+                isCrouching = 0;
+            if (isCrouching == 1)
             {
-                isCrouching = true;
+                // isCrouching = true;
                 SetPlayerHeightCrouching(false, true);
-                //playerBody.GetComponent<CapsuleCollider>().height = 1f;
-                //playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
-                //wantedHeadHeight = 0.885f;
                 playerSpeed = 0.8f;
+            }
+            else if (isCrouching == 0)
+            {
+                // isCrouching = false;
+                SetPlayerHeightNormal(false, true);
+                playerSpeed = playerDaySpeed;
             }
             else
             {
-                isCrouching = false;
-                SetPlayerHeightNormal(false, true);
-                //playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
-                //playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                //wantedHeadHeight = 1.785f;
-                playerSpeed = playerDaySpeed;
+                SetPlayerHeightCrawling(false, true);
+                playerSpeed = 0.8f;
             }
         }
         public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
@@ -237,6 +240,15 @@ namespace NoSideEffects
                 Head.position = new Vector3(Head.position.x, 0.885f, Head.position.z);
             if (initiateHeadLerp)
                 wantedHeadHeight = 0.885f;
+        }
+        public void SetPlayerHeightCrawling(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 0.7f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.535f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.485f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 0.485f;
         }
         public void DampingPlanarMovement(float amount)
         {

@@ -2617,8 +2617,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Movable
   furnitureName: this weird box
   IsMovable: 1
-  IsMoving: 0
-  isBeingPulled: 0
   player: {fileID: 228226133}
   playerPosition: {fileID: 228226134}
 --- !u!1 &741208446
