@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Cinemachine;
 using UnityEngine.InputSystem;
 
 namespace NoSideEffects
@@ -10,6 +11,8 @@ namespace NoSideEffects
         public string objectID;
         public string infoText;
         public bool oneTimeUse = false;
+        public CameraTarget lookAtPoint;
+        public PlayerController player;
         [NonSerialized] public bool hasBeenChecked = false;
 
         private bool inZone = false;
@@ -25,6 +28,8 @@ namespace NoSideEffects
             {
                 HUD.instance.SetSubTitleText(infoText);
                 hasBeenChecked = true;
+
+                player.MakePlayerLookAt(lookAtPoint);
 
                 if (oneTimeUse)
                 {
