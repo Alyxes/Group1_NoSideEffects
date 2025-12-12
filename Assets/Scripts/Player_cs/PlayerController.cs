@@ -120,7 +120,6 @@ namespace NoSideEffects
         private Vector3 projected;
         private float wantedHeadHeight;
 
-        private CinemachineCamera cameraRotation;
         [NonSerialized] public CameraTarget lookAtObject;
 
         // Cinemachine input controller(found at runtime)
@@ -136,12 +135,6 @@ namespace NoSideEffects
             moveAction = InputSystem.actions.FindAction("Move");
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
-
-            cameraRotation = GetComponent<CinemachineCamera>();
-            if (cameraRotation == null)
-                cameraRotation = GetComponentInChildren<CinemachineCamera>();
-            //if (cameraRotation == null)
-            //    Debug.LogWarning("No CinemachineCamera found on PlayerController or its children.");
 
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
@@ -249,12 +242,6 @@ namespace NoSideEffects
                 Head.position = new Vector3(Head.position.x, 0.485f, Head.position.z);
             if (initiateHeadLerp)
                 wantedHeadHeight = 0.485f;
-        }
-        public void MakePlayerLookAt(CameraTarget lookAtThis)
-        {
-            lookAtObject = lookAtThis;
-            cameraRotation.Target = lookAtObject;
-            ToggleCameraRotationOff();
         }
         public void DampingPlanarMovement(float amount)
         {
