@@ -112,13 +112,12 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-        // [SerializeField] CinemachineCamera cameraRotation;
-        InputAction moveAction, lookAction, crouchButton;
+        InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
-        [NonSerialized] public bool canMove, wakingUp, isCrouching = false;
-        private Vector2 moveValue;
-        private Vector2 lookValue;
+        [NonSerialized] public bool canMove, wakingUp, isMovingFurniture = false;
+        [NonSerialized] public int isCrouching = 0;
+        [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
 
@@ -203,24 +202,53 @@ namespace NoSideEffects
         }
         public void ToggleCrouch()
         {
-            if (!isCrouching)
+            isCrouching++;
+            if (isCrouching > 2)
+                isCrouching = 0;
+            if (isCrouching == 1)
             {
-                Debug.Log(Head.position.y);
-                isCrouching = true;
-                playerBody.GetComponent<CapsuleCollider>().height = 1f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
-                wantedHeadHeight = 0.885f;
+                // isCrouching = true;
+                SetPlayerHeightCrouching(false, true);
                 playerSpeed = 0.8f;
+            }
+            else if (isCrouching == 0)
+            {
+                // isCrouching = false;
+                SetPlayerHeightNormal(false, true);
+                playerSpeed = playerDaySpeed;
             }
             else
             {
-                Debug.Log(Head.position.y);
-                isCrouching = false;
-                playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                wantedHeadHeight = 1.785f;
-                playerSpeed = playerDaySpeed;
+                SetPlayerHeightCrawling(false, true);
+                playerSpeed = 0.8f;
             }
+        }
+        public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 1.785f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 1.785f;
+        }
+        public void SetPlayerHeightCrouching(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.885f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 0.885f;
+        }
+        public void SetPlayerHeightCrawling(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 0.7f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.535f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.485f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 0.485f;
         }
         public void DampingPlanarMovement(float amount)
         {
@@ -239,7 +267,7 @@ namespace NoSideEffects
             HUD.instance.blackScreenFadeOut = true;
             HUD.instance.blackScreenFadeSpeed = 0.4f;
 
-            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED);
+            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED, AudioManager.instance.audSrc_PlayerMovement);
         }
         public void RiseFromBed()
         {

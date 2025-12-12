@@ -61,9 +61,6 @@ namespace NoSideEffects
                     doorPivot.ToggleDoor(false);
                     doorPivot.canBeOpened = false;
                     doorPivot.showInteractionText = false;
-                    
-                    //doorPivot.rotation = Quaternion.Euler(0, 0, 0);
-                    //Debug.Log("DOOR SLAM");
 
                     isPuzzleOn = false;
                     isPuzzleDone = true;

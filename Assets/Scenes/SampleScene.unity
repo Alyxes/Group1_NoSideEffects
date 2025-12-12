@@ -842,6 +842,22 @@ MonoBehaviour:
   playerInventory: {fileID: 0}
   InTaskZone: 0
   meshChange: {fileID: 0}
+--- !u!114 &228226133 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1581962121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8e685f162d3c3439339d99005debb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!4 &228226134 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1581962121}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &278185931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +2045,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554910439}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c61c69318f2205b489083cec343150b1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2459,8 +2475,8 @@ GameObject:
   - component: {fileID: 721477632}
   - component: {fileID: 721477631}
   - component: {fileID: 721477630}
-  - component: {fileID: 721477635}
   - component: {fileID: 721477634}
+  - component: {fileID: 721477635}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2475,7 +2491,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721477629}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 197b7d4c428bbd94d852d465644517c9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2554,11 +2570,10 @@ Transform:
   m_GameObject: {fileID: 721477629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 15}
+  m_LocalPosition: {x: -0.82, y: 0.5, z: 5.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 739082097}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &721477634
@@ -2584,7 +2599,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -2599,63 +2614,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c643732fa207be54fa1f2c31df5277cd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Pushing
+  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Movable
+  furnitureName: this weird box
   IsMovable: 1
-  inZone: 0
-  name: Furniture
---- !u!1 &739082096
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 739082097}
-  - component: {fileID: 739082098}
-  m_Layer: 0
-  m_Name: PushingZone
-  m_TagString: PushZone
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &739082097
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739082096}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 721477633}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &739082098
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739082096}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  player: {fileID: 228226133}
+  playerPosition: {fileID: 228226134}
 --- !u!1 &741208446
 GameObject:
   m_ObjectHideFlags: 0
@@ -3330,6 +3293,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: soundList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: 'soundList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d4985b01c5d27f14193afb9cb2ac1e00, type: 3}
+    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
+      propertyPath: 'soundList.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 40817093f04298f45a53c99f4c5ffd6e, type: 3}
     - target: {fileID: 7070216211405653924, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
       propertyPath: m_Name
       value: SoundSystemBox
