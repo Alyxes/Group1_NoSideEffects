@@ -477,9 +477,10 @@ MonoBehaviour:
   childTriggers:
   - {fileID: 1686826194}
   - {fileID: 1192800630}
+  meshNamesToChange: []
+  meshChange: {fileID: 1192800627}
   playerInventory: {fileID: 1749742432}
   InTaskZone: 0
-  meshChange: {fileID: 1192800627}
 --- !u!4 &18109622
 Transform:
   m_ObjectHideFlags: 0
@@ -33618,9 +33619,10 @@ MonoBehaviour:
   childTriggers:
   - {fileID: 532859027}
   - {fileID: 476497652}
+  meshNamesToChange: []
+  meshChange: {fileID: 0}
   playerInventory: {fileID: 0}
   InTaskZone: 0
-  meshChange: {fileID: 0}
 --- !u!4 &2138914702
 Transform:
   m_ObjectHideFlags: 0

@@ -265,7 +265,7 @@ namespace NoSideEffects
                     Debug.Log("Watering the plant... Task Complete!");
                     HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
                     DeactivateTrigger("Plant");
-                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day2, 10f));
+                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day3, 10f));
                     break;
             }
         }
