@@ -13,13 +13,13 @@ namespace NoSideEffects
     {
         void Start()
         {
-            AudioManager.StartLoopingSound(SoundType.TITLESONG);
+            AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
         }
         public void StartGame()
         {
-            AudioManager.StopSound(false, 1f);
+            AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 5f);
             // Stop title music and play button click sound
-            AudioManager.PlaySound(SoundType.BUTTONCLICK);
+            AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
 
             StartCoroutine(WaitAndLoadScene("Day1"));
         }
@@ -31,7 +31,7 @@ namespace NoSideEffects
         }
         public void ExitGame()
         {
-            AudioManager.StopSound(false, 1f);
+            AudioManager.StopSound(AudioManager.instance.audSrc_Music);
             StartCoroutine(WaitAndQuitGame());
         }
         public IEnumerator WaitAndQuitGame()

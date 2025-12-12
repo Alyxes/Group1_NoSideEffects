@@ -114,8 +114,8 @@ namespace NoSideEffects
         [SerializeField] Transform FPViewCamera;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
-        [SerializeField] public float playerSpeed;
-        [SerializeField] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
+        [NonSerialized] public float playerSpeed;
+        [NonSerialized] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
@@ -203,22 +203,40 @@ namespace NoSideEffects
         {
             if (!isCrouching)
             {
-                Debug.Log(Head.position.y);
                 isCrouching = true;
-                playerBody.GetComponent<CapsuleCollider>().height = 1f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
-                wantedHeadHeight = 0.885f;
+                SetPlayerHeightCrouching(false, true);
+                //playerBody.GetComponent<CapsuleCollider>().height = 1f;
+                //playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+                //wantedHeadHeight = 0.885f;
                 playerSpeed = 0.8f;
             }
             else
             {
-                Debug.Log(Head.position.y);
                 isCrouching = false;
-                playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                wantedHeadHeight = 1.785f;
+                SetPlayerHeightNormal(false, true);
+                //playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+                //playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+                //wantedHeadHeight = 1.785f;
                 playerSpeed = playerDaySpeed;
             }
+        }
+        public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 1.785f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 1.785f;
+        }
+        public void SetPlayerHeightCrouching(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.885f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 0.885f;
         }
         public void DampingPlanarMovement(float amount)
         {
@@ -237,7 +255,7 @@ namespace NoSideEffects
             HUD.instance.blackScreenFadeOut = true;
             HUD.instance.blackScreenFadeSpeed = 0.4f;
 
-            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED);
+            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED, AudioManager.instance.audSrc_PlayerMovement);
         }
         public void RiseFromBed()
         {

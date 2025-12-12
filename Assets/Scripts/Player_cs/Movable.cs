@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 namespace NoSideEffects
@@ -7,11 +8,10 @@ namespace NoSideEffects
     {
         public string furnitureName;
         public bool IsMovable = true;
-        public bool IsMoving, isBeingPulled = false;
         public PlayerController player;
         public Transform playerPosition;
 
-        private bool inZone, isPlayingSound = false;
+        private bool inZone, isBeingPulled, isPlayingSound = false;
         private Vector3 OldPos;
         private Rigidbody furniture_rb;
         private InputAction interactButton;
@@ -28,8 +28,6 @@ namespace NoSideEffects
             OldPos = furniture_rb.position;
             interactButton = InputSystem.actions.FindAction("Interact");
         }
-
-        // Update is called once per frame
         void Update()
         {
             if (inZone)
@@ -61,10 +59,14 @@ namespace NoSideEffects
             {
                 if (!isPlayingSound)
                 {
-                    isPlayingSound = true;
-                    Debug.Log("Scraping sound begin");
-                    AudioManager.StartLoopingSound(SoundType.FURNITUREMOVE);
+                    if (AudioManager.instance.audSrc_MovingFurniture.isPlaying == false)
+                    {
+                        isPlayingSound = true;
+                        Debug.Log("Scraping sound begin");
+                        AudioManager.PlayFadeInSound(SoundType.FURNITUREMOVE, AudioManager.instance.audSrc_MovingFurniture, 0.2f, true);
+                    }
                 }
+
                 Debug.Log("Scraping sound continues");
                 OldPos = currentPos;
             }
@@ -95,20 +97,10 @@ namespace NoSideEffects
                     inZone = false;
                     Debug.Log("left the pushing zone");
                     DisablePulling();
-                    EndFurnitureSounds();
-                    // EnableKinematic();
                     HUD.instance.ClearPickUpText();
                 }
             }
         }
-        //public void DisableKinematic()
-        //{
-        //    furniture_rb.isKinematic = false;
-        //}
-        //public void EnableKinematic()
-        //{
-        //    furniture_rb.isKinematic = true;
-        //}
         public void EnablePulling()
         {
             if (!isBeingPulled)
@@ -131,7 +123,7 @@ namespace NoSideEffects
             {
                 isPlayingSound = false;
                 Debug.Log("Scraping sound stops.");
-                AudioManager.StopSound();
+                AudioManager.StopSound(AudioManager.instance.audSrc_MovingFurniture, true, 0.3f);
             }
         }
     }
