@@ -32,7 +32,7 @@ namespace NoSideEffects
                 if (lockPlayerView)
                 {
                     player.ToggleCameraRotationOff();
-                    StartCoroutine();
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(2f));
                 }
 
                 if (oneTimeUse)
