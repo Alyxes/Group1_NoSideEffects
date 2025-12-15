@@ -115,11 +115,12 @@ namespace NoSideEffects
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
-        [NonSerialized] public bool canMove, wakingUp, isMovingFurniture = false;
-        [NonSerialized] public int isCrouching = 0;
+        [NonSerialized] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
+
+        [NonSerialized] public CameraTarget lookAtObject;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -202,25 +203,17 @@ namespace NoSideEffects
         }
         public void ToggleCrouch()
         {
-            isCrouching++;
-            if (isCrouching > 2)
-                isCrouching = 0;
-            if (isCrouching == 1)
+            if (!isCrouching)
             {
-                // isCrouching = true;
+                isCrouching = true;
                 SetPlayerHeightCrouching(false, true);
                 playerSpeed = 0.8f;
             }
-            else if (isCrouching == 0)
-            {
-                // isCrouching = false;
-                SetPlayerHeightNormal(false, true);
-                playerSpeed = playerDaySpeed;
-            }
             else
             {
-                SetPlayerHeightCrawling(false, true);
-                playerSpeed = 0.8f;
+                isCrouching = false;
+                SetPlayerHeightNormal(false, true);
+                playerSpeed = playerDaySpeed;
             }
         }
         public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
@@ -340,6 +333,26 @@ namespace NoSideEffects
         {
             SetControllerEnabledByName("Look X", true);
             SetControllerEnabledByName("Look Y", true);
+        }
+        public IEnumerator SwitchCameraRotationOnTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOn();
+        }
+        public IEnumerator SwitchCameraRotationOffTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOff();
+        }
+        public IEnumerator SwitchOnPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = true;
+        }
+        public IEnumerator SwitchOffPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = false;
         }
     }
 }
