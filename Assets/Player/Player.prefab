@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3761074729845616084}
   - component: {fileID: 2335888225141391088}
   - component: {fileID: 5921015239689971617}
+  - component: {fileID: 140577849294217115}
   m_Layer: 3
   m_Name: Head
   m_TagString: Player
@@ -121,6 +122,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &140577849294217115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189317257153110625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8752553616284094cbffa1cddfeecd9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
 --- !u!1 &2419550440057724488
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +245,7 @@ MonoBehaviour:
   playerBody: {fileID: 2419550440057724488}
   Head: {fileID: 3761074729845616084}
   FPViewCamera: {fileID: 6846272917935288821}
-  cameraControl: {fileID: 5926884319129916908}
+  cameraControl: {fileID: 140577849294217115}
 --- !u!114 &7989836947901242678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +280,6 @@ GameObject:
   - component: {fileID: 4387733020113458865}
   - component: {fileID: 5601832044627968953}
   - component: {fileID: 4161730526067097161}
-  - component: {fileID: 5926884319129916908}
   m_Layer: 3
   m_Name: FirstPersonViewCamera
   m_TagString: InteractZone
@@ -379,7 +391,7 @@ MonoBehaviour:
     FieldOfView: 45
     OrthographicSize: 10
     NearClipPlane: 0.05
-    FarClipPlane: 5000
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -730,18 +742,6 @@ MonoBehaviour:
         DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
---- !u!114 &5926884319129916908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4127613967434889917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8752553616284094cbffa1cddfeecd9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraController
 --- !u!1 &5399150659091928637
 GameObject:
   m_ObjectHideFlags: 0
