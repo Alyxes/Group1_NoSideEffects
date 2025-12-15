@@ -10,6 +10,7 @@ namespace NoSideEffects
         public string objectID;
         public string infoText;
         public PlayerController player;
+        public Transform objectToLookAt;
         public bool oneTimeUse = false;
         public bool lockPlayerView = false;
         public float lockViewTime = 0f;
@@ -32,7 +33,8 @@ namespace NoSideEffects
                 if (lockPlayerView)
                 {
                     player.ToggleCameraRotationOff();
-                    StartCoroutine(player.SwitchCameraRotationOnTimer(2f));
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(lockViewTime));
+                    //player.cameraControl.SetLookAtObject(objectToLookAt);
                 }
 
                 if (oneTimeUse)

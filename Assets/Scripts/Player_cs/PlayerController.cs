@@ -112,6 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
+        [SerializeField] public CameraController cameraControl;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
@@ -119,8 +120,6 @@ namespace NoSideEffects
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
-
-        [NonSerialized] public CameraTarget lookAtObject;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;

@@ -11566,6 +11566,7 @@ MonoBehaviour:
   objectID: plant
   infoText: I should water my plants.\nThe watering can's in the bathroom.
   player: {fileID: 0}
+  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -15497,9 +15498,10 @@ MonoBehaviour:
   infoText: Feels strange after all these years that I might not need this wretched
     thing anymore...
   player: {fileID: 1514417012}
+  objectToLookAt: {fileID: 1473467804157146505}
   oneTimeUse: 0
-  lockPlayerView: 0
-  lockViewTime: 0
+  lockPlayerView: 1
+  lockViewTime: 4
 --- !u!135 &938451437
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -34365,6 +34367,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 187090ee7e647f34e9f51a77af894d75, type: 3}
+--- !u!4 &1473467804157146505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7343492812912770157, guid: 187090ee7e647f34e9f51a77af894d75, type: 3}
+  m_PrefabInstance: {fileID: 1473467804157146504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1735061595981207716
 PrefabInstance:
   m_ObjectHideFlags: 0
