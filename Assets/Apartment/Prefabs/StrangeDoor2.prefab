@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 13d6bec585dbee14f8cb65cba956ba24, type: 2}
     - target: {fileID: 919132149155446097, guid: f9e588ff290034f4791bbab725ef92a7, type: 3}
       propertyPath: m_Name
-      value: StrangeDoor2
+      value: StrangeDoor2_SM
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -76,7 +76,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6039746687747372855}
-  m_Material: {fileID: 13400000, guid: 197b7d4c428bbd94d852d465644517c9, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
