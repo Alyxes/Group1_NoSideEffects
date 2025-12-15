@@ -84,7 +84,6 @@ namespace NoSideEffects
         private void SetupDay1()
         {
             BaseStartOfDay("Day1");
-            AudioManager.PlayFadeInSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music, 10f);
             wakeUpMonologue = "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect.";
             monolougeTimer = 3f;
         }
