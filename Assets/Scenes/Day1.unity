@@ -478,6 +478,7 @@ MonoBehaviour:
   - {fileID: 1686826194}
   - {fileID: 1192800630}
   meshNamesToChange: []
+  lightSwitch: {fileID: 0}
   meshChange: {fileID: 1192800627}
   playerInventory: {fileID: 1749742432}
   InTaskZone: 0
@@ -16043,6 +16044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: WaterCan
   model: {fileID: 2092519053}
+  Flashlight: {fileID: 0}
   pickupRotation: {x: 0, y: -90, z: 0}
 --- !u!135 &987551824
 SphereCollider:
@@ -24225,6 +24227,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5734478976212372908, guid: e3bc589cf4dca7a4c94b4fea1ef3946e, type: 3}
   m_PrefabInstance: {fileID: 1494254479}
   m_PrefabAsset: {fileID: 0}
+--- !u!108 &1495348130 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7279188149856245631, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1504691642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24533,6 +24540,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: Flashlight
+      value: 
+      objectReference: {fileID: 1495348130}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
