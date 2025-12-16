@@ -2,7 +2,7 @@
 - Project name: Group1_NoSideEffects
 - Unity version: Unity 6000.2.12f1
 - Active game object:
-  - Name: Global Volume
+  - Name: Sky and Fog Global Volume
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
