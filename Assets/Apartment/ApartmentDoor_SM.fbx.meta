@@ -3,7 +3,27 @@ guid: b8d49d698f116074fb8a7df43ff7498e
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ApartmentDoorBrass_mat
+    second: {fileID: 2100000, guid: cf69cfe002e34e946a4f5f8113f064e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ApartmentDoorMetals_mat
+    second: {fileID: 2100000, guid: 949cf4e68cb10eb45a4de49498e859fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ApartmentDoor_mat
+    second: {fileID: 2100000, guid: bc8f0c590ff9c564e83535f8c08295e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PeepingHoleGlass_mat
+    second: {fileID: 2100000, guid: ec8d3638d0ab9464087ec6bfaf74ad9c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

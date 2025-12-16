@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -2570901135000619732, guid: b68f9a4d808421d41bf046e525fceab3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3fdd772a2bbac3f44b3d189a75ecd959, type: 2}
+      objectReference: {fileID: 2100000, guid: e8d5140b24635e748b81a94f1323024d, type: 2}
     - target: {fileID: 919132149155446097, guid: b68f9a4d808421d41bf046e525fceab3, type: 3}
       propertyPath: m_Name
       value: Desk
@@ -59,11 +59,11 @@ PrefabInstance:
     - target: {fileID: 4688764833614478262, guid: b68f9a4d808421d41bf046e525fceab3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3fdd772a2bbac3f44b3d189a75ecd959, type: 2}
+      objectReference: {fileID: 2100000, guid: e8d5140b24635e748b81a94f1323024d, type: 2}
     - target: {fileID: 5971456542158778415, guid: b68f9a4d808421d41bf046e525fceab3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3fdd772a2bbac3f44b3d189a75ecd959, type: 2}
+      objectReference: {fileID: 2100000, guid: e8d5140b24635e748b81a94f1323024d, type: 2}
     - target: {fileID: 6114729761981388069, guid: b68f9a4d808421d41bf046e525fceab3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
