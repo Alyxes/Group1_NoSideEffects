@@ -15365,7 +15365,7 @@ MonoBehaviour:
   objectToLookAt: {fileID: 1473467804157146505}
   oneTimeUse: 0
   lockPlayerView: 1
-  lockViewTime: 4
+  lockViewTime: 2
 --- !u!135 &938451437
 SphereCollider:
   m_ObjectHideFlags: 0

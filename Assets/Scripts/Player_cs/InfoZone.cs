@@ -34,7 +34,7 @@ namespace NoSideEffects
                 {
                     player.ToggleCameraRotationOff();
                     StartCoroutine(player.SwitchCameraRotationOnTimer(lockViewTime));
-                    player.cameraControl.SetHeadRotation(90f, 90f);
+                    // player.cameraControl.SetHeadRotation(90f, 90f);
                 }
 
                 if (oneTimeUse)
