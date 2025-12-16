@@ -10,30 +10,66 @@ namespace NoSideEffects
         public bool IsMoving, isBeingPulled = false;
         public PlayerController player;
         public Transform playerPosition;
+        public bool XAxis = false;
+        public bool ZAxis = false;
+        public Material mat,mat2;
 
         private bool inZone, isPlayingSound = false;
         private Vector3 OldPos;
         private Rigidbody furniture_rb;
         private InputAction interactButton;
+        private InputAction ResetButton;
+        private Vector3 OrgPos;
+        private Vector3 playerOrgPos= new Vector3(5.87300014f, 0.93900001f, 9.96700001f);
 
-
+        
         void Awake()
         {
             if (player == null)
                 player = GetComponentInChildren<PlayerController>();
-
+            
             playerPosition = player.transform;
-
+            
             furniture_rb = GetComponent<Rigidbody>();
             OldPos = furniture_rb.position;
             interactButton = InputSystem.actions.FindAction("Interact");
+            ResetButton = InputSystem.actions.FindAction("Reset");
+            if (XAxis )
+            {
+                furniture_rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                Material[] mats = GetComponent<MeshRenderer>().materials;
+                mats[0] = mat;
+                GetComponent<MeshRenderer>().materials = mats;
+                
+            }
+            if (ZAxis )
+            {
+                furniture_rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+                Material[] mats = GetComponent<MeshRenderer>().materials;
+                mats[0] = mat2;
+
+                GetComponent<MeshRenderer>().materials = mats;
+            }
+            OrgPos=transform.position;
+
+        }
+
+        void Reset()
+        {
+            transform.position = OrgPos;
+            playerPosition.position = playerOrgPos;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (ResetButton.IsPressed())
+                {
+                    Reset();
+                }
             if (inZone)
             {
+                
                 if (interactButton.IsPressed())
                 {
                     if (IsMovable)
