@@ -12421,11 +12421,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: flashlight
+      value: 
+      objectReference: {fileID: 448484113}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+--- !u!1 &448484113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8380483606172238876, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 448484112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &452107849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24349,6 +24358,7 @@ MonoBehaviour:
   objectID: picture frame
   infoText: Me when I was capable...\nA long time ago.
   player: {fileID: 0}
+  objectToLookAt: {fileID: 0}
   oneTimeUse: 0
   lockPlayerView: 0
   lockViewTime: 0
@@ -34217,7 +34227,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.05
-  far clip plane: 5000
+  far clip plane: 1000
   field of view: 45
   orthographic: 0
   orthographic size: 10

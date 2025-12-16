@@ -11,7 +11,7 @@ namespace NoSideEffects
         public List<ChildTrigger> childTriggers;
 
         [Header("Mesh Change")]
-        public MeshChange meshChange;
+        public List<MeshChange> meshChanges;
 
         public Lightswitch lightSwitch;
 
@@ -54,6 +54,21 @@ namespace NoSideEffects
 
             if (interactButton.WasPressedThisFrame())
                 Tasks();
+        }
+        private void ActivateMesh(string childName)
+        {
+            foreach (var mc in meshChanges)
+            {
+                mc.ActivateChild(childName);
+            }
+        }
+
+        private void DeactivateMesh(string childName)
+        {
+            foreach (var mc in meshChanges)
+            {
+                mc.DeactivateChild(childName);
+            }
         }
 
         public void PlayerEntered(string triggerName)
@@ -189,8 +204,8 @@ private void Day1Task()
                     Debug.Log("Filling watering can...");
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
-                    meshChange.DeactivateChild("HealthyPlant_SM (1)"); meshChange.DeactivateChild("HealthyPlant_SM (2)"); meshChange.DeactivateChild("HealthyPlant_SM (3)");
-                    meshChange.ActivateChild("DeadPlant_SM (1)"); meshChange.ActivateChild("DeadPlant_SM (2)"); meshChange.ActivateChild("DeadPlant_SM (3)");
+                    DeactivateMesh("HealthyPlant_SM (1)"); DeactivateMesh("HealthyPlant_SM (2)"); DeactivateMesh("HealthyPlant_SM (3)");
+                    ActivateMesh("DeadPlant_SM (1)"); ActivateMesh("DeadPlant_SM (2)"); ActivateMesh("DeadPlant_SM (3)");
                     HUD.instance.SetSubTitleText("Theeere we go.");
                     taskState = TaskState.Done;
                     break;
@@ -308,7 +323,7 @@ private void Day1Task()
                     }
                     Debug.Log("I need to remove the eyes");
                     DeactivateTrigger("Eye1");
-                    //Insert to change mesh here
+                    DeactivateMesh("Eye1"); ActivateMesh("Eye1Dmg");
                     ActivateTrigger("Eye2");
                     taskState = TaskState.StepTwo;
                     break;

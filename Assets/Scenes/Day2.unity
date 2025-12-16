@@ -20429,6 +20429,10 @@ PrefabInstance:
       propertyPath: m_TargetTexture
       value: 
       objectReference: {fileID: 8400000, guid: 8ad0300486358fb41b45a3b2034fab78, type: 2}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: flashlight
+      value: 
+      objectReference: {fileID: 1514417013}
     m_RemovedComponents:
     - {fileID: 2082260350067955119, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
     m_RemovedGameObjects: []
@@ -20446,6 +20450,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8e685f162d3c3439339d99005debb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &1514417013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8380483606172238876, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 1514417011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1523921966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8201727050516472740, guid: cd5cf819852ee1f49b34ea29730db2fe, type: 3}
@@ -28492,9 +28501,8 @@ MonoBehaviour:
   childTriggers:
   - {fileID: 532859027}
   - {fileID: 476497652}
-  meshNamesToChange: []
+  meshChanges: []
   lightSwitch: {fileID: 0}
-  meshChange: {fileID: 0}
   playerInventory: {fileID: 0}
   InTaskZone: 0
 --- !u!4 &2138914702
