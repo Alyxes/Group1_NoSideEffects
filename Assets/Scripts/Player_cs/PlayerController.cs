@@ -112,6 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
+        public GameObject flashlight;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
@@ -129,6 +130,7 @@ namespace NoSideEffects
 
         void Awake()
         {
+            flashlight.SetActive(false);
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
             // Head = GetComponent<Transform>();
