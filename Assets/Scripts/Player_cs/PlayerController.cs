@@ -135,6 +135,9 @@ namespace NoSideEffects
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
 
+            //if (cameraControl == null)
+            //    cameraControl = GetComponentInChildren<CameraController>();
+
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
