@@ -112,7 +112,6 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-        [SerializeField] public CameraController cameraControl;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
         [NonSerialized] public float playerSpeed;
@@ -120,6 +119,10 @@ namespace NoSideEffects
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
+        private float currentHeadXrotation;
+        private float wantedHeadXrotation;
+        private float currentHeadYrotation;
+        private float wantedHeadYrotation;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -135,9 +138,6 @@ namespace NoSideEffects
             // interactButton = InputSystem.actions.FindAction("Interact");
             crouchButton = InputSystem.actions.FindAction("Crouch");
 
-            //if (cameraControl == null)
-            //    cameraControl = GetComponentInChildren<CameraController>();
-
             if (inputAxisController == null)
                 inputAxisController = GetComponentInChildren<CinemachineInputAxisController>();
         }
@@ -147,7 +147,11 @@ namespace NoSideEffects
             playerSpeed = playerDaySpeed;
             ToggleCameraRotationOff();
             HUD.instance.SetBlackScreenAlpha(1);
-            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
+            Head.localRotation = Quaternion.Euler(285f, 0f, 0f);
+            currentHeadXrotation = 285f;
+            wantedHeadXrotation = 360f;
+            currentHeadYrotation = 0f;
+            wantedHeadYrotation = 0f;
             wakingUp = true;
             Awakening();
         }
@@ -155,7 +159,33 @@ namespace NoSideEffects
         {
             if (wakingUp)
             {
-                if (HUD.instance.blackScreenFadeOut == false)
+                if (currentHeadXrotation < wantedHeadXrotation)
+                {
+                    currentHeadXrotation += Time.deltaTime * 42f;
+                    Head.localRotation = Quaternion.Euler(currentHeadXrotation, 0f, 0f);
+                    if (currentHeadXrotation > 320f && wantedHeadYrotation == 0f)
+                    {
+                            wantedHeadYrotation = 90f;
+                    }
+                }
+                else
+                {
+                    currentHeadXrotation = wantedHeadXrotation;
+                    Head.localRotation = Quaternion.Euler(0f, currentHeadYrotation, 0f);
+                }
+
+                if (currentHeadYrotation < wantedHeadYrotation)
+                {
+                    currentHeadYrotation += Time.deltaTime * 64f;
+                    Head.localRotation = Quaternion.Euler(currentHeadXrotation, currentHeadYrotation, 0f);
+                }
+                else
+                {
+                    currentHeadYrotation = wantedHeadYrotation;
+                    Head.localRotation = Quaternion.Euler(currentHeadXrotation, currentHeadYrotation, 0f);
+                }
+
+                if (currentHeadXrotation == wantedHeadXrotation && currentHeadYrotation == wantedHeadYrotation)
                 {
                     StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 1f));
                 }
@@ -245,6 +275,17 @@ namespace NoSideEffects
             if (initiateHeadLerp)
                 wantedHeadHeight = 0.485f;
         }
+        public void SetHeadHeightSpecific(float _height, bool setHeadPosition, bool initiateHeadLerp)
+        {
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, _height, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = _height;
+        }
+        public void StartRiseFromBedAnimation()
+        {
+
+        }
         public void DampingPlanarMovement(float amount)
         {
             rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
@@ -287,7 +328,7 @@ namespace NoSideEffects
                 Debug.LogWarning("No CinemachineInputAxisController found to modify controllers.");
                 return;
             }
-
+            
             inputAxisController.SynchronizeControllers();
 
             var controller = inputAxisController.GetController(axisName);
