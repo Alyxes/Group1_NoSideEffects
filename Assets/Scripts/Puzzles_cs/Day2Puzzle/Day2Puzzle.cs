@@ -14,7 +14,10 @@ namespace NoSideEffects
 
         private InputAction interactButton;
         private bool InZone = false;
-        private bool HasCombination = false;
+
+        // Names of the LostButtons that must be collected
+        [Header("Required LostButtons")]
+        [SerializeField] private string[] requiredButtons = { "PhoneButtonLost", "PhoneButtonLost (1)" };
 
         private void Awake()
         {
@@ -32,23 +35,31 @@ namespace NoSideEffects
         {
             if (interactButton == null) return;
 
-            if (interactButton.WasPressedThisFrame())
+            if (interactButton.WasPressedThisFrame() && InZone)
             {
-                if (InZone)
+                // Check if player has collected all required LostButtons
+                bool hasAllButtons = true;
+                foreach (string buttonName in requiredButtons)
                 {
-                    if (combinationItem.HasCombination)
+                    if (!LostButtons.pickedUpObjects.Contains(buttonName))
                     {
-                        combination?.SetActive(true);
+                        hasAllButtons = false;
+                        break;
                     }
+                }
+
+                if (hasAllButtons)
+                {
+                    // Player has all buttons — show UI and allow interaction
+                    combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
                     phoneButton?.SetActive(true);
                     Cursor.lockState = CursorLockMode.None;
                     Camera.ToggleCameraRotationOff();
                 }
                 else
                 {
-                    phoneButton?.SetActive(false);
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Camera.ToggleCameraRotationOn();
+                    // Player is missing buttons
+                    Debug.Log("You need to collect all LostButtons first!");
                 }
             }
         }
@@ -66,8 +77,8 @@ namespace NoSideEffects
                 InZone = false;
                 phoneButton?.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                Camera.ToggleCameraRotationOn();
             }
         }
     }
 }
-
