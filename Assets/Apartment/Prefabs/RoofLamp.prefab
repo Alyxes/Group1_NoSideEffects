@@ -42,7 +42,7 @@ Light:
   m_GameObject: {fileID: 7959182880200702846}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6422.2417
   m_Range: 10
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_ShadowFadeDistance: 10000
   m_UseContactShadow:
     m_Override: 0
-    m_UseOverride: 0
+    m_UseOverride: 1
     m_Level: 2
   m_RayTracedContactShadow: 0
   m_ShadowTint: {r: 0, g: 0, b: 0, a: 1}
@@ -289,6 +289,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -799063249234826353, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -799063249234826353, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e5a2a396115864f45a531ca708a29805, type: 2}
@@ -297,9 +301,21 @@ PrefabInstance:
       value: RoofLamp
       objectReference: {fileID: 0}
     - target: {fileID: 2285397613093665803, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285397613093665803, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4dcb504b9d89f9e4cbec4aff18b6df77, type: 2}
+    - target: {fileID: 4079420923344576079, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573404709709479995, guid: 226957111ef6848439bd99d99f6c9124, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

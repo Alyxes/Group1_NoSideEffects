@@ -45,7 +45,7 @@ namespace NoSideEffects
                 {
                     currentRotation = wantedRotation;
                     if (!open)
-                        AudioManager.PlaySound(SoundType.DOORCLOSE);
+                        AudioManager.PlaySound(SoundType.DOORCLOSE, AudioManager.instance.audSrc_DoorSound);
                 }
             }
 

@@ -8,7 +8,7 @@ namespace NoSideEffects
         [Header("Item Data")]
         public string itemID;
         public GameObject model;
-
+        public GameObject Flashlight;
         [Header("Pickup Rotation")]
         public Vector3 pickupRotation = Vector3.zero;
 
@@ -80,6 +80,14 @@ namespace NoSideEffects
             model.transform.localPosition = Vector3.zero;
             model.transform.localRotation = Quaternion.Euler(pickupRotation);
 
+            // -----------------------------
+            // Activate flashlight if this item is the flashlight
+            // -----------------------------
+            if (itemID == "Flashlight" && Flashlight != null)
+            {
+                Flashlight.SetActive(true);
+            }
+
             HUD.instance.SetPutDownText(itemID);
 
             // Start Task in TaskSwitch
@@ -90,16 +98,24 @@ namespace NoSideEffects
             }
         }
 
-
         private void DropItem()
         {
             PlayerInventory.currentHeldItem = null;
             isHeld = false;
 
+            // -----------------------------
+            // Deactivate flashlight if this item is the flashlight
+            // -----------------------------
+            if (itemID == "Flashlight" && Flashlight != null)
+            {
+                Flashlight.SetActive(false);
+            }
+
             model.transform.SetParent(transform);
             model.transform.position = originalPosition;
             model.transform.rotation = originalRotation;
         }
+
 
         private void OnTriggerEnter(Collider other)
         {

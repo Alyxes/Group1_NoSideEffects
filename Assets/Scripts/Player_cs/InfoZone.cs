@@ -9,7 +9,11 @@ namespace NoSideEffects
         [Header("Zone Data")]
         public string objectID;
         public string infoText;
+        public PlayerController player;
+        public Transform objectToLookAt;
         public bool oneTimeUse = false;
+        public bool lockPlayerView = false;
+        public float lockViewTime = 0f;
         [NonSerialized] public bool hasBeenChecked = false;
 
         private bool inZone = false;
@@ -25,6 +29,12 @@ namespace NoSideEffects
             {
                 HUD.instance.SetSubTitleText(infoText);
                 hasBeenChecked = true;
+
+                if (lockPlayerView)
+                {
+                    player.ToggleCameraRotationOff();
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(lockViewTime));
+                }
 
                 if (oneTimeUse)
                 {

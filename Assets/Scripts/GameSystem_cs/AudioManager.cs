@@ -20,7 +20,22 @@ namespace NoSideEffects
 
         public static AudioManager instance;
 
-        private AudioSource audioSource;
+        // Sound channels kinda...
+        public AudioSource audSrc_Music;
+        public AudioSource audSrc_ApartmentNoise;
+        public AudioSource audSrc_NeighbourNoise;
+        public AudioSource audSrc_WindowNoise;
+        public AudioSource audSrc_FanNoise;
+        public AudioSource audSrc_MovingFurniture;
+        public AudioSource audSrc_DoorSound;
+        public AudioSource audSrc_InteractSound;
+        public AudioSource audSrc_PlayerVoice;
+        public AudioSource audSrc_PlayerMovement;
+        public AudioSource audSrc_OtherVoice;
+        public AudioSource audSrc_NoisyVoices;
+        public AudioSource audSrc_SuddenSound;
+        public AudioSource audSrc_OtherSound;
+        public AudioSource audSrc_DistantSound;
 
         private void Awake()
         {
@@ -32,49 +47,91 @@ namespace NoSideEffects
             else
             {
                 Destroy(gameObject);
+                return;
             }
+
+            audSrc_Music = GetComponent<AudioSource>();
+            audSrc_ApartmentNoise = GetComponent<AudioSource>();
+            audSrc_NeighbourNoise = GetComponent<AudioSource>();
+            audSrc_WindowNoise = GetComponent<AudioSource>();
+            audSrc_FanNoise = GetComponent<AudioSource>();
+            audSrc_MovingFurniture = GetComponent<AudioSource>();
+            audSrc_DoorSound = GetComponent<AudioSource>();
+            audSrc_InteractSound = GetComponent<AudioSource>();
+            audSrc_PlayerVoice = GetComponent<AudioSource>();
+            audSrc_PlayerMovement = GetComponent<AudioSource>();
+            audSrc_OtherVoice = GetComponent<AudioSource>();
+            audSrc_NoisyVoices = GetComponent<AudioSource>();
+            audSrc_SuddenSound = GetComponent<AudioSource>();
+            audSrc_OtherSound = GetComponent<AudioSource>();
+            audSrc_DistantSound = GetComponent<AudioSource>();
         }
-        void Start()
+        public static void PlaySound(SoundType sound, AudioSource audioSource, float _volume = 1)
         {
-            audioSource = GetComponent<AudioSource>();
+            audioSource.volume = _volume;
+            audioSource.PlayOneShot(instance.soundList[(int)sound], _volume);
         }
-        public static void PlaySound(SoundType sound, float volume = 1)
+        public static void StartLoopingSound(SoundType sound, AudioSource audioSource, float _volume = 1)
         {
-            instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
-        }
-        public static void StartLoopingSound(SoundType sound, float volume = 1)
-        {
-            instance.audioSource.clip = instance.soundList[(int)sound];
-            instance.audioSource.loop = true;
-            instance.audioSource.volume = volume;
-            instance.audioSource.Play();
+            audioSource.clip = instance.soundList[(int)sound];
+            audioSource.loop = true;
+            audioSource.volume = _volume;
+            audioSource.Play();
         }
         // function to stop playing sound, giving option to fade out.
-        public static void StopSound(bool fadeOut = false, float fadeDuration = 1f)
+        public static void StopSound(AudioSource audioSource, bool fadeOut = false, float fadeDuration = 1f)
         {
             if (fadeOut)
             {
-                instance.StartCoroutine(FadeOutSound(fadeDuration));
+                instance.StartCoroutine(FadeOutSound(audioSource, fadeDuration));
             }
             else
             {
-                instance.audioSource.Stop();
-                instance.audioSource.loop = false;
+                audioSource.Stop();
+                audioSource.loop = false;
+                audioSource.volume = 0;
             }
         }
-        private static IEnumerator FadeOutSound(float fadeDuration)
+        public static void PlayFadeInSound(SoundType sound, AudioSource audioSource, float fadeInDuration, bool isLooping = true, float startVolume = 0f, float goalVolume = 1f)
         {
-            float startVolume = instance.audioSource.volume;
+            audioSource.clip = instance.soundList[(int)sound];
+            audioSource.volume = startVolume;
+
+            if (isLooping)
+            {
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.PlayOneShot(instance.soundList[(int)sound], audioSource.volume);
+            }
+
+            instance.StartCoroutine(FadeInSound(audioSource, fadeInDuration, goalVolume));
+        }
+        public static IEnumerator FadeOutSound(AudioSource audioSource, float fadeDuration)
+        {
+            float startVolume = audioSource.volume;
             float time = 0;
             while (time < fadeDuration)
             {
                 time += Time.deltaTime;
-                instance.audioSource.volume = Mathf.Lerp(startVolume, 0, time / fadeDuration);
+                audioSource.volume = Mathf.Lerp(startVolume, 0, time / fadeDuration);
                 yield return null;
             }
-            instance.audioSource.Stop();
-            instance.audioSource.loop = false;
-            instance.audioSource.volume = startVolume; // Reset volume for future use
+            audioSource.Stop();
+            audioSource.loop = false;
+        }
+        public static IEnumerator FadeInSound(AudioSource audioSource, float fadeInDuration, float goalVolume = 1f)
+        {
+            float finalVolume = goalVolume;
+            float time = 0;
+            while (time < fadeInDuration)
+            {
+                time += Time.deltaTime;
+                audioSource.volume = Mathf.Lerp(audioSource.volume, finalVolume, time / fadeInDuration);
+                yield return null;
+            }
         }
     }
 }

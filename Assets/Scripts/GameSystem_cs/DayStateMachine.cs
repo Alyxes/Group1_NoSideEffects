@@ -126,7 +126,7 @@ namespace NoSideEffects
         private void BaseStartOfDay(string dayName)
         {
             SceneManager.LoadScene(dayName);
-            AudioManager.StartLoopingSound(SoundType.APARTMENTBUZZING);
+            AudioManager.StartLoopingSound(SoundType.APARTMENTBUZZING, AudioManager.instance.audSrc_ApartmentNoise);
         }
         private void CleanupDay()
         {

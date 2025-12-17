@@ -112,19 +112,29 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
+        public GameObject flashlight;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
-        [SerializeField] public float playerSpeed;
-        [SerializeField] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
+        [NonSerialized] public float playerSpeed;
+        [NonSerialized] public bool canMove, wakingUp, isCrouching, isMovingFurniture = false;
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
+        private float currentHeadXrotation;
+        private float wantedHeadXrotation;
+        private float currentHeadYrotation;
+        private float wantedHeadYrotation;
+        private float currentXposition;
+        private float wantedXposition;
+        private float currentZposition;
+        private float wantedZposition;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
 
         void Awake()
         {
+            flashlight.SetActive(false);
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
             // Head = GetComponent<Transform>();
@@ -141,22 +151,30 @@ namespace NoSideEffects
         {
             Cursor.lockState = CursorLockMode.Locked;
             playerSpeed = playerDaySpeed;
+
             ToggleCameraRotationOff();
             HUD.instance.SetBlackScreenAlpha(1);
-            // Head.localRotation = Quaternion.Euler(-75f, 0f, 0f);
-            wakingUp = true;
+            SetPlayerHeightCrouching(true, false);
+            Head.localRotation = Quaternion.Euler(285f, 0f, 0f);
+
+            currentHeadXrotation = 285f;
+            wantedHeadXrotation = 360f;
+            currentHeadYrotation = 270f;
+            wantedHeadYrotation = 270f;
+
+            currentXposition = transform.localPosition.x;
+            currentZposition = transform.localPosition.z;
+            wantedXposition = currentXposition;
+            wantedZposition = currentZposition;
+
             Awakening();
         }
         void Update()
         {
             if (wakingUp)
             {
-                if (HUD.instance.blackScreenFadeOut == false)
-                {
-                    StartCoroutine(WaitAndRunFuncton(() => { RiseFromBed(); return null; }, 1f));
-                }
-                else
-                    return;
+                RiseFromBedAnimation();
+                return;
             }
 
             if (canMove && crouchButton.WasPressedThisFrame())
@@ -201,23 +219,129 @@ namespace NoSideEffects
         }
         public void ToggleCrouch()
         {
-            if (!isCrouching)
+            if (canMove)
             {
-                Debug.Log(Head.position.y);
-                isCrouching = true;
-                playerBody.GetComponent<CapsuleCollider>().height = 1f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+                if (!isCrouching)
+                {
+                    isCrouching = true;
+                    SetPlayerHeightCrouching(false, true);
+                    playerSpeed = 0.8f;
+                }
+                else
+                {
+                    isCrouching = false;
+                    SetPlayerHeightNormal(false, true);
+                    playerSpeed = playerDaySpeed;
+                }
+            }
+        }
+        public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+            if (setHeadPosition || initiateHeadLerp)
+                SetPlayerHeadNormal(setHeadPosition, initiateHeadLerp);
+        }
+        public void SetPlayerHeadNormal(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 1.785f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 1.785f;
+        }
+        public void SetPlayerHeightCrouching(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 1f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.378f, 0f);
+            if (setHeadPosition || initiateHeadLerp)
+                SetPlayerHeadCrouching(setHeadPosition, initiateHeadLerp);
+        }
+        public void SetPlayerHeadCrouching(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.885f, Head.position.z);
+            if (initiateHeadLerp)
                 wantedHeadHeight = 0.885f;
-                playerSpeed = 0.8f;
+        }
+        public void SetPlayerHeightCrawling(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            playerBody.GetComponent<CapsuleCollider>().height = 0.7f;
+            playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, -0.535f, 0f);
+            if (setHeadPosition || initiateHeadLerp)
+                SetPlayerHeadCrawling(setHeadPosition, initiateHeadLerp);
+        }
+        public void SetPlayerHeadCrawling(bool setHeadPosition, bool initiateHeadLerp)
+        {
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, 0.485f, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = 0.485f;
+        }
+        public void SetHeadHeightSpecific(float _height, bool setHeadPosition, bool initiateHeadLerp)
+        {
+            if (setHeadPosition)
+                Head.position = new Vector3(Head.position.x, _height, Head.position.z);
+            if (initiateHeadLerp)
+                wantedHeadHeight = _height;
+        }
+        public void RiseFromBedAnimation()
+        {
+            if (currentHeadXrotation < wantedHeadXrotation)
+            {
+                currentHeadXrotation += Time.deltaTime * 42f;
+                Head.localRotation = Quaternion.Euler(currentHeadXrotation, 0f, 0f);
+                if (currentHeadXrotation > 320f && wantedHeadYrotation == 270f)
+                {
+                    wantedHeadYrotation = 360f;
+                }
             }
             else
             {
-                Debug.Log(Head.position.y);
-                isCrouching = false;
-                playerBody.GetComponent<CapsuleCollider>().height = 1.75f;
-                playerBody.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
-                wantedHeadHeight = 1.785f;
-                playerSpeed = playerDaySpeed;
+                currentHeadXrotation = wantedHeadXrotation;
+                Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+
+            if (currentHeadYrotation < wantedHeadYrotation)
+            {
+                currentHeadYrotation += Time.deltaTime * 64f;
+                transform.localRotation = Quaternion.Euler(0f, currentHeadYrotation, 0f);
+
+                if (currentHeadYrotation > 285f && wantedZposition == currentZposition)
+                    wantedZposition = transform.localPosition.z + 1.5f;
+            }
+            else
+            {
+                currentHeadYrotation = wantedHeadYrotation;
+                transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+
+            if (currentXposition > wantedXposition)
+            {
+                currentXposition -= Time.deltaTime;
+                transform.localPosition = new Vector3(currentXposition, transform.localPosition.y, transform.localPosition.z);
+            }
+            else
+            {
+                currentXposition = wantedXposition;
+                transform.localPosition = new Vector3(currentXposition, transform.localPosition.y, transform.localPosition.z);
+            }
+
+            if (currentZposition < wantedZposition)
+            {
+                currentZposition += Time.deltaTime;
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, currentZposition);
+            }
+            else
+            {
+                currentZposition = wantedZposition;
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, currentZposition);
+            }
+
+            if (currentHeadXrotation == wantedHeadXrotation && currentHeadYrotation == wantedHeadYrotation && currentZposition == wantedZposition)
+            {
+                SetPlayerHeightNormal(false, false);
+                StartCoroutine(WaitAndRunFuncton(() => { ExitBed(); return null; }, 1f));
+                wakingUp = false;
             }
         }
         public void DampingPlanarMovement(float amount)
@@ -231,24 +355,24 @@ namespace NoSideEffects
         }
         public void Awakening()
         {
+            wakingUp = true;
+
             HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
             StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
 
             HUD.instance.blackScreenFadeOut = true;
             HUD.instance.blackScreenFadeSpeed = 0.4f;
 
-            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED);
-        }
-        public void RiseFromBed()
-        {
-            // DSM.instance.StartingNewDay(DSM.Days.Day2); // Sparad här för att ha till hands senare.
-            // Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            SetPlayerHeadNormal(false, true);
+            wantedXposition = transform.localPosition.x - 1f;
 
+            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED, AudioManager.instance.audSrc_PlayerMovement);
+        }
+        public void ExitBed()
+        {
+            ToggleCameraRotationOn();
             canMove = true;
 
-            ToggleCameraRotationOn();
-
-            wakingUp = false;
             // This text will be different or be none at all depending on the day.
             if (DSM.instance.wakeUpMonologue != "")
                 StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
@@ -262,7 +386,7 @@ namespace NoSideEffects
                 Debug.LogWarning("No CinemachineInputAxisController found to modify controllers.");
                 return;
             }
-
+            
             inputAxisController.SynchronizeControllers();
 
             var controller = inputAxisController.GetController(axisName);
@@ -310,6 +434,26 @@ namespace NoSideEffects
         {
             SetControllerEnabledByName("Look X", true);
             SetControllerEnabledByName("Look Y", true);
+        }
+        public IEnumerator SwitchCameraRotationOnTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOn();
+        }
+        public IEnumerator SwitchCameraRotationOffTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            ToggleCameraRotationOff();
+        }
+        public IEnumerator SwitchOnPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = true;
+        }
+        public IEnumerator SwitchOffPlayerMovementTimer(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canMove = false;
         }
     }
 }
