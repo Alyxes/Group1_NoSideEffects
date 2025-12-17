@@ -239,7 +239,8 @@ private void Day1Task()
                     lightSwitch.ChangeMaterials();
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
-                    Debug.Log("Go to Fusebox to start ToolBox task.");
+                    Debug.Log("Go to Fusebox to start task.");
+                    HUD.instance.SetSubTitleText("Great, the power's out now too...\nI need to find and change the fuses.");
                     break;
                 case TaskState.StepOne:
                     if (currentTrigger != "FuseBox")
@@ -259,7 +260,6 @@ private void Day1Task()
                         Debug.Log("Go to one of the fuses to pick it up.");
                         return;
                     }
-
                     Debug.Log("Picking up fuse...");
 
                     if (currentTrigger == "Fuse1")
@@ -292,7 +292,7 @@ private void Day1Task()
                     }
                     else
                     {
-                        HUD.instance.SetSubTitleText("You picked up a fuse. Find the other one.");
+                        HUD.instance.SetSubTitleText("Got one fuse. Find the other one.");
                     }
                     break;
 
@@ -319,7 +319,8 @@ private void Day1Task()
             {
                 case TaskState.None:
                     ActivateTrigger("Eye1");
-                    Debug.Log("Gotta get rid of these eyes");
+                    HUD.instance.SetSubTitleText("Woahh... What are those things?\n" +
+                        "They look like eyes... I need to get rid of them.");
                     taskState = TaskState.StepOne;
                     break;
                 case TaskState.StepOne:
@@ -328,7 +329,7 @@ private void Day1Task()
                         Debug.Log("You must be at the Door to proceed.");
                         return;
                     }
-                    Debug.Log("I need to remove the eyes");
+                    HUD.instance.SetSubTitleText("Bye bye mister eye.");
                     DeactivateTrigger("Eye1");
                     DeactivateMesh("Eye1"); ActivateMesh("Eye1Dmg");
                     ActivateTrigger("Eye2");
@@ -340,7 +341,7 @@ private void Day1Task()
                         Debug.Log("You must be at the Eye to proceed.");
                         return;
                     }
-                    Debug.Log("Removing eye...");
+                    HUD.instance.SetSubTitleText("Another one bites the dust.");
                     DeactivateTrigger("Eye2");
                     DeactivateMesh("Eye2"); ActivateMesh("Eye2Dmg");
                     ActivateTrigger("Eye3");
@@ -349,13 +350,14 @@ private void Day1Task()
                     break;
 
                 case TaskState.StepThree:
+                    HUD.instance.SetSubTitleText("More!?!...Where are they coming from!?");
                     if (currentTrigger != "Eye3" && currentTrigger != "Eye4")
                     {
                         Debug.Log("Go to one of the eyes and destroy it");
                         return;
                     }
 
-                    Debug.Log("Destroying Eye");
+                    HUD.instance.SetSubTitleText("Why are they blocking the windows?");
 
                     if (currentTrigger == "Eye3")
                     {
@@ -378,7 +380,7 @@ private void Day1Task()
                     }
                     else
                     {
-                        HUD.instance.SetSubTitleText("You got more eyes to destroy");
+                        HUD.instance.SetSubTitleText("I gotta get the last one.");
                     }
                     break;
 
@@ -393,7 +395,7 @@ private void Day1Task()
                     transform.Find("EyeTrigger5").gameObject.SetActive(false);
                     keyZone.SetActive(true);
                     taskState = TaskState.Done;
-                    HUD.instance.SetSubTitleText("All eyes are gone. Let's open this door.");
+                    HUD.instance.SetSubTitleText("All eyes are gone. And... \n" + "it dropped a mysterious key?");
                     break;
 
                 case TaskState.Done:
@@ -407,6 +409,7 @@ private void Day1Task()
             ActivateTrigger("Door");
             door.canBeOpened = true;
             Debug.Log("Go to the door to use the key.");
+            HUD.instance.SetSubTitleText("This key looks like it fits the door.\nLet's see what's in here.");
         }
     }
 }
