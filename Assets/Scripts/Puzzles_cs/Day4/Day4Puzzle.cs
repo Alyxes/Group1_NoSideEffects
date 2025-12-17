@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Day4Puzzle : MonoBehaviour
 {
+    public Lightswitch lightswitch; 
     private bool inZone = false;
     public TaskSwitch day4TaskSwitch;
     private void OnTriggerEnter(Collider other)
