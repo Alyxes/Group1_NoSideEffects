@@ -232,6 +232,16 @@ MonoBehaviour:
   playerBody: {fileID: 2419550440057724488}
   Head: {fileID: 3761074729845616084}
   FPViewCamera: {fileID: 6846272917935288821}
+  pillBottle: {fileID: 0}
+  flashlight: {fileID: 0}
+  currentHeadXrotation: 0
+  wantedHeadXrotation: 0
+  currentHeadYrotation: 0
+  wantedHeadYrotation: 0
+  currentXposition: 0
+  wantedXposition: 0
+  currentZposition: 0
+  wantedZposition: 0
 --- !u!114 &7989836947901242678
 MonoBehaviour:
   m_ObjectHideFlags: 0
