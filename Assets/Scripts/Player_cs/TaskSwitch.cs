@@ -219,7 +219,7 @@ private void Day1Task()
                     Debug.Log("Watering the plant... Task Complete!");
                     HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
                     DeactivateTrigger("Plant");
-                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day3, 10f));
+                    DSM.instance.isDoneForTheDay = true;
                     break;
             }
         }
