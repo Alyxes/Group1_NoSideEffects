@@ -1,89 +1,88 @@
-using NoSideEffects;
 using UnityEngine;
 
 namespace NoSideEffects
 {
     public class PlayerInventory : MonoBehaviour
     {
-        // Currently held item (static so ItemPickup can access it)
+        // Right and Left hand items
         public static ItemPickup currentHeldItem;
+        public static ItemPickup currentHeldItemLeft;
 
-        // Hold points
         public static Transform holdPoint;
-        public static Transform holdPoint2; // ADDED
+        public static Transform holdPoint2;
 
-        [Header("Hold Point References")]
-        [SerializeField] private Transform holdPointReference;   // Assign in Inspector
-        [SerializeField] private Transform holdPoint2Reference;  // ADDED: Assign second hold point in Inspector
+        [SerializeField] private Transform holdPointReference;
+        [SerializeField] private Transform holdPoint2Reference;
 
-        [Header("Reference to TaskSwitch")]
-        [SerializeField] private TaskSwitch taskSwitch; // Assign in Inspector
+        [SerializeField] private TaskSwitch taskSwitch;
 
-        // Property for currently held item's ID
-        public string HeldItemID
-        {
-            get
-            {
-                if (currentHeldItem != null)
-                    return currentHeldItem.itemID;
-                else
-                    return null;
-            }
-        }
+        public string HeldItemID => currentHeldItem != null ? currentHeldItem.itemID : null;
+        public string HeldItemIDLeft => currentHeldItemLeft != null ? currentHeldItemLeft.itemID : null;
 
         private void Awake()
         {
-            // Assign static hold point from inspector reference
-            if (holdPointReference != null)
-            {
-                holdPoint = holdPointReference;
-            }
-            else
-            {
-                Debug.LogError("PlayerInventory: HoldPoint not assigned in Inspector!");
-            }
+            // Assign hold points
+            if (holdPointReference != null) holdPoint = holdPointReference;
+            if (holdPoint2Reference != null) holdPoint2 = holdPoint2Reference;
 
-            // ADDED: Assign second hold point
-            if (holdPoint2Reference != null)
-            {
-                holdPoint2 = holdPoint2Reference;
-            }
-            else
-            {
-                Debug.LogWarning("PlayerInventory: HoldPoint2 not assigned (optional).");
-            }
+            // Ensure taskSwitch exists
+            if (taskSwitch == null)
+                taskSwitch = FindObjectOfType<TaskSwitch>();
         }
 
-        public void PickUpItem(ItemPickup pickedUpItem)
+        public void PickUpItem(ItemPickup pickedUpItem, bool leftHand = false)
         {
             if (pickedUpItem == null) return;
 
-            currentHeldItem = pickedUpItem;
-
-            // Attach item to hold point
-            if (holdPoint != null)
+            if (leftHand)
             {
-                pickedUpItem.transform.SetParent(holdPoint);
-                pickedUpItem.transform.localPosition = Vector3.zero;
-                pickedUpItem.transform.localRotation = Quaternion.identity;
+                currentHeldItemLeft = pickedUpItem;
+                if (holdPoint2 != null)
+                {
+                    pickedUpItem.transform.SetParent(holdPoint2);
+                    pickedUpItem.transform.localPosition = Vector3.zero;
+                    pickedUpItem.transform.localRotation = Quaternion.identity;
+                }
+                Debug.Log("Picked up (Left Hand): " + pickedUpItem.itemID);
+            }
+            else
+            {
+                currentHeldItem = pickedUpItem;
+                if (holdPoint != null)
+                {
+                    pickedUpItem.transform.SetParent(holdPoint);
+                    pickedUpItem.transform.localPosition = Vector3.zero;
+                    pickedUpItem.transform.localRotation = Quaternion.identity;
+                }
+                Debug.Log("Picked up (Right Hand): " + pickedUpItem.itemID);
             }
 
-            Debug.Log("Picked up: " + pickedUpItem.itemID);
+            // Trigger task immediately
+            if (taskSwitch == null)
+                taskSwitch = FindObjectOfType<TaskSwitch>();
 
-            // Start task in TaskSwitch automatically
-            if (taskSwitch != null)
-            {
-                taskSwitch.playerInventory = this;
-                taskSwitch.StartTaskForCurrentItem();
-            }
+            taskSwitch?.StartTaskForCurrentItem();
         }
 
-        public void DropItem()
+        public void DropItem(bool leftHand = false)
         {
-            if (currentHeldItem != null)
+            if (leftHand)
             {
-                currentHeldItem.transform.SetParent(null);
-                currentHeldItem = null;
+                if (currentHeldItemLeft != null)
+                {
+                    currentHeldItemLeft.transform.SetParent(null);
+                    Debug.Log("Dropped: " + currentHeldItemLeft.itemID + " (Left Hand)");
+                    currentHeldItemLeft = null;
+                }
+            }
+            else
+            {
+                if (currentHeldItem != null)
+                {
+                    currentHeldItem.transform.SetParent(null);
+                    Debug.Log("Dropped: " + currentHeldItem.itemID + " (Right Hand)");
+                    currentHeldItem = null;
+                }
             }
         }
     }

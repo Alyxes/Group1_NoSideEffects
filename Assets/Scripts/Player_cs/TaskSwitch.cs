@@ -1,9 +1,7 @@
-
-using NoSideEffects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
+using UnityEngine.SceneManagement;
 
 namespace NoSideEffects
 {
@@ -11,52 +9,44 @@ namespace NoSideEffects
     {
         [Header("Child Triggers")]
         public List<ChildTrigger> childTriggers;
-        [Header("Mesh Change")]
-        public List<MeshChange> meshNamesToChange;
 
-        public MeshChange meshChange;
+        [Header("Mesh Change")]
+        public List<MeshChange> meshChanges;
+
+        public Lightswitch lightSwitch;
+
         [Header("Player Inventory")]
-        public PlayerInventory playerInventory; // Assign in inspector (optional, mostly for HeldItemID property)
+        public PlayerInventory playerInventory;
+
         public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
         public static bool Item2TaskDone = false;
         public static bool Item3TaskDone = false;
 
-
         private InputAction interactButton;
-        private string itemIDValue;
         private string currentTrigger = "";
         private bool fuse1Collected, fuse2Collected = false;
 
-
-
-        private enum TaskState
-        {
-            None,
-            StepOne,
-            StepTwo,
-            StepThree,
-            StepFour,
-            StepFive,
-            Done
-        }
-
+        private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, Done }
         private TaskState taskState = TaskState.None;
 
+        [System.Obsolete]
         private void Awake()
         {
             interactButton = InputSystem.actions.FindAction("Interact");
+
+            // Ensure playerInventory is assigned
+            if (playerInventory == null)
+                playerInventory = FindObjectOfType<PlayerInventory>();
         }
 
-      private void Start()
-{
-    var keyZone = transform.Find("KeyZone");
-    if (keyZone != null)
-        keyZone.gameObject.SetActive(false);
+        private void Start()
+        {
+            var keyZone = transform.Find("KeyZone");
+            if (keyZone != null) keyZone.gameObject.SetActive(false);
 
-    DisableAllTriggers();
-}
-
+            DisableAllTriggers();
+        }
 
         private void Update()
         {
@@ -64,6 +54,21 @@ namespace NoSideEffects
 
             if (interactButton.WasPressedThisFrame())
                 Tasks();
+        }
+        private void ActivateMesh(string childName)
+        {
+            foreach (var mc in meshChanges)
+            {
+                mc.ActivateChild(childName);
+            }
+        }
+
+        private void DeactivateMesh(string childName)
+        {
+            foreach (var mc in meshChanges)
+            {
+                mc.DeactivateChild(childName);
+            }
         }
 
         public void PlayerEntered(string triggerName)
@@ -74,33 +79,8 @@ namespace NoSideEffects
 
         public void PlayerExited(string triggerName)
         {
-            if (currentTrigger == triggerName)
-                currentTrigger = "";
-
+            if (currentTrigger == triggerName) currentTrigger = "";
             InTaskZone = false;
-        }
-        private void ActivateTrigger(string triggerName)
-        {
-            foreach (var child in childTriggers)
-            {
-                if (child.triggerName == triggerName)
-                {
-                    child.SetTriggerActive(true);
-                    return;
-                }
-            }
-        }
-
-        private void DeactivateTrigger(string triggerName)
-        {
-            foreach (var child in childTriggers)
-            {
-                if (child.triggerName == triggerName)
-                {
-                    child.SetTriggerActive(false);
-                    return;
-                }
-            }
         }
 
         public void DisableAllTriggers()
@@ -109,100 +89,74 @@ namespace NoSideEffects
                 child.SetTriggerActive(false);
         }
 
+        private void ActivateTrigger(string triggerName)
+        {
+            foreach (var child in childTriggers)
+                if (child.triggerName == triggerName)
+                    child.SetTriggerActive(true);
+        }
+
+        private void DeactivateTrigger(string triggerName)
+        {
+            foreach (var child in childTriggers)
+                if (child.triggerName == triggerName)
+                    child.SetTriggerActive(false);
+        }
+
         // -----------------------------
-        // Start task when an item is picked up
+        // Start task for current item (checks both hands)
         // -----------------------------
         public void StartTaskForCurrentItem()
         {
-            // Use static variable directly
-            if (PlayerInventory.currentHeldItem == null) return;
+            ItemPickup itemToUse = PlayerInventory.currentHeldItem ?? PlayerInventory.currentHeldItemLeft;
 
-            // Get item ID
-            itemIDValue = PlayerInventory.currentHeldItem.itemID;
-
-            switch (itemIDValue)
+            if (itemToUse == null)
             {
-                case "WaterCan":
-                    Debug.Log("Starting Water Task automatically");
-                    if (taskState != TaskState.Done)
-                        taskState = TaskState.None;
-
-                    Day1Task(); // Activate Sink trigger immediately
-                    break;
-
-                case "ToolBox":
-                    Debug.Log("Starting ToolBox Task automatically");
-                    if (taskState != TaskState.Done)
-                        taskState = TaskState.None;
-                    Day4Task(); // Activate TriggerA immediately
-                    break;
-
-                case "Knife":
-                    Debug.Log("Starting Knife Task automatically");
-                    if (taskState != TaskState.Done)
-                        taskState = TaskState.None;
-                    Day6Task(); // Activate TriggerA immediately
-                    break;
-                case "Key":
-                    Debug.Log("Starting Knife Task automatically");
-                    if (taskState != TaskState.Done)
-                        taskState = TaskState.None;
-                    KeyTask(); // Activate TriggerA immediately
-                    break;
-
-                default:
-                    Debug.Log("No task assigned for this item");
-                    break;
+                Debug.Log("No item in either hand to start task.");
+                return;
             }
+
+            Debug.Log("Starting task for: " + itemToUse.itemID);
+            StartTaskByID(itemToUse.itemID);
         }
 
         public void Tasks()
         {
-            if (PlayerInventory.currentHeldItem != null)
-                itemIDValue = PlayerInventory.currentHeldItem.itemID;
+            ItemPickup itemToUse = PlayerInventory.currentHeldItem ?? PlayerInventory.currentHeldItemLeft;
 
-            switch (itemIDValue)
+            if (itemToUse == null)
+            {
+                Debug.Log("No item in either hand to use task.");
+                return;
+            }
+
+            StartTaskByID(itemToUse.itemID);
+        }
+
+        private void StartTaskByID(string itemID)
+        {
+            switch (itemID)
             {
                 case "WaterCan":
-                    if (ItemTaskDone)
-                    {
-                        Debug.Log("Water Task already completed.");
-                        return;
-                    }
-                    Day1Task();
+                    if (!ItemTaskDone) Day1Task();
                     break;
-
-                case "ToolBox":
-                    if (Item2TaskDone)
-                    {
-                        Debug.Log("ToolBox Task already completed.");
-                        return;
-                    }
-                    Day4Task();
-                    break;
-
                 case "Knife":
-
-                    if (Item3TaskDone)
-                    {
-                        Debug.Log("Knife Task already completed.");
-                        return;
-                    }
-                    Day6Task();
+                    if (!Item3TaskDone) Day6Task();
                     break;
                 case "Key":
-                    if (Item3TaskDone)
-                    {
-                        Debug.Log("Key Task already completed.");
-                        return;
-                    }
-                    KeyTask();
+                    if (!Item3TaskDone) KeyTask();
                     break;
-
+                case "Flashlight":
+                    if (!Item2TaskDone) Day4Task();
+                    break;
+                default:
+                    Debug.Log("No task assigned for this item: " + itemID);
+                    break;
             }
         }
 
-        private void Day1Task()
+
+private void Day1Task()
         {
             switch (taskState)
             {
@@ -250,8 +204,8 @@ namespace NoSideEffects
                     Debug.Log("Filling watering can...");
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
-                    meshChange.DeactivateChild("HealthyPlant_SM (1)"); meshChange.DeactivateChild("HealthyPlant_SM (2)"); meshChange.DeactivateChild("HealthyPlant_SM (3)");
-                    meshChange.ActivateChild("DeadPlant_SM (1)"); meshChange.ActivateChild("DeadPlant_SM (2)"); meshChange.ActivateChild("DeadPlant_SM (3)");
+                    DeactivateMesh("HealthyPlant_SM (1)"); DeactivateMesh("HealthyPlant_SM (2)"); DeactivateMesh("HealthyPlant_SM (3)");
+                    ActivateMesh("DeadPlant_SM (1)"); ActivateMesh("DeadPlant_SM (2)"); ActivateMesh("DeadPlant_SM (3)");
                     HUD.instance.SetSubTitleText("Theeere we go.");
                     taskState = TaskState.Done;
                     break;
@@ -269,11 +223,14 @@ namespace NoSideEffects
                     break;
             }
         }
-        private void Day4Task()
+        public void Day4Task()
         {
+            if (Item2TaskDone) return;
+
             switch (taskState)
             {
                 case TaskState.None:
+                    lightSwitch.TurnOffLights();
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start ToolBox task.");
@@ -343,6 +300,7 @@ namespace NoSideEffects
                     }
                     Debug.Log("Inserting fuse into FuseBox... Task Complete!");
                     DeactivateTrigger("FuseBox");
+                    lightSwitch.ToggleLights();
                     Item2TaskDone = true;
                     HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
                     break;
@@ -365,7 +323,7 @@ namespace NoSideEffects
                     }
                     Debug.Log("I need to remove the eyes");
                     DeactivateTrigger("Eye1");
-                    //Insert to change mesh here
+                    DeactivateMesh("Eye1"); ActivateMesh("Eye1Dmg");
                     ActivateTrigger("Eye2");
                     taskState = TaskState.StepTwo;
                     break;
