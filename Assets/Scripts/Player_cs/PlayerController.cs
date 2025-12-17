@@ -121,14 +121,14 @@ namespace NoSideEffects
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
-        public float currentHeadXrotation;
-        public float wantedHeadXrotation;
-        public float currentHeadYrotation;
-        public float wantedHeadYrotation;
-        public float currentXposition;
-        public float wantedXposition;
-        public float currentZposition;
-        public float wantedZposition;
+        [NonSerialized] public float currentHeadXrotation;
+        [NonSerialized] public float wantedHeadXrotation;
+        [NonSerialized] public float currentHeadYrotation;
+        [NonSerialized] public float wantedHeadYrotation;
+        [NonSerialized] public float currentXposition;
+        [NonSerialized] public float wantedXposition;
+        [NonSerialized] public float currentZposition;
+        [NonSerialized] public float wantedZposition;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
