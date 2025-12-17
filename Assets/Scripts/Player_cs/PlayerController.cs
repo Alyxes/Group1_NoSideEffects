@@ -112,6 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
+        [SerializeField] GameObject pillBottle;
         public GameObject flashlight;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
@@ -120,14 +121,14 @@ namespace NoSideEffects
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
-        private float currentHeadXrotation;
-        private float wantedHeadXrotation;
-        private float currentHeadYrotation;
-        private float wantedHeadYrotation;
-        private float currentXposition;
-        private float wantedXposition;
-        private float currentZposition;
-        private float wantedZposition;
+        public float currentHeadXrotation;
+        public float wantedHeadXrotation;
+        public float currentHeadYrotation;
+        public float wantedHeadYrotation;
+        public float currentXposition;
+        public float wantedXposition;
+        public float currentZposition;
+        public float wantedZposition;
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -150,6 +151,8 @@ namespace NoSideEffects
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
+
+            playerDaySpeed = DSM.instance.dayWalkSpeed;
             playerSpeed = playerDaySpeed;
 
             ToggleCameraRotationOff();
@@ -180,6 +183,12 @@ namespace NoSideEffects
             if (canMove && crouchButton.WasPressedThisFrame())
             {
                 ToggleCrouch();
+            }
+
+            if (DSM.instance.isDoneForTheDay)
+            {
+                // Activates the zone around the pill bottle that lets the player end the day.
+                pillBottle.SetActive(true);
             }
 
             moveValue = moveAction.ReadValue<Vector2>();
@@ -344,14 +353,13 @@ namespace NoSideEffects
                 wakingUp = false;
             }
         }
+        public void GoToBedAnimation()
+        {
+
+        }
         public void DampingPlanarMovement(float amount)
         {
             rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
-        }
-        public IEnumerator WaitAndRunFuncton(Func<object> function, float time)
-        {
-            yield return new WaitForSeconds(time);
-            function();
         }
         public void Awakening()
         {
@@ -454,6 +462,11 @@ namespace NoSideEffects
         {
             yield return new WaitForSeconds(time);
             canMove = false;
+        }
+        public IEnumerator WaitAndRunFuncton(Func<object> function, float time)
+        {
+            yield return new WaitForSeconds(time);
+            function();
         }
     }
 }

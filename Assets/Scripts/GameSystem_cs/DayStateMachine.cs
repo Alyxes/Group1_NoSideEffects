@@ -20,9 +20,12 @@ namespace NoSideEffects
             Day7
         }
         public Days currentDay = Days.Day1;
+        public Days nextDay = Days.Day1;
         [NonSerialized] public string wakeUpMonologue = "";
         [NonSerialized] public float monolougeTimer = 2f;
         [NonSerialized] public bool isDoneForTheDay = false;
+        [NonSerialized] public string endDayMonologue = "";
+        [NonSerialized] public float dayWalkSpeed = 1.5f;
 
         private void Awake()
         {
@@ -84,47 +87,70 @@ namespace NoSideEffects
         private void SetupDay1()
         {
             BaseStartOfDay("Day1");
+            dayWalkSpeed = 1.5f;
             wakeUpMonologue = "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect.";
             monolougeTimer = 3f;
+            endDayMonologue = "Being able to walk has exhausted me... Hopefully that gets better tomorrow.";
+            nextDay = Days.Day2;
         }
         private void SetupDay2()
         {
             BaseStartOfDay("Day2");
+            dayWalkSpeed = 2f;
             wakeUpMonologue = "I think I feel even more nimble today.\nI should call the doctor to tell him about the results.";
-            monolougeTimer = 2f;
+            monolougeTimer = 5f;
+            endDayMonologue = "Took forever to read Dr. Raphael's handwriting... My mind's all worn out. Gotta sleep.";
+            nextDay = Days.Day3;
         }
         private void SetupDay3()
         {
             BaseStartOfDay("Day3");
+            dayWalkSpeed = 2f;
             wakeUpMonologue = "Even though I can walk, my legs are really weak after this long...\nGuess I shouldn't have quit the neuro rehab.";
             monolougeTimer = 2f;
+            endDayMonologue = "Bloody intruders... The mess they made... I'm dead tired.";
+            nextDay = Days.Day4;
         }
         private void SetupDay4()
         {
             BaseStartOfDay("Day4");
+            dayWalkSpeed = 2.5f;
             wakeUpMonologue = "Power outage? Crap..";
             monolougeTimer = 2f;
+            endDayMonologue = "All that rummaging in the dark... I'm done for today.";
+            nextDay = Days.Day6; // As of discussions, Day 5 is skipped.
         }
         private void SetupDay5()
         {
+            // This day is skipped.
             BaseStartOfDay("Day5");
+            dayWalkSpeed = 0.7f;
             wakeUpMonologue = "What? No! My legs...!? They're... not responding!";
             monolougeTimer = 2f;
+            endDayMonologue = "";
+            nextDay = Days.Day6;
         }
         private void SetupDay6()
         {
             BaseStartOfDay("Day6");
+            dayWalkSpeed = 3.5f;
             wakeUpMonologue = "Oh my god... What do they want!?";
             monolougeTimer = 2f;
+            endDayMonologue = "Help! Someone, please...! Help...";
+            nextDay = Days.Day7;
         }
         private void SetupDay7()
         {
             BaseStartOfDay("Day7");
-            wakeUpMonologue = "I'm back home...\nBack to being paralyzed...\nShould I be happy to be alive?";
+            dayWalkSpeed = 0f;
+            wakeUpMonologue = "Back to being paralyzed...\nShould I be happy to be alive?";
             monolougeTimer = 2f;
+            endDayMonologue = "";
+            nextDay = Days.Day1;
         }
         private void BaseStartOfDay(string dayName)
         {
+            isDoneForTheDay = false;
             SceneManager.LoadScene(dayName);
             AudioManager.StartLoopingSound(SoundType.APARTMENTBUZZING, AudioManager.instance.audSrc_ApartmentNoise);
         }
@@ -165,10 +191,10 @@ namespace NoSideEffects
                     dayString = "day five";
                     break;
                 case Days.Day6:
-                    dayString = "day six";
+                    dayString = "day five";
                     break;
                 case Days.Day7:
-                    dayString = "day seven";
+                    dayString = "day six";
                     break;
                 default:
                     dayString = "unknown day";

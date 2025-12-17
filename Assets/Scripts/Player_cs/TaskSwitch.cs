@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace NoSideEffects
 {
@@ -14,9 +15,10 @@ namespace NoSideEffects
         public List<MeshChange> meshChanges;
 
         public Lightswitch lightSwitch;
-
+        public Door door;
         [Header("Player Inventory")]
         public PlayerInventory playerInventory;
+        public GameObject keyZone;
 
         public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
@@ -46,6 +48,12 @@ namespace NoSideEffects
             if (keyZone != null) keyZone.gameObject.SetActive(false);
 
             DisableAllTriggers();
+            if (SceneManager.GetActiveScene().name == "Day4")
+            {
+                lightSwitch.ToggleLights();
+                lightSwitch.ChangeMaterials();
+                Day4Task();
+            }
         }
 
         private void Update()
@@ -146,9 +154,6 @@ namespace NoSideEffects
                 case "Key":
                     if (!Item3TaskDone) KeyTask();
                     break;
-                case "Flashlight":
-                    if (!Item2TaskDone) Day4Task();
-                    break;
                 default:
                     Debug.Log("No task assigned for this item: " + itemID);
                     break;
@@ -219,7 +224,7 @@ private void Day1Task()
                     Debug.Log("Watering the plant... Task Complete!");
                     HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
                     DeactivateTrigger("Plant");
-                    StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day3, 10f));
+                    DSM.instance.isDoneForTheDay = true;
                     break;
             }
         }
@@ -337,7 +342,7 @@ private void Day1Task()
                     }
                     Debug.Log("Removing eye...");
                     DeactivateTrigger("Eye2");
-                    //Insert to change mesh here
+                    DeactivateMesh("Eye2"); ActivateMesh("Eye2Dmg");
                     ActivateTrigger("Eye3");
                     ActivateTrigger("Eye4");
                     taskState = TaskState.StepThree;
@@ -356,13 +361,13 @@ private void Day1Task()
                     {
                         fuse1Collected = true;
                         DeactivateTrigger("Eye3");
-                        //Insert to change mesh here
+                        DeactivateMesh("Eye3"); ActivateMesh("Eye3Dmg");
                     }
                     else if (currentTrigger == "Eye4")
                     {
                         fuse2Collected = true;
                         DeactivateTrigger("Eye4");
-                        //Insert to change mesh here
+                        DeactivateMesh("Eye4"); ActivateMesh("Eye4Dmg");
                     }
                     // Only proceed when both are destroyed
                     if (fuse1Collected && fuse2Collected)
@@ -385,8 +390,8 @@ private void Day1Task()
                     }
                     Debug.Log("Using Knife on eye... Now to the door");
                     DeactivateTrigger("Eye5");
-                    //Insert to change mesh here
-                    transform.Find("KeyZone").gameObject.SetActive(true);
+                    transform.Find("EyeTrigger5").gameObject.SetActive(false);
+                    keyZone.SetActive(true);
                     taskState = TaskState.Done;
                     HUD.instance.SetSubTitleText("All eyes are gone. Let's open this door.");
                     break;
@@ -399,25 +404,9 @@ private void Day1Task()
         }
         public void KeyTask()
         {
-            switch (taskState)
-            {
-                case TaskState.None:
-                    ActivateTrigger("Door");
-                    taskState = TaskState.StepOne;
-                    Debug.Log("Go to the door to use the key.");
-                    break;
-                case TaskState.StepOne:
-                    if (currentTrigger != "Door")
-                    {
-                        Debug.Log("You must be at the Door to proceed.");
-                        return;
-                    }
-                    Debug.Log("Using Key on Door... Task Complete!");
-                    DeactivateTrigger("Door");
-                    Item3TaskDone = true;
-                    HUD.instance.SetSubTitleText("The door's finally open.");
-                    break;
-            }
+            ActivateTrigger("Door");
+            door.canBeOpened = true;
+            Debug.Log("Go to the door to use the key.");
         }
     }
 }
