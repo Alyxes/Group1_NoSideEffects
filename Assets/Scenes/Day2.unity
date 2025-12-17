@@ -30214,6 +30214,14 @@ PrefabInstance:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 1514417012}
+    - target: {fileID: 7679564385952781131, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
+      propertyPath: 'requiredButtons.Array.data[0]'
+      value: PhoneButtonLost
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679564385952781131, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
+      propertyPath: 'requiredButtons.Array.data[1]'
+      value: PhoneButtonLost (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 7983930554851305193, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.274
