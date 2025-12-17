@@ -391,6 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: Item2
   model: {fileID: 56553827}
+  Flashlight: {fileID: 0}
   pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &81869652
 GameObject:
@@ -789,6 +790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.ItemPickup
   itemID: CapsuleThingy
   model: {fileID: 546951595}
+  Flashlight: {fileID: 0}
   pickupRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &116817765
 GameObject:
@@ -839,9 +841,10 @@ MonoBehaviour:
   childTriggers:
   - {fileID: 753821965}
   - {fileID: 741208449}
+  meshChanges: []
+  lightSwitch: {fileID: 0}
   playerInventory: {fileID: 0}
   InTaskZone: 0
-  meshChange: {fileID: 0}
 --- !u!114 &228226133 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
@@ -1021,7 +1024,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.05
-  far clip plane: 5000
+  far clip plane: 1000
   field of view: 45
   orthographic: 0
   orthographic size: 10
@@ -1548,6 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.PickUp
   itemID: WaterCan
   model: {fileID: 1721739083}
+  Flashlight: {fileID: 0}
   pickupRotation: {x: 0, y: -90, z: 0}
 --- !u!1 &410087039
 GameObject:
@@ -4267,12 +4271,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: the weirdest cube
   infoText: Uuuuuuuhhhhhh.....
-  oneTimeUse: 0
-  lookAtPoint:
-    TrackingTarget: {fileID: 1746085858}
-    LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
   player: {fileID: 228226133}
+  objectToLookAt: {fileID: 0}
+  oneTimeUse: 0
+  lockPlayerView: 0
+  lockViewTime: 0
 --- !u!1 &1766462979
 GameObject:
   m_ObjectHideFlags: 0
