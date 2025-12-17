@@ -34,22 +34,26 @@ namespace NoSideEffects
             OldPos = furniture_rb.position;
             interactButton = InputSystem.actions.FindAction("Interact");
             ResetButton = InputSystem.actions.FindAction("Reset");
-            if (XAxis )
-            {
-                furniture_rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-                Material[] mats = GetComponent<MeshRenderer>().materials;
-                mats[0] = mat;
-                GetComponent<MeshRenderer>().materials = mats;
-                
+            if(GetComponent<MeshRenderer>()!= null && (mat || mat2) ) {//check if null on stuff
+                if (XAxis )
+                {
+                    Material[] mats = GetComponent<MeshRenderer>().materials;
+                    mats[0] = mat;
+                    GetComponent<MeshRenderer>().materials = mats;
+                }
+                else if (ZAxis )
+                {
+                    Material[] mats = GetComponent<MeshRenderer>().materials;
+                    mats[0] = mat2;
+                    GetComponent<MeshRenderer>().materials = mats;
+                }
             }
-            if (ZAxis )
-            {
-                furniture_rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
-                Material[] mats = GetComponent<MeshRenderer>().materials;
-                mats[0] = mat2;
+                //furniture_rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                furniture_rb.constraints = 
+                (XAxis? RigidbodyConstraints.FreezePositionZ :  RigidbodyConstraints.None)  | 
+                (ZAxis? RigidbodyConstraints.FreezePositionX :  RigidbodyConstraints.None)  |
+                 RigidbodyConstraints.FreezeRotation;
 
-                GetComponent<MeshRenderer>().materials = mats;
-            }
             OrgPos=transform.position;
 
         }
