@@ -231,6 +231,7 @@ private void Day1Task()
             {
                 case TaskState.None:
                     lightSwitch.TurnOffLights();
+                    lightSwitch.ChangeMaterials();
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start ToolBox task.");
@@ -301,6 +302,7 @@ private void Day1Task()
                     Debug.Log("Inserting fuse into FuseBox... Task Complete!");
                     DeactivateTrigger("FuseBox");
                     lightSwitch.ToggleLights();
+                    lightSwitch.ResetMaterials();
                     Item2TaskDone = true;
                     HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
                     break;
