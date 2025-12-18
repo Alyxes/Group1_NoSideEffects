@@ -154,6 +154,9 @@ namespace NoSideEffects
                 case "Key":
                     if (!Item3TaskDone) KeyTask();
                     break;
+                case "Flashlight":
+                    if (!Item2TaskDone) Day4Task();
+                    break;
                 default:
                     Debug.Log("No task assigned for this item: " + itemID);
                     break;
@@ -167,9 +170,9 @@ private void Day1Task()
             {
                 case TaskState.None:
                     ActivateTrigger("Sink");
-                    taskState = TaskState.StepOne;
                     Debug.Log("Go to the Sink to start filling water.");
                     HUD.instance.SetSubTitleText("Let's give the plants some water.\nGotta fill this up in the kitchen.");
+                    taskState = TaskState.StepOne;
                     break;
                 case TaskState.StepOne:
                     if (currentTrigger != "Sink")
@@ -235,8 +238,6 @@ private void Day1Task()
             switch (taskState)
             {
                 case TaskState.None:
-                    lightSwitch.TurnOffLights();
-                    lightSwitch.ChangeMaterials();
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start task.");
