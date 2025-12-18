@@ -75,6 +75,10 @@ public class PhoneScreen : MonoBehaviour
                 HUD.instance.SetSubTitleText("Doctor- I see you are awake. Can you hear me?");
                 talkStake = TalkState.StepTwo;
                 break;
+            case TalkState.StepTwo:
+                HUD.instance.SetSubTitleText("Not good, something wierd is happening to me...");
+                talkStake = TalkState.StepThree;
+                break;
         }
     }
 }
