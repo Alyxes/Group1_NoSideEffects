@@ -14659,10 +14659,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.Door
   doorTransform: {fileID: 1262885024}
   currentRotation: -90
-  openRotationAngle: -180
+  openRotationAngle: -200
   closedRotationAngle: -90
-  turnSpeed: 200
-  wantedRotation: -180
+  turnSpeed: 500
+  wantedRotation: -200
   open: 0
   canBeOpened: 0
   showInteractionText: 1

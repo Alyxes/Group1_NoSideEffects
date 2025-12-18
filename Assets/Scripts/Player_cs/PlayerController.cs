@@ -121,14 +121,23 @@ namespace NoSideEffects
         [NonSerialized] public Vector2 moveValue;
         private Vector3 projected;
         private float wantedHeadHeight;
-        public float currentHeadXrotation;
-        public float wantedHeadXrotation;
-        public float currentHeadYrotation;
-        public float wantedHeadYrotation;
-        public float currentXposition;
-        public float wantedXposition;
-        public float currentZposition;
-        public float wantedZposition;
+        [NonSerialized] public float currentHeadXrotation;
+        [NonSerialized] public float wantedHeadXrotation;
+        private bool XrotationDone = true;
+        private bool hasChangedWantedXrotation = false;
+        [NonSerialized] public float currentHeadYrotation;
+        [NonSerialized] public float wantedHeadYrotation;
+        private bool hasChangedWantedYrotation = false;
+        private bool YrotationDone = true;
+        [NonSerialized] public float currentXposition;
+        [NonSerialized] public float wantedXposition;
+        private bool XpositionDone = true;
+        private bool hasChangedWantedXposition = false;
+        [NonSerialized] public float currentZposition;
+        [NonSerialized] public float wantedZposition;
+        private bool ZpositionDone = true;
+        private bool hasChangedWantedZposition = false;
+
 
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
@@ -210,7 +219,7 @@ namespace NoSideEffects
 
             projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
 
-            //Debug.Log("");
+            // Debug.Log("Player position: " + transform.position);
         }
         void FixedUpdate()
         {
@@ -226,22 +235,47 @@ namespace NoSideEffects
 
             DampingPlanarMovement(0.9f);
         }
+        public void Awakening()
+        {
+            wakingUp = true;
+
+            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
+
+            HUD.instance.blackScreenFadeOut = true;
+            HUD.instance.blackScreenFadeSpeed = 0.4f;
+
+            SetPlayerHeadNormal(false, true);
+            wantedXposition = transform.localPosition.x - 1f;
+
+            CheckAnimationBools();
+
+            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED, AudioManager.instance.audSrc_PlayerMovement);
+        }
+        public void ExitBed()
+        {
+            ToggleCameraRotationOn();
+            canMove = true;
+
+            ResetAnimationBools();
+
+            // This text will be different or be none at all depending on the day.
+            if (DSM.instance.wakeUpMonologue != "")
+                StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
+        }
         public void ToggleCrouch()
         {
-            if (canMove)
+            if (!isCrouching)
             {
-                if (!isCrouching)
-                {
-                    isCrouching = true;
-                    SetPlayerHeightCrouching(false, true);
-                    playerSpeed = 0.8f;
-                }
-                else
-                {
-                    isCrouching = false;
-                    SetPlayerHeightNormal(false, true);
-                    playerSpeed = playerDaySpeed;
-                }
+                isCrouching = true;
+                SetPlayerHeightCrouching(false, true);
+                playerSpeed = 0.8f;
+            }
+            else
+            {
+                isCrouching = false;
+                SetPlayerHeightNormal(false, true);
+                playerSpeed = playerDaySpeed;
             }
         }
         public void SetPlayerHeightNormal(bool setHeadPosition, bool initiateHeadLerp)
@@ -293,21 +327,63 @@ namespace NoSideEffects
             if (initiateHeadLerp)
                 wantedHeadHeight = _height;
         }
+        private void CheckAnimationBools()
+        {
+            if (XrotationDone && currentHeadXrotation != wantedHeadXrotation)
+            {
+                XrotationDone = false;
+                // Debug.Log("XrotationDone: " + XrotationDone + " - currentHeadXrotation: " + currentHeadXrotation + " - wantedHeadXrotation: " + wantedHeadXrotation);
+            }
+            if (YrotationDone && currentHeadYrotation != wantedHeadYrotation)
+            {
+                YrotationDone = false;
+                // Debug.Log("YrotationDone: " + YrotationDone + " - currentHeadYrotation: " + currentHeadYrotation + " - wantedHeadYrotation: " + wantedHeadYrotation);
+            }
+            if (XpositionDone && currentXposition != wantedXposition)
+            {
+                XpositionDone = false;
+                // Debug.Log("XpositionDone: " + XpositionDone + " - currentXposition: " + currentXposition + " - wantedXposition: " + wantedXposition);
+            }
+            if (ZpositionDone && currentZposition != wantedZposition)
+            {
+                ZpositionDone = false;
+                // Debug.Log("ZpositionDone: " + ZpositionDone + " - currentZposition: " + currentZposition + " - wantedZposition: " + wantedZposition);
+            }
+        }
+        private void ResetAnimationBools()
+        {
+            XrotationDone = true;
+            hasChangedWantedXrotation = false;
+            YrotationDone = true;
+            hasChangedWantedYrotation = false;
+            XpositionDone = true;
+            hasChangedWantedXposition = false;
+            ZpositionDone = true;
+            hasChangedWantedZposition = false;
+        }
         public void RiseFromBedAnimation()
         {
             if (currentHeadXrotation < wantedHeadXrotation)
             {
                 currentHeadXrotation += Time.deltaTime * 42f;
                 Head.localRotation = Quaternion.Euler(currentHeadXrotation, 0f, 0f);
-                if (currentHeadXrotation > 320f && wantedHeadYrotation == 270f)
+                if (!hasChangedWantedYrotation && currentHeadXrotation > 320f && wantedHeadYrotation == 270f)
                 {
+                    // Debug.Log("Setting wantedHeadYrotation to 360f, should only happen ONCE!");
                     wantedHeadYrotation = 360f;
+                    hasChangedWantedYrotation = true;
+                    // YrotationDone = false;
                 }
             }
             else
             {
-                currentHeadXrotation = wantedHeadXrotation;
-                Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                if (!XrotationDone)
+                {
+                    currentHeadXrotation = wantedHeadXrotation;
+                    Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    XrotationDone = true;
+                    // Debug.Log("XrotationDone TRUE NOW");
+                }
             }
 
             if (currentHeadYrotation < wantedHeadYrotation)
@@ -315,13 +391,23 @@ namespace NoSideEffects
                 currentHeadYrotation += Time.deltaTime * 64f;
                 transform.localRotation = Quaternion.Euler(0f, currentHeadYrotation, 0f);
 
-                if (currentHeadYrotation > 285f && wantedZposition == currentZposition)
+                if (!hasChangedWantedZposition && currentHeadYrotation > 285f && wantedZposition == currentZposition)
+                {
+                    // Debug.Log("Setting wantedZposition to transform.localPosition.z + 1.5f, should only happen ONCE!");
                     wantedZposition = transform.localPosition.z + 1.5f;
+                    hasChangedWantedZposition = true;
+                    // ZpositionDone = false;
+                }
             }
             else
             {
-                currentHeadYrotation = wantedHeadYrotation;
-                transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                if (!YrotationDone)
+                {
+                    currentHeadYrotation = wantedHeadYrotation;
+                    transform.localRotation = Quaternion.Euler(0f, currentHeadYrotation, 0f);
+                    YrotationDone = true;
+                    // Debug.Log("YrotationDone TRUE NOW");
+                }
             }
 
             if (currentXposition > wantedXposition)
@@ -331,8 +417,13 @@ namespace NoSideEffects
             }
             else
             {
-                currentXposition = wantedXposition;
-                transform.localPosition = new Vector3(currentXposition, transform.localPosition.y, transform.localPosition.z);
+                if (!XpositionDone)
+                {
+                    currentXposition = wantedXposition;
+                    transform.localPosition = new Vector3(currentXposition, transform.localPosition.y, transform.localPosition.z);
+                    XpositionDone = true;
+                    // Debug.Log("XpositionDone TRUE NOW");
+                }
             }
 
             if (currentZposition < wantedZposition)
@@ -342,15 +433,23 @@ namespace NoSideEffects
             }
             else
             {
-                currentZposition = wantedZposition;
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, currentZposition);
+                if (!ZpositionDone)
+                {
+                    currentZposition = wantedZposition;
+                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, currentZposition);
+                    ZpositionDone = true;
+                    // Debug.Log("ZpositionDone TRUE NOW");
+                }
             }
 
-            if (currentHeadXrotation == wantedHeadXrotation && currentHeadYrotation == wantedHeadYrotation && currentZposition == wantedZposition)
+            CheckAnimationBools();
+
+            if (XrotationDone && YrotationDone && XpositionDone && ZpositionDone)
             {
                 SetPlayerHeightNormal(false, false);
                 StartCoroutine(WaitAndRunFuncton(() => { ExitBed(); return null; }, 1f));
                 wakingUp = false;
+                // Debug.Log("THIS SHOULD HAPPEN, BUT ONLY ONCE");
             }
         }
         public void GoToBedAnimation()
@@ -360,30 +459,6 @@ namespace NoSideEffects
         public void DampingPlanarMovement(float amount)
         {
             rigid_Body.linearVelocity = new Vector3(rigid_Body.linearVelocity.x * amount, rigid_Body.linearVelocity.y, rigid_Body.linearVelocity.z * amount);
-        }
-        public void Awakening()
-        {
-            wakingUp = true;
-
-            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
-            StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
-
-            HUD.instance.blackScreenFadeOut = true;
-            HUD.instance.blackScreenFadeSpeed = 0.4f;
-
-            SetPlayerHeadNormal(false, true);
-            wantedXposition = transform.localPosition.x - 1f;
-
-            AudioManager.PlaySound(SoundType.GETTINGUPFROMBED, AudioManager.instance.audSrc_PlayerMovement);
-        }
-        public void ExitBed()
-        {
-            ToggleCameraRotationOn();
-            canMove = true;
-
-            // This text will be different or be none at all depending on the day.
-            if (DSM.instance.wakeUpMonologue != "")
-                StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
         }
         public void SetControllerEnabledByName(string axisName, bool enabled)
         {
