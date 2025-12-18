@@ -35,13 +35,13 @@ namespace NoSideEffects
             interactButton = InputSystem.actions.FindAction("Interact");
             ResetButton = InputSystem.actions.FindAction("Reset");
             if(GetComponent<MeshRenderer>()!= null && (mat || mat2) ) {//check if null on stuff
-                if (XAxis )
+                if (XAxis)
                 {
                     Material[] mats = GetComponent<MeshRenderer>().materials;
                     mats[0] = mat;
                     GetComponent<MeshRenderer>().materials = mats;
                 }
-                else if (ZAxis )
+                else if (ZAxis)
                 {
                     Material[] mats = GetComponent<MeshRenderer>().materials;
                     mats[0] = mat2;
