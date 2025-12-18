@@ -16,7 +16,7 @@ public class PhoneScreen : MonoBehaviour
         StepFive,
         Done
     }
-    private TalkState talkStake = TalkState.None;
+    private TalkState talkState = TalkState.None;
 
     [Tooltip("Set the button IDs in the order they should be pressed")]
     public List<int> correctSequence = new List<int> { 1, 2, 3 }; // fixed sequence
@@ -57,28 +57,37 @@ public class PhoneScreen : MonoBehaviour
         if (currentSequence.Count == correctSequence.Count)
         {
             Debug.Log("Sequence complete! Triggering action.");
-            DoAction();
             currentSequence.Clear(); // Reset for next attempt
+            DoAction();
         }
     }
-
     void DoAction()
     {
-        Debug.Log("Success! Action triggered!");
-        switch (talkStake)
+        switch (talkState)
         {
             case TalkState.None:
                 HUD.instance.SetSubTitleText("Doctor- Hello How are you?");
-                talkStake = TalkState.StepOne;
-                break;
-            case TalkState.StepOne:
-                HUD.instance.SetSubTitleText("Doctor- I see you are awake. Can you hear me?");
-                talkStake = TalkState.StepTwo;
-                break;
-            case TalkState.StepTwo:
-                HUD.instance.SetSubTitleText("Not good, something wierd is happening to me...");
-                talkStake = TalkState.StepThree;
+                talkState = TalkState.StepOne;
+                Invoke(nameof(NextStep), 2f);
                 break;
         }
     }
+
+    void NextStep()
+    {
+        switch (talkState)
+        {
+            case TalkState.StepOne:
+                HUD.instance.SetSubTitleText("Doctor- I see you are awake. Can you hear me?");
+                talkState = TalkState.StepTwo;
+                Invoke(nameof(NextStep), 2f);
+                break;
+
+            case TalkState.StepTwo:
+                HUD.instance.SetSubTitleText("Not good, something weird is happening to me...");
+                talkState = TalkState.StepThree;
+                break;
+        }
+    }
+
 }
