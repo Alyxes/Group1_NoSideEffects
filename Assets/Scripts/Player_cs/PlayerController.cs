@@ -219,14 +219,13 @@ namespace NoSideEffects
 
             projected = Vector3.ProjectOnPlane(relativeMoveDirection, Vector3.up);
 
-            //Debug.Log("");
+            // Debug.Log("Player position: " + transform.position);
         }
         void FixedUpdate()
         {
             if (canMove)
             {
-                Debug.Log("moveValue: " + moveValue);
-                // rigid_Body.AddForce(projected * 800f * Time.fixedDeltaTime * playerSpeed, ForceMode.Impulse);
+                rigid_Body.AddForce(projected * 800f * Time.fixedDeltaTime * playerSpeed, ForceMode.Impulse);
             }
 
             if (wantedHeadHeight != Head.position.y)
@@ -333,22 +332,22 @@ namespace NoSideEffects
             if (XrotationDone && currentHeadXrotation != wantedHeadXrotation)
             {
                 XrotationDone = false;
-                Debug.Log("XrotationDone: " + XrotationDone + " - currentHeadXrotation: " + currentHeadXrotation + " - wantedHeadXrotation: " + wantedHeadXrotation);
+                // Debug.Log("XrotationDone: " + XrotationDone + " - currentHeadXrotation: " + currentHeadXrotation + " - wantedHeadXrotation: " + wantedHeadXrotation);
             }
             if (YrotationDone && currentHeadYrotation != wantedHeadYrotation)
             {
                 YrotationDone = false;
-                Debug.Log("YrotationDone: " + YrotationDone + " - currentHeadYrotation: " + currentHeadYrotation + " - wantedHeadYrotation: " + wantedHeadYrotation);
+                // Debug.Log("YrotationDone: " + YrotationDone + " - currentHeadYrotation: " + currentHeadYrotation + " - wantedHeadYrotation: " + wantedHeadYrotation);
             }
             if (XpositionDone && currentXposition != wantedXposition)
             {
                 XpositionDone = false;
-                Debug.Log("XpositionDone: " + XpositionDone + " - currentXposition: " + currentXposition + " - wantedXposition: " + wantedXposition);
+                // Debug.Log("XpositionDone: " + XpositionDone + " - currentXposition: " + currentXposition + " - wantedXposition: " + wantedXposition);
             }
             if (ZpositionDone && currentZposition != wantedZposition)
             {
                 ZpositionDone = false;
-                Debug.Log("ZpositionDone: " + ZpositionDone + " - currentZposition: " + currentZposition + " - wantedZposition: " + wantedZposition);
+                // Debug.Log("ZpositionDone: " + ZpositionDone + " - currentZposition: " + currentZposition + " - wantedZposition: " + wantedZposition);
             }
         }
         private void ResetAnimationBools()
@@ -364,17 +363,16 @@ namespace NoSideEffects
         }
         public void RiseFromBedAnimation()
         {
-            Debug.Log("RiseFromBedAnimation is running...");
             if (currentHeadXrotation < wantedHeadXrotation)
             {
                 currentHeadXrotation += Time.deltaTime * 42f;
                 Head.localRotation = Quaternion.Euler(currentHeadXrotation, 0f, 0f);
                 if (!hasChangedWantedYrotation && currentHeadXrotation > 320f && wantedHeadYrotation == 270f)
                 {
-                    Debug.Log("Setting wantedHeadYrotation to 360f, should only happen ONCE!");
+                    // Debug.Log("Setting wantedHeadYrotation to 360f, should only happen ONCE!");
                     wantedHeadYrotation = 360f;
                     hasChangedWantedYrotation = true;
-                    YrotationDone = false;
+                    // YrotationDone = false;
                 }
             }
             else
@@ -384,7 +382,7 @@ namespace NoSideEffects
                     currentHeadXrotation = wantedHeadXrotation;
                     Head.localRotation = Quaternion.Euler(0f, 0f, 0f);
                     XrotationDone = true;
-                    Debug.Log("XrotationDone TRUE NOW");
+                    // Debug.Log("XrotationDone TRUE NOW");
                 }
             }
 
@@ -395,10 +393,10 @@ namespace NoSideEffects
 
                 if (!hasChangedWantedZposition && currentHeadYrotation > 285f && wantedZposition == currentZposition)
                 {
-                    Debug.Log("Setting wantedZposition to transform.localPosition.z + 1.5f, should only happen ONCE!");
+                    // Debug.Log("Setting wantedZposition to transform.localPosition.z + 1.5f, should only happen ONCE!");
                     wantedZposition = transform.localPosition.z + 1.5f;
                     hasChangedWantedZposition = true;
-                    ZpositionDone = false;
+                    // ZpositionDone = false;
                 }
             }
             else
@@ -408,7 +406,7 @@ namespace NoSideEffects
                     currentHeadYrotation = wantedHeadYrotation;
                     transform.localRotation = Quaternion.Euler(0f, currentHeadYrotation, 0f);
                     YrotationDone = true;
-                    Debug.Log("YrotationDone TRUE NOW");
+                    // Debug.Log("YrotationDone TRUE NOW");
                 }
             }
 
@@ -424,7 +422,7 @@ namespace NoSideEffects
                     currentXposition = wantedXposition;
                     transform.localPosition = new Vector3(currentXposition, transform.localPosition.y, transform.localPosition.z);
                     XpositionDone = true;
-                    Debug.Log("XpositionDone TRUE NOW");
+                    // Debug.Log("XpositionDone TRUE NOW");
                 }
             }
 
@@ -440,7 +438,7 @@ namespace NoSideEffects
                     currentZposition = wantedZposition;
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, currentZposition);
                     ZpositionDone = true;
-                    Debug.Log("ZpositionDone TRUE NOW");
+                    // Debug.Log("ZpositionDone TRUE NOW");
                 }
             }
 
@@ -451,7 +449,7 @@ namespace NoSideEffects
                 SetPlayerHeightNormal(false, false);
                 StartCoroutine(WaitAndRunFuncton(() => { ExitBed(); return null; }, 1f));
                 wakingUp = false;
-                Debug.Log("THIS SHOULD HAPPEN, BUT ONLY ONCE");
+                // Debug.Log("THIS SHOULD HAPPEN, BUT ONLY ONCE");
             }
         }
         public void GoToBedAnimation()
