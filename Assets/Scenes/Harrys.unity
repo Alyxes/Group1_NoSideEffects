@@ -179,7 +179,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 4437907652021922329}
     m_Modifications:
     - target: {fileID: 419451852884879075, guid: de91b20b159a28d4db22ca0903402d77, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
@@ -249,7 +249,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 4437907652021922329}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8cd481c9b5ca393409369f4144bf9bf0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -306,7 +306,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 4437907652021922329}
     m_Modifications:
     - target: {fileID: 2626694705542905448, guid: 8d397b27ad2990647b80deb725d66d62, type: 3}
       propertyPath: m_Name
@@ -845,6 +845,8 @@ PrefabInstance:
     - {fileID: 8476315385047138552, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     - {fileID: 5671937114368299707, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     - {fileID: 8470661159821366063, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+    - {fileID: 2015211290426783684, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+    - {fileID: 9071657129929079509, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4317000201914645568, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       insertIndex: -1
@@ -857,6 +859,11 @@ PrefabInstance:
       addedObject: {fileID: 557582215}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+--- !u!4 &4437907652021922329 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4317000201914645568, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+  m_PrefabInstance: {fileID: 4437907652021922328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
