@@ -203,6 +203,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 810096961679044440, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782554922210376690, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3767213589169543755, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.38
@@ -246,6 +254,10 @@ PrefabInstance:
     - target: {fileID: 4619444594010437267, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_Name
       value: Water_PlantTask (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470585313493294293, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
