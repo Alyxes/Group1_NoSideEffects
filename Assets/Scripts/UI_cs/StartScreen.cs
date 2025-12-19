@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Drawing;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -16,13 +17,31 @@ namespace NoSideEffects
         private float timer;
         private float blackAlpha;
 
+        private void Awake()
+        {
+            blackAlpha = 0f;
+            blackScreen.color = new UnityEngine.Color(0, 0, 0, blackAlpha);
+            logoScreen.color = new UnityEngine.Color(1, 1, 1, 1);
+            timer = 5f;
+        }
         void Start()
         {
-            AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
+            if (!AudioManager.instance.audSrc_Music.isPlaying)
+                AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
+            if (!DSM.instance.hasShownLogos)
+                StartCoroutine(WaitAndHideLogoscreen());
+            else
+            {
+                blackScreen.enabled = false;
+                logoScreen.enabled = false;
+            }
         }
         public void StartGame()
         {
-            AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 5f);
+            if (!DSM.instance.hasShownLogos)
+                return;
+
+            AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 3f);
             // Stop title music and play button click sound
             AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
 
@@ -30,6 +49,11 @@ namespace NoSideEffects
         }
         public void CreditsPage()
         {
+            if (!DSM.instance.hasShownLogos)
+                return;
+
+            AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
+
             StartCoroutine(WaitAndLoadScene("CreditsPage"));
         }
         private IEnumerator WaitAndLoadScene(string scene)
@@ -39,6 +63,11 @@ namespace NoSideEffects
         }
         public void ExitGame()
         {
+            if (!DSM.instance.hasShownLogos)
+                return;
+
+            AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
+
             AudioManager.StopSound(AudioManager.instance.audSrc_Music);
             StartCoroutine(WaitAndQuitGame());
         }
@@ -51,6 +80,39 @@ namespace NoSideEffects
             #else
                 Application.Quit();
             #endif
+        }
+        public IEnumerator WaitAndHideLogoscreen()
+        {
+            yield return new WaitForSecondsRealtime(timer);
+            while (blackAlpha < 1)
+            {
+                blackAlpha += Time.deltaTime * 2f;
+                if (blackAlpha >= 1)
+                {
+                    blackAlpha = 1;
+                    logoScreen.color = new UnityEngine.Color(1, 1, 1, 0);
+                    logoScreen.enabled = false;
+                    StartCoroutine(WaitAlittleMoreAndShowMenu());
+                }
+                blackScreen.color = new UnityEngine.Color(0, 0, 0, blackAlpha);
+                yield return null;
+            }
+        }
+        public IEnumerator WaitAlittleMoreAndShowMenu()
+        {
+            yield return new WaitForSecondsRealtime(1f);
+            while (blackAlpha > 0)
+            {
+                blackAlpha -= Time.deltaTime * 5f;
+                if (blackAlpha <= 0)
+                {
+                    blackAlpha = 0;
+                    blackScreen.enabled = false;
+                    DSM.instance.hasShownLogos = true;
+                }
+                blackScreen.color = new UnityEngine.Color(0, 0, 0, blackAlpha);
+                yield return null;
+            }
         }
     }
 }

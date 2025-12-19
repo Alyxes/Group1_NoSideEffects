@@ -10,7 +10,8 @@ namespace NoSideEffects
         APARTMENTBUZZING,
         GETTINGUPFROMBED,
         DOORCLOSE,
-        FURNITUREMOVE
+        FURNITUREMOVE,
+        PILLRATTLE
     }
 
     [RequireComponent(typeof(AudioSource))]

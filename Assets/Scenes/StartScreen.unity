@@ -1393,8 +1393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760ad4ce8eb9a0645b3b62d79cf75a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  logoScreen: {fileID: 0}
-  blackScreen: {fileID: 0}
+  logoScreen: {fileID: 2018151974}
+  blackScreen: {fileID: 2144166054}
 --- !u!1 &2018151972
 GameObject:
   m_ObjectHideFlags: 0

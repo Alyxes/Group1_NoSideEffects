@@ -26,6 +26,7 @@ namespace NoSideEffects
         [NonSerialized] public bool isDoneForTheDay = false;
         [NonSerialized] public string endDayMonologue = "";
         [NonSerialized] public float dayWalkSpeed = 1.5f;
+        [NonSerialized] public bool hasShownLogos;
 
         private void Awake()
         {
@@ -36,6 +37,7 @@ namespace NoSideEffects
             }
             else
             {
+                hasShownLogos = true;
                 Destroy(gameObject);
             }
         }
