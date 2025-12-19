@@ -11,6 +11,11 @@ namespace NoSideEffects
 {
     public class StartScreen : MonoBehaviour
     {
+        public Image logoScreen;
+        public RawImage blackScreen;
+        private float timer;
+        private float blackAlpha;
+
         void Start()
         {
             AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
@@ -23,18 +28,21 @@ namespace NoSideEffects
 
             StartCoroutine(WaitAndLoadScene("Day1"));
         }
-
-        public IEnumerator WaitAndLoadScene(string scene)
+        public void CreditsPage()
+        {
+            StartCoroutine(WaitAndLoadScene("CreditsPage"));
+        }
+        private IEnumerator WaitAndLoadScene(string scene)
         {
             yield return new WaitForSecondsRealtime(0.1f);
-            DSM.instance.StartingNewDay(DSM.Days.Day1);
+            SceneManager.LoadScene(scene);
         }
         public void ExitGame()
         {
             AudioManager.StopSound(AudioManager.instance.audSrc_Music);
             StartCoroutine(WaitAndQuitGame());
         }
-        public IEnumerator WaitAndQuitGame()
+        private IEnumerator WaitAndQuitGame()
         {
             yield return new WaitForSecondsRealtime(0.1f);
 
