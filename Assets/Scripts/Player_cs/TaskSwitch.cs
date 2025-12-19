@@ -19,7 +19,6 @@ namespace NoSideEffects
         [Header("Player Inventory")]
         public PlayerInventory playerInventory;
         public GameObject keyZone;
-        public DSM Dsm;
 
         public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
@@ -155,9 +154,9 @@ namespace NoSideEffects
                 case "Key":
                     if (!Item3TaskDone) KeyTask();
                     break;
-                case "Flashlight":
-                    if (!Item2TaskDone) Day4Task();
-                    break;
+                //case "Flashlight":
+                  //  if (!Item2TaskDone) Day4Task();
+                    //break;
                 default:
                     Debug.Log("No task assigned for this item: " + itemID);
                     break;
@@ -312,7 +311,7 @@ private void Day1Task()
                     lightSwitch.ResetMaterials();
                     Item2TaskDone = true;
                     HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
-                    Dsm.isDoneForTheDay = true;
+                    DSM.instance.isDoneForTheDay = true;
                     break;
             }
         }
@@ -413,7 +412,7 @@ private void Day1Task()
             door.canBeOpened = true;
             Debug.Log("Go to the door to use the key.");
             HUD.instance.SetSubTitleText("This key looks like it fits the door.\nLet's see what's in here.");
-            Dsm.isDoneForTheDay = true;
+            DSM.instance.isDoneForTheDay = true;
         }
     }
 }
