@@ -155,7 +155,6 @@ MonoBehaviour:
   infoText: "These photos bring back quite a few memories. It\u2019s been so long
     since I went outdoors regularly."
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -307,6 +306,10 @@ PrefabInstance:
       propertyPath: flashlight
       value: 
       objectReference: {fileID: 674618284}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: pillBottle
+      value: 
+      objectReference: {fileID: 2086809525}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -369,7 +372,6 @@ MonoBehaviour:
   infoText: I used to watch so many VHSes on this thing. Now it barely seems to work
     at all.
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -720,7 +722,6 @@ MonoBehaviour:
   objectID: wardrobe
   infoText: Nothing of note in here.
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -968,7 +969,6 @@ MonoBehaviour:
   infoText: Aw, you guys are looking pretty dry right now. Time to give you some
     water. Now where did I put that watering can again?
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1099,7 +1099,6 @@ MonoBehaviour:
   objectID: milk
   infoText: mmmmm milk. oh wait i'm lactose intolerant *dies*
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1300,7 +1299,6 @@ MonoBehaviour:
   objectID: front door
   infoText: "I\u2019m not ready to head outside yet."
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1524,7 +1522,6 @@ MonoBehaviour:
   infoText: "Perhaps I won\u2019t be needing this clunky chair anymore, thanks to
     this new medicine. That would be nice\u2026"
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1620,7 +1617,6 @@ MonoBehaviour:
   objectID: mirror
   infoText: I wonder how I look right now. Probably not great.
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1782,6 +1778,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3402526995408020690, guid: 8d397b27ad2990647b80deb725d66d62, type: 3}
   m_PrefabInstance: {fileID: 2074443264}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2086809525 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8084473281099976838, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+  m_PrefabInstance: {fileID: 4437907652021922328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2129372544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1818,6 @@ MonoBehaviour:
   objectID: bath
   infoText: "I can take a bath later. I\u2019ve got more important things to do."
   player: {fileID: 210517792}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0

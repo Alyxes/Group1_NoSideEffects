@@ -45,7 +45,8 @@ namespace NoSideEffects
             // Stop title music and play button click sound
             AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
 
-            StartCoroutine(WaitAndLoadScene("Day1"));
+            // StartCoroutine(WaitAndLoadScene("Day1"));
+            StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day1, 1f));
         }
         public void CreditsPage()
         {
