@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Drawing;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
