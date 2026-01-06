@@ -1,41 +1,44 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CombinationPickUp : MonoBehaviour
+namespace NoSideEffects
 {
-    public bool HasCombination = false;
-    private bool InZone = false;
-
-    private InputAction interactButton;
-
-    private void Awake()
+    public class CombinationPickUp : MonoBehaviour
     {
-        interactButton = InputSystem.actions.FindAction("Interact");
-        if (interactButton == null)
-            Debug.LogError("SceneChecker: Could not find 'Interact' action! Make sure your Input Actions asset is set as Default.");
-    }
-    private void Update()
-    {
-        if (interactButton == null) return;
+        public bool HasCombination = false;
+        private bool InZone = false;
 
-        if (InZone && interactButton.WasPressedThisFrame())
+        private InputAction interactButton;
+
+        private void Awake()
         {
-            HasCombination = true;
-            gameObject.SetActive(false);
+            interactButton = InputSystem.actions.FindAction("Interact");
+            if (interactButton == null)
+                Debug.LogError("SceneChecker: Could not find 'Interact' action! Make sure your Input Actions asset is set as Default.");
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void Update()
         {
-            InZone = true;
+            if (interactButton == null) return;
+
+            if (InZone && interactButton.WasPressedThisFrame())
+            {
+                HasCombination = true;
+                gameObject.SetActive(false);
+            }
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            InZone = false;
+            if (other.CompareTag("Player"))
+            {
+                InZone = true;
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                InZone = false;
+            }
         }
     }
 }

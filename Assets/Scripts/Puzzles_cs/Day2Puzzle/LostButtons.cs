@@ -2,45 +2,48 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public class LostButtons : MonoBehaviour
+namespace NoSideEffects
 {
-    private bool inZone = false;
-    private InputAction interactButton;
-
-    // Static list to track picked-up objects
-    public static List<string> pickedUpObjects = new List<string>();
-
-    private void Awake()
+    public class LostButtons : MonoBehaviour
     {
-        interactButton = InputSystem.actions.FindAction("Interact");
-    }
+        private bool inZone = false;
+        private InputAction interactButton;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        // Static list to track picked-up objects
+        public static List<string> pickedUpObjects = new List<string>();
+
+        private void Awake()
         {
-            inZone = true;
+            interactButton = InputSystem.actions.FindAction("Interact");
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            inZone = false;
+            if (other.CompareTag("Player"))
+            {
+                inZone = true;
+            }
         }
-    }
 
-    private void Update()
-    {
-        if (inZone && interactButton.WasPressedThisFrame())
+        private void OnTriggerExit(Collider other)
         {
-            Debug.Log(gameObject.name + " picked up!");
+            if (other.CompareTag("Player"))
+            {
+                inZone = false;
+            }
+        }
 
-            // Add this object to the static list
-            pickedUpObjects.Add(gameObject.name);
+        private void Update()
+        {
+            if (inZone && interactButton.WasPressedThisFrame())
+            {
+                Debug.Log(gameObject.name + " picked up!");
 
-            Destroy(gameObject);
+                // Add this object to the static list
+                pickedUpObjects.Add(gameObject.name);
+
+                Destroy(gameObject);
+            }
         }
     }
 }

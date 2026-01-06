@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class ButtonID : MonoBehaviour
+namespace NoSideEffects
 {
-    public int id;
+    public class ButtonID : MonoBehaviour
+    {
+        public int id;
 
+    }
 }

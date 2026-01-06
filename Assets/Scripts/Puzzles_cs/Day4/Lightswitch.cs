@@ -1,101 +1,104 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Lightswitch : MonoBehaviour
+namespace NoSideEffects
 {
-    public List<Light> lights;
-    private bool isOn = false;
-
-    [SerializeField] private Material materialToSwapFrom; // the material you want to replace
-    [SerializeField] private Material materialToSwapTo;   // the new material
-    [SerializeField] private bool changeChildrenMaterials = true;
-
-    private List<Renderer> renderers = new List<Renderer>();
-
-    private void Awake()
+    public class Lightswitch : MonoBehaviour
     {
-        if (changeChildrenMaterials)
+        public List<Light> lights;
+        private bool isOn = false;
+
+        [SerializeField] private Material materialToSwapFrom; // the material you want to replace
+        [SerializeField] private Material materialToSwapTo;   // the new material
+        [SerializeField] private bool changeChildrenMaterials = true;
+
+        private List<Renderer> renderers = new List<Renderer>();
+
+        private void Awake()
         {
-            renderers.AddRange(GetComponentsInChildren<Renderer>(true)); // include inactive
-        }
-        else
-        {
-            Renderer rend = GetComponent<Renderer>();
-            if (rend != null) renderers.Add(rend);
-        }
-    }
-
-    public void ToggleLights()
-    {
-        isOn = !isOn;
-        foreach (var light in lights)
-            if (light != null) light.enabled = isOn;
-    }
-
-    public void SetLights(bool on)
-    {
-        isOn = on;
-        foreach (var light in lights)
-            if (light != null) light.enabled = isOn;
-    }
-
-    public void TurnOffLights() => SetLights(false);
-    public void TurnOnLights() => SetLights(true);
-
-    public void ChangeMaterials()
-    {
-        if (materialToSwapFrom == null || materialToSwapTo == null)
-        {
-            Debug.LogWarning("Assign both materials to swap!");
-            return;
-        }
-
-        int changedCount = 0;
-
-        foreach (var rend in renderers)
-        {
-            if (rend == null) continue;
-
-            Material[] mats = rend.sharedMaterials;
-
-            for (int i = 0; i < mats.Length; i++)
+            if (changeChildrenMaterials)
             {
-                // Swap only the materials that match the original
-                if (mats[i] == materialToSwapFrom || mats[i].name.StartsWith(materialToSwapFrom.name))
-                {
-                    mats[i] = materialToSwapTo;
-                    changedCount++;
-                }
+                renderers.AddRange(GetComponentsInChildren<Renderer>(true)); // include inactive
+            }
+            else
+            {
+                Renderer rend = GetComponent<Renderer>();
+                if (rend != null) renderers.Add(rend);
+            }
+        }
+
+        public void ToggleLights()
+        {
+            isOn = !isOn;
+            foreach (var light in lights)
+                if (light != null) light.enabled = isOn;
+        }
+
+        public void SetLights(bool on)
+        {
+            isOn = on;
+            foreach (var light in lights)
+                if (light != null) light.enabled = isOn;
+        }
+
+        public void TurnOffLights() => SetLights(false);
+        public void TurnOnLights() => SetLights(true);
+
+        public void ChangeMaterials()
+        {
+            if (materialToSwapFrom == null || materialToSwapTo == null)
+            {
+                Debug.LogWarning("Assign both materials to swap!");
+                return;
             }
 
-            rend.sharedMaterials = mats;
-        }
+            int changedCount = 0;
 
-        Debug.Log($"Changed {changedCount} specific materials in hierarchy.");
-    }
-    public void ResetMaterials()
-    {
-        if (materialToSwapFrom == null || materialToSwapTo == null)
-        {
-            Debug.LogWarning("Assign both materials to swap!");
-            return;
-        }
-        int changedCount = 0;
-        foreach (var rend in renderers)
-        {
-            if (rend == null) continue;
-            Material[] mats = rend.sharedMaterials;
-            for (int i = 0; i < mats.Length; i++)
+            foreach (var rend in renderers)
             {
-                // Swap back only the materials that match the swapped one
-                if (mats[i] == materialToSwapTo || mats[i].name.StartsWith(materialToSwapTo.name))
+                if (rend == null) continue;
+
+                Material[] mats = rend.sharedMaterials;
+
+                for (int i = 0; i < mats.Length; i++)
                 {
-                    mats[i] = materialToSwapFrom;
-                    changedCount++;
+                    // Swap only the materials that match the original
+                    if (mats[i] == materialToSwapFrom || mats[i].name.StartsWith(materialToSwapFrom.name))
+                    {
+                        mats[i] = materialToSwapTo;
+                        changedCount++;
+                    }
                 }
+
+                rend.sharedMaterials = mats;
             }
-            rend.sharedMaterials = mats;
+
+            Debug.Log($"Changed {changedCount} specific materials in hierarchy.");
         }
-        Debug.Log($"Reset {changedCount} specific materials in hierarchy.");
+        public void ResetMaterials()
+        {
+            if (materialToSwapFrom == null || materialToSwapTo == null)
+            {
+                Debug.LogWarning("Assign both materials to swap!");
+                return;
+            }
+            int changedCount = 0;
+            foreach (var rend in renderers)
+            {
+                if (rend == null) continue;
+                Material[] mats = rend.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    // Swap back only the materials that match the swapped one
+                    if (mats[i] == materialToSwapTo || mats[i].name.StartsWith(materialToSwapTo.name))
+                    {
+                        mats[i] = materialToSwapFrom;
+                        changedCount++;
+                    }
+                }
+                rend.sharedMaterials = mats;
+            }
+            Debug.Log($"Reset {changedCount} specific materials in hierarchy.");
+        }
     }
 }
