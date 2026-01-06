@@ -22,7 +22,7 @@ namespace NoSideEffects
         private TalkState talkState = TalkState.None;
 
         [Tooltip("Set the button IDs in the order they should be pressed")]
-        public List<int> correctSequence = new List<int> { 1, 2, 3 }; // fixed sequence
+        public List<int> correctSequence = new List<int> { 2, 7, 10, 3, 9, 3, 1, 7, 12, 4 }; // fixed sequence
         private List<int> currentSequence = new List<int>();
 
         void Start()

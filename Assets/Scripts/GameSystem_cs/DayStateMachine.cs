@@ -101,7 +101,7 @@ namespace NoSideEffects
             wakeUpMonologue = "I think I feel even more nimble today.\nI should call the doctor to tell him about the results.";
             monolougeTimer = 5f;
             endDayMonologue = "Took forever to read Dr. Raphael's handwriting... My mind's all worn out. Gotta sleep.";
-            nextDay = Days.Day3;
+            nextDay = Days.Day4;
             BaseStartOfDay("Day2");
         }
         private void SetupDay3()
