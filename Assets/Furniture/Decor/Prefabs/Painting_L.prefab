@@ -49,12 +49,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 98563025f61e5b44692c8a926424e486, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 98563025f61e5b44692c8a926424e486, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 059ecc4580489f0499127fa1d6697506, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b5cc7026ecb2a140a488326879071d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 98563025f61e5b44692c8a926424e486, type: 3}
       propertyPath: m_Name
-      value: Painting_L_SM
+      value: Painting_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 98563025f61e5b44692c8a926424e486, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

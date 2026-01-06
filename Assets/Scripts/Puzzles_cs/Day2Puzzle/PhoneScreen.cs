@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PhoneScreen : MonoBehaviour
 {
+    public DSM Dsm;
     private enum TalkState
     {
         None,
@@ -48,6 +49,7 @@ public class PhoneScreen : MonoBehaviour
             if (currentSequence[i] != correctSequence[i])
             {
                 Debug.Log("Wrong sequence! Resetting.");
+                HUD.instance.SetSubTitleText("That's not his number.");
                 currentSequence.Clear();
                 return;
             }
@@ -66,7 +68,7 @@ public class PhoneScreen : MonoBehaviour
         switch (talkState)
         {
             case TalkState.None:
-                HUD.instance.SetSubTitleText("Doctor- Hello How are you?");
+                HUD.instance.SetSubTitleText("Hello?... are you there?");
                 talkState = TalkState.StepOne;
                 Invoke(nameof(NextStep), 2f);
                 break;
@@ -78,14 +80,15 @@ public class PhoneScreen : MonoBehaviour
         switch (talkState)
         {
             case TalkState.StepOne:
-                HUD.instance.SetSubTitleText("Doctor- I see you are awake. Can you hear me?");
+                HUD.instance.SetSubTitleText("Beep beep beep... \n Doctor- Sorry i can't pick up right now, send a message at the tone.");
                 talkState = TalkState.StepTwo;
                 Invoke(nameof(NextStep), 2f);
                 break;
 
             case TalkState.StepTwo:
-                HUD.instance.SetSubTitleText("Not good, something weird is happening to me...");
+                HUD.instance.SetSubTitleText("Oh no what am i going to do, i need answers now!");
                 talkState = TalkState.StepThree;
+                Dsm.isDoneForTheDay = true;
                 break;
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ namespace NoSideEffects
         APARTMENTBUZZING,
         GETTINGUPFROMBED,
         DOORCLOSE,
-        FURNITUREMOVE
+        FURNITUREMOVE,
+        PILLRATTLE
     }
 
     [RequireComponent(typeof(AudioSource))]
@@ -21,21 +23,21 @@ namespace NoSideEffects
         public static AudioManager instance;
 
         // Sound channels kinda...
-        public AudioSource audSrc_Music;
-        public AudioSource audSrc_ApartmentNoise;
-        public AudioSource audSrc_NeighbourNoise;
-        public AudioSource audSrc_WindowNoise;
-        public AudioSource audSrc_FanNoise;
-        public AudioSource audSrc_MovingFurniture;
-        public AudioSource audSrc_DoorSound;
-        public AudioSource audSrc_InteractSound;
-        public AudioSource audSrc_PlayerVoice;
-        public AudioSource audSrc_PlayerMovement;
-        public AudioSource audSrc_OtherVoice;
-        public AudioSource audSrc_NoisyVoices;
-        public AudioSource audSrc_SuddenSound;
-        public AudioSource audSrc_OtherSound;
-        public AudioSource audSrc_DistantSound;
+        [NonSerialized] public AudioSource audSrc_Music;
+        [NonSerialized] public AudioSource audSrc_ApartmentNoise;
+        [NonSerialized] public AudioSource audSrc_NeighbourNoise;
+        [NonSerialized] public AudioSource audSrc_WindowNoise;
+        [NonSerialized] public AudioSource audSrc_FanNoise;
+        [NonSerialized] public AudioSource audSrc_MovingFurniture;
+        [NonSerialized] public AudioSource audSrc_DoorSound;
+        [NonSerialized] public AudioSource audSrc_InteractSound;
+        [NonSerialized] public AudioSource audSrc_PlayerVoice;
+        [NonSerialized] public AudioSource audSrc_PlayerMovement;
+        [NonSerialized] public AudioSource audSrc_OtherVoice;
+        [NonSerialized] public AudioSource audSrc_NoisyVoices;
+        [NonSerialized] public AudioSource audSrc_SuddenSound;
+        [NonSerialized] public AudioSource audSrc_OtherSound;
+        [NonSerialized] public AudioSource audSrc_DistantSound;
 
         private void Awake()
         {

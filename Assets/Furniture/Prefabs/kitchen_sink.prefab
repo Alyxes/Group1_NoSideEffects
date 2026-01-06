@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: kitchen_sink
       objectReference: {fileID: 0}
+    - target: {fileID: 1139779310978935951, guid: adbe0d8c3b39e1a409f9d019872bd15f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1211679f0308f6a4b9f9e473a31e040c, type: 2}
+    - target: {fileID: 8346923501320019889, guid: adbe0d8c3b39e1a409f9d019872bd15f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1211679f0308f6a4b9f9e473a31e040c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -154,5 +162,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.80644894, y: 0.953735, z: 0.82099974}
-  m_Center: {x: 0.00000035762787, y: -0.14374071, z: 3.3881318e-21}
+  m_Size: {x: 0.80644894, y: 0.9048971, z: 0.82099974}
+  m_Center: {x: 0.00000035762787, y: -0.16815966, z: 3.3881318e-21}

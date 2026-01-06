@@ -60,6 +60,7 @@ namespace NoSideEffects
                 {
                     // Player is missing buttons
                     Debug.Log("You need to collect all LostButtons first!");
+                    HUD.instance.SetSubTitleText("Some of the  buttons are gone... \n I should find them before i call Alf.");
                 }
             }
         }
