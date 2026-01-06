@@ -144,7 +144,8 @@ namespace NoSideEffects
 
         void Awake()
         {
-            flashlight.SetActive(false);
+            if (flashlight != null)
+                flashlight.SetActive(false);
             rigid_Body = GetComponent<Rigidbody>();
             Player = GetComponent<Transform>();
             // Head = GetComponent<Transform>();

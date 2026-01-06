@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 467825387529731961, guid: bb34c1b7d1b06814b862450ea5f69717, type: 3}
+      propertyPath: Flashlight
+      value: 
+      objectReference: {fileID: 623838418}
     - target: {fileID: 6305404309644583400, guid: bb34c1b7d1b06814b862450ea5f69717, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.8786013
@@ -180,6 +184,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8cd481c9b5ca393409369f4144bf9bf0, type: 3}
   m_PrefabInstance: {fileID: 1935749078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &623838418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5793397610505035419, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+  m_PrefabInstance: {fileID: 4437907652021922328}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1061291432 stripped
 Transform:
@@ -862,6 +871,10 @@ PrefabInstance:
       propertyPath: pillBottle
       value: 
       objectReference: {fileID: 4437907652021922330}
+    - target: {fileID: 5793397610505035419, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599822621421111968, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -993,6 +1006,10 @@ PrefabInstance:
     - target: {fileID: 8522950094364795076, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8671564464623475841, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8740220201141612475, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalPosition.x

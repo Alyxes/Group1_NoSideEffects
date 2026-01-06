@@ -154,7 +154,7 @@ MonoBehaviour:
   objectID: picture frame
   infoText: "These photos bring back quite a few memories. It\u2019s been so long
     since I went outdoors regularly."
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -250,87 +250,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &210517790
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1350159546}
-    m_Modifications:
-    - target: {fileID: 2419550440057724488, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_Name
-      value: Player1.0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.355
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.002
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 270
-      objectReference: {fileID: 0}
-    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: flashlight
-      value: 
-      objectReference: {fileID: 674618284}
-    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-      propertyPath: pillBottle
-      value: 
-      objectReference: {fileID: 2086809525}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
---- !u!4 &210517791 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-  m_PrefabInstance: {fileID: 210517790}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &210517792 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-  m_PrefabInstance: {fileID: 210517790}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8e685f162d3c3439339d99005debb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!4 &557582215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8cd481c9b5ca393409369f4144bf9bf0, type: 3}
@@ -371,7 +290,7 @@ MonoBehaviour:
   objectID: TV
   infoText: I used to watch so many VHSes on this thing. Now it barely seems to work
     at all.
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -467,10 +386,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &674618284 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8380483606172238876, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
-  m_PrefabInstance: {fileID: 210517790}
+--- !u!1001 &728461677
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1350159546}
+    m_Modifications:
+    - target: {fileID: 2419550440057724488, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.23925
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.978
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.332
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: pillBottle
+      value: 
+      objectReference: {fileID: 2086809525}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+--- !u!4 &728461678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6728451414552704316, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+  m_PrefabInstance: {fileID: 728461677}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1138684935
 PrefabInstance:
@@ -721,7 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: wardrobe
   infoText: Nothing of note in here.
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -967,7 +947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: milk
   infoText: mmmmm milk. oh wait i'm lactose intolerant *dies*
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1167,7 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: front door
   infoText: "I\u2019m not ready to head outside yet."
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1390,7 +1370,7 @@ MonoBehaviour:
   objectID: wheelchair
   infoText: "Perhaps I won\u2019t be needing this clunky chair anymore, thanks to
     this new medicine. That would be nice\u2026"
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1485,7 +1465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: mirror
   infoText: I wonder how I look right now. Probably not great.
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -1686,7 +1666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: bath
   infoText: "I can take a bath later. I\u2019ve got more important things to do."
-  player: {fileID: 210517792}
+  player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
   lockViewTime: 0
@@ -2168,15 +2148,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f32a61715fd27d04f8f2daf9ec777d89, type: 2}
     - target: {fileID: 7797432243288072682, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.355
+      value: 4.23925
       objectReference: {fileID: 0}
     - target: {fileID: 7797432243288072682, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.912
+      value: 1.888
       objectReference: {fileID: 0}
     - target: {fileID: 7797432243288072682, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.3
+      value: -8.332
       objectReference: {fileID: 0}
     - target: {fileID: 7797432243288072682, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2205,7 +2185,7 @@ PrefabInstance:
     - target: {fileID: 8098027138505493637, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 210517792}
+      objectReference: {fileID: 0}
     - target: {fileID: 8297043990062283717, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -2287,7 +2267,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4317000201914645568, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 210517791}
+      addedObject: {fileID: 728461678}
     - targetCorrespondingSourceObject: {fileID: 4317000201914645568, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1633318064}

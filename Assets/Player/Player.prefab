@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 7500013475040357777}
   - component: {fileID: 7989836947901242678}
   m_Layer: 3
-  m_Name: Player1.0
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,14 +234,6 @@ MonoBehaviour:
   FPViewCamera: {fileID: 6846272917935288821}
   pillBottle: {fileID: 0}
   flashlight: {fileID: 0}
-  currentHeadXrotation: 0
-  wantedHeadXrotation: 0
-  currentHeadYrotation: 0
-  wantedHeadYrotation: 0
-  currentXposition: 0
-  wantedXposition: 0
-  currentZposition: 0
-  wantedZposition: 0
 --- !u!114 &7989836947901242678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6922394114323755780
 Transform:
   m_ObjectHideFlags: 0

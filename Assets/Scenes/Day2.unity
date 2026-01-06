@@ -175,6 +175,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PhoneTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 2459680234012463863, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479548434059132004, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.309
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7250524673785037199, guid: 052a80a8abf393349b3d480146d66ed6, type: 3}
@@ -604,6 +612,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -181.077
       objectReference: {fileID: 0}
+    - target: {fileID: 3290146010939049741, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3447661043340665489, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.439746
@@ -886,6 +898,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8522950094364795076, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8671564464623475841, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8740220201141612475, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
