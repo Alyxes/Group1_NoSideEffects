@@ -95,7 +95,7 @@ namespace NoSideEffects
                 case TalkState.None:
                     HUD.instance.SetSubTitleText("Hello?... are you there?");
                     talkState = TalkState.StepOne;
-                    Invoke(nameof(NextStep), 2f);
+                    Invoke(nameof(NextStep), 1f);
                     break;
             }
         }
@@ -105,13 +105,13 @@ namespace NoSideEffects
             switch (talkState)
             {
                 case TalkState.StepOne:
-                    HUD.instance.SetSubTitleText("Beep beep beep... \n Doctor- Sorry i can't pick up right now, send a message at the tone.");
+                    HUD.instance.SetSubTitleText("Beep - beep - beep... \n\"Sorry, I can't pick up right now, please leave a message after the tone.\"");
                     talkState = TalkState.StepTwo;
-                    Invoke(nameof(NextStep), 2f);
+                    Invoke(nameof(NextStep), 5f);
                     break;
 
                 case TalkState.StepTwo:
-                    HUD.instance.SetSubTitleText("Oh no what am i going to do, i need answers now!");
+                    HUD.instance.SetSubTitleText("That's what I thought... He doesn't really want me to call him.\nI guess I'll just wait for them to reach out for results...");
                     talkState = TalkState.StepThree;
                     DSM.instance.isDoneForTheDay = true;
                     break;
