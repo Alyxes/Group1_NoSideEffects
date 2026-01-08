@@ -124,7 +124,6 @@ namespace NoSideEffects
         [NonSerialized] public float currentHeadXrotation;
         [NonSerialized] public float wantedHeadXrotation;
         private bool XrotationDone = true;
-        private bool hasChangedWantedXrotation = false;
         [NonSerialized] public float currentHeadYrotation;
         [NonSerialized] public float wantedHeadYrotation;
         private bool hasChangedWantedYrotation = false;
@@ -132,7 +131,6 @@ namespace NoSideEffects
         [NonSerialized] public float currentXposition;
         [NonSerialized] public float wantedXposition;
         private bool XpositionDone = true;
-        private bool hasChangedWantedXposition = false;
         [NonSerialized] public float currentZposition;
         [NonSerialized] public float wantedZposition;
         private bool ZpositionDone = true;
@@ -354,11 +352,9 @@ namespace NoSideEffects
         private void ResetAnimationBools()
         {
             XrotationDone = true;
-            hasChangedWantedXrotation = false;
             YrotationDone = true;
             hasChangedWantedYrotation = false;
             XpositionDone = true;
-            hasChangedWantedXposition = false;
             ZpositionDone = true;
             hasChangedWantedZposition = false;
         }
