@@ -16,8 +16,8 @@ namespace NoSideEffects
         private bool InZone = false;
 
         // Names of the LostButtons that must be collected
-        [Header("Required LostButtons")]
-        [SerializeField] private string[] requiredButtons = { "PhoneButtonLost", "PhoneButtonLost (1)" };
+        // [Header("Required LostButtons")]
+        // [SerializeField] private string[] requiredButtons = { "PhoneButtonLost", "PhoneButtonLost (1)" };
 
         private void Awake()
         {
@@ -27,8 +27,8 @@ namespace NoSideEffects
 
             // Get the global "Interact" action from Input System
             interactButton = InputSystem.actions.FindAction("Interact");
-            if (interactButton == null)
-                Debug.LogError("SceneChecker: Could not find 'Interact' action! Make sure your Input Actions asset is set as Default.");
+            //if (interactButton == null)
+            //    Debug.LogError("SceneChecker: Could not find 'Interact' action! Make sure your Input Actions asset is set as Default.");
         }
 
         private void Update()
@@ -37,13 +37,14 @@ namespace NoSideEffects
 
             if (InZone && interactButton.WasPressedThisFrame())
             {
-                if (LostButtons.totalButtonsPickedUp == 2)
+                if (LostButtons.totalButtonsPickedUp == 2 && combinationItem.HasCombination)
                 {
                     // Player has all buttons — show UI and allow interaction
                     combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
                     phoneButton?.SetActive(true);
                     Cursor.lockState = CursorLockMode.None;
                     Camera.ToggleCameraRotationOff();
+                    Camera.canMove = false;
                 }
                 //// Check if player has collected all required LostButtons
                 //bool hasAllButtons = true;
@@ -88,10 +89,16 @@ namespace NoSideEffects
             {
                 InZone = false;
                 HUD.instance.ClearPickUpText();
-                phoneButton?.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                Camera.ToggleCameraRotationOn();
+                ClosePhoneUI();
             }
+        }
+
+        public void ClosePhoneUI()
+        {
+            phoneButton?.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Camera.ToggleCameraRotationOn();
+            Camera.canMove = true;
         }
     }
 }
