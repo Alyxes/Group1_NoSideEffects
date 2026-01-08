@@ -8,7 +8,6 @@ namespace NoSideEffects
 {
     public class PhoneScreen : MonoBehaviour
     {
-        public DSM Dsm;
         private enum TalkState
         {
             None,
@@ -31,31 +30,39 @@ namespace NoSideEffects
             foreach (Transform child in transform)
             {
                 Button button = child.GetComponent<Button>();
-                ButtonID id = child.GetComponent<ButtonID>();
-                if (button != null && id != null)
+                ButtonID Id = child.GetComponent<ButtonID>();
+                if (button != null && Id != null)
                 {
-                    int capturedID = id.id; // capture for the lambda
+                    int capturedID = Id.id; // capture for the lambda
                     button.onClick.AddListener(() => OnButtonPressed(capturedID));
+                }
+                else
+                {
+                    Debug.Log("Button or ButtonID component missing on child: " + child.name);
                 }
             }
         }
 
-        void OnButtonPressed(int buttonID)
+        void OnButtonPressed(int pressedButtonId)
         {
-            currentSequence.Add(buttonID);
-            Debug.Log("Pressed button ID: " + buttonID);
+            currentSequence.Add(pressedButtonId);
+            Debug.Log("Pressed button ID: " + pressedButtonId);
 
             // Check if current sequence is correct so far
             for (int i = 0; i < currentSequence.Count; i++)
             {
                 if (currentSequence[i] != correctSequence[i])
                 {
+                    // Konstig bugg här. Verkar inte få rätt siffra från knappen.
                     Debug.Log("Wrong sequence! Resetting.");
-                    HUD.instance.SetSubTitleText("That's not his number.");
+                    // Här bör vi kanske ändra? Ska man behöva skriva in hela längden innan man får ett svar? I så fall måste if-satsen längst ner också ändras.
+                    HUD.instance.SetSubTitleText("That's not his number...");
                     currentSequence.Clear();
                     return;
                 }
             }
+
+            HUD.instance.SetSubTitleText("That's right it seems!");
 
             // Check if the full sequence is complete
             if (currentSequence.Count == correctSequence.Count)
@@ -90,7 +97,7 @@ namespace NoSideEffects
                 case TalkState.StepTwo:
                     HUD.instance.SetSubTitleText("Oh no what am i going to do, i need answers now!");
                     talkState = TalkState.StepThree;
-                    Dsm.isDoneForTheDay = true;
+                    DSM.instance.isDoneForTheDay = true;
                     break;
             }
         }

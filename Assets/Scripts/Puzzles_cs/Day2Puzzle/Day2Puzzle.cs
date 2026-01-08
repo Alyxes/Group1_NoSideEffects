@@ -35,20 +35,9 @@ namespace NoSideEffects
         {
             if (interactButton == null) return;
 
-            if (interactButton.WasPressedThisFrame() && InZone)
+            if (InZone && interactButton.WasPressedThisFrame())
             {
-                // Check if player has collected all required LostButtons
-                bool hasAllButtons = true;
-                foreach (string buttonName in requiredButtons)
-                {
-                    if (!LostButtons.pickedUpObjects.Contains(buttonName))
-                    {
-                        hasAllButtons = false;
-                        break;
-                    }
-                }
-
-                if (hasAllButtons)
+                if (LostButtons.totalButtonsPickedUp == 2)
                 {
                     // Player has all buttons — show UI and allow interaction
                     combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
@@ -56,26 +45,49 @@ namespace NoSideEffects
                     Cursor.lockState = CursorLockMode.None;
                     Camera.ToggleCameraRotationOff();
                 }
+                //// Check if player has collected all required LostButtons
+                //bool hasAllButtons = true;
+                //foreach (string buttonName in requiredButtons)
+                //{
+                //    if (!LostButtons.pickedUpObjects.Contains(buttonName))
+                //    {
+                //        hasAllButtons = false;
+                //        break;
+                //    }
+                //}
+
+                //if (hasAllButtons)
+                //{
+                //    // Player has all buttons — show UI and allow interaction
+                //    combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
+                //    phoneButton?.SetActive(true);
+                //    Cursor.lockState = CursorLockMode.None;
+                //    Camera.ToggleCameraRotationOff();
+                //}
                 else
                 {
                     // Player is missing buttons
                     Debug.Log("You need to collect all LostButtons first!");
-                    HUD.instance.SetSubTitleText("Some of the buttons are gone..? \n I have to find them before i call Dr. Raphael.");
+                    HUD.instance.SetSubTitleText("Some of the buttons are gone...? \n I have to find them before i can call him.");
                 }
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("InteractZone"))
+            {
                 InZone = true;
+                HUD.instance.SetUniqueItemText("Call Dr. Raphael.");
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("InteractZone"))
             {
                 InZone = false;
+                HUD.instance.ClearPickUpText();
                 phoneButton?.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 Camera.ToggleCameraRotationOn();

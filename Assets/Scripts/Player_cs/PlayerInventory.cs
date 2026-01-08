@@ -27,7 +27,7 @@ namespace NoSideEffects
 
             // Ensure taskSwitch exists
             if (taskSwitch == null)
-                taskSwitch = FindObjectOfType<TaskSwitch>();
+                taskSwitch = FindFirstObjectByType<TaskSwitch>();
         }
 
         public void PickUpItem(ItemPickup pickedUpItem, bool leftHand = false)
@@ -59,7 +59,7 @@ namespace NoSideEffects
 
             // Trigger task immediately
             if (taskSwitch == null)
-                taskSwitch = FindObjectOfType<TaskSwitch>();
+                taskSwitch = FindFirstObjectByType<TaskSwitch>();
 
             taskSwitch?.StartTaskForCurrentItem();
         }
