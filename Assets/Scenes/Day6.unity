@@ -3739,7 +3739,7 @@ MonoBehaviour:
   turnSpeed: 500
   wantedRotation: -200
   open: 0
-  canBeOpened: 1
+  canBeOpened: 0
   showInteractionText: 1
 --- !u!1001 &786312292
 PrefabInstance:
@@ -6709,6 +6709,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyZone
       objectReference: {fileID: 0}
+    - target: {fileID: 695142114904341399, guid: b1533d7179b84f345b88bdff49643c2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9068524758274955235, guid: b1533d7179b84f345b88bdff49643c2f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4535906
@@ -9614,7 +9618,7 @@ PrefabInstance:
     - target: {fileID: 7180740773455614448, guid: fe90e9c42dda0e54791960162a54fd62, type: 3}
       propertyPath: door
       value: 
-      objectReference: {fileID: 1487517715}
+      objectReference: {fileID: 778458342}
     - target: {fileID: 7180740773455614448, guid: fe90e9c42dda0e54791960162a54fd62, type: 3}
       propertyPath: keyZone
       value: 
