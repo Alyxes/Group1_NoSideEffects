@@ -24,6 +24,7 @@ namespace NoSideEffects
             {
                 HasCombination = true;
                 HUD.instance.ClearPickUpText();
+                HUD.instance.SetSubTitleText("There's the card.");
                 gameObject.SetActive(false);
             }
         }
@@ -32,7 +33,7 @@ namespace NoSideEffects
             if (other.CompareTag("InteractZone"))
             {
                 InZone = true;
-                HUD.instance.SetUniqueItemText("Pick up phone number");
+                HUD.instance.SetUniqueItemText("Pick up card with phone number");
             }
         }
         private void OnTriggerExit(Collider other)

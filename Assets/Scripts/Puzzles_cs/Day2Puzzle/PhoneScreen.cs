@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace NoSideEffects
 {
@@ -19,11 +20,18 @@ namespace NoSideEffects
             Done
         }
         private TalkState talkState = TalkState.None;
+        public SceneChecker day2puzzleScript;
 
         [Tooltip("Set the button IDs in the order they should be pressed")]
-        public List<int> correctSequence = new List<int> { 2, 7, 10, 3, 9, 3, 1, 7, 12, 4 }; // fixed sequence
+        private List<int> correctSequence = new List<int> { 2, 7, 10, 3, 9, 3, 1, 7, 12, 4 }; // fixed sequence
         private List<int> currentSequence = new List<int>();
 
+        private InputAction backButton;
+
+        private void Awake()
+        {
+            backButton = InputSystem.actions.FindAction("Back");
+        }
         void Start()
         {
             // Add listeners to all child buttons
@@ -43,6 +51,14 @@ namespace NoSideEffects
             }
         }
 
+        private void Update()
+        {
+            if (backButton.WasPressedThisFrame())
+            {
+                day2puzzleScript.ClosePhoneUI();
+            }
+        }
+
         void OnButtonPressed(int pressedButtonId)
         {
             currentSequence.Add(pressedButtonId);
@@ -53,7 +69,6 @@ namespace NoSideEffects
             {
                 if (currentSequence[i] != correctSequence[i])
                 {
-                    // Konstig bugg här. Verkar inte få rätt siffra från knappen.
                     Debug.Log("Wrong sequence! Resetting.");
                     // Här bör vi kanske ändra? Ska man behöva skriva in hela längden innan man får ett svar? I så fall måste if-satsen längst ner också ändras.
                     HUD.instance.SetSubTitleText("That's not his number...");
@@ -69,6 +84,7 @@ namespace NoSideEffects
             {
                 Debug.Log("Sequence complete! Triggering action.");
                 currentSequence.Clear(); // Reset for next attempt
+                day2puzzleScript.ClosePhoneUI();
                 DoAction();
             }
         }
@@ -79,7 +95,7 @@ namespace NoSideEffects
                 case TalkState.None:
                     HUD.instance.SetSubTitleText("Hello?... are you there?");
                     talkState = TalkState.StepOne;
-                    Invoke(nameof(NextStep), 2f);
+                    Invoke(nameof(NextStep), 1f);
                     break;
             }
         }
@@ -89,13 +105,13 @@ namespace NoSideEffects
             switch (talkState)
             {
                 case TalkState.StepOne:
-                    HUD.instance.SetSubTitleText("Beep beep beep... \n Doctor- Sorry i can't pick up right now, send a message at the tone.");
+                    HUD.instance.SetSubTitleText("Beep - beep - beep... \n\"Sorry, I can't pick up right now, please leave a message after the tone.\"");
                     talkState = TalkState.StepTwo;
-                    Invoke(nameof(NextStep), 2f);
+                    Invoke(nameof(NextStep), 5f);
                     break;
 
                 case TalkState.StepTwo:
-                    HUD.instance.SetSubTitleText("Oh no what am i going to do, i need answers now!");
+                    HUD.instance.SetSubTitleText("That's what I thought... He doesn't really want me to call him.\nI guess I'll just wait for them to reach out for results...");
                     talkState = TalkState.StepThree;
                     DSM.instance.isDoneForTheDay = true;
                     break;

@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Back",
                     "type": "Button",
                     "id": "cd43ce14-17c5-431d-a878-97a61cbd1f61",
                     "expectedControlType": "",
@@ -179,29 +179,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "458053a5-ca35-4a24-866e-8c32337a7ab8",
-                    "path": "<Keyboard>/p",
+                    "id": "540d3597-83ea-4976-bc74-91ad939f3ee0",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0dbccb14-9915-4925-8099-fc4ee1c1b5cc",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
