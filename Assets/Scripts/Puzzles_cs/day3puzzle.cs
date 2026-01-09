@@ -76,7 +76,7 @@ namespace NoSideEffects
             
             puzzledApartment.SetActive(true);
             normalStartApartment.SetActive(false);
-            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1f, "Woah! What's going on!?"));
+            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1f, "Woah! What's going on!?", true));
             player.ToggleCameraRotationOn();
         }
         private IEnumerator RemoveDay3Puzzle()

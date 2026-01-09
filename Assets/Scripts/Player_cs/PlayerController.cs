@@ -260,7 +260,7 @@ namespace NoSideEffects
 
             // This text will be different or be none at all depending on the day.
             if (DSM.instance.wakeUpMonologue != "")
-                StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue));
+                StartCoroutine(HUD.instance.SetTimerUntilSubTitle(DSM.instance.monolougeTimer, DSM.instance.wakeUpMonologue, true));
         }
         public void ToggleCrouch()
         {

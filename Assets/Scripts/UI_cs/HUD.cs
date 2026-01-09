@@ -18,8 +18,9 @@ namespace NoSideEffects
         public TMP_Text pressToContinue;
         public RawImage blackScreen;
         InputAction interactButton;
-        [NonSerialized] public bool isSubTitleActive, blackScreenFadeOut, blackScreenFadeIn = false;
+        [NonSerialized] public bool isSubTitleActive, isPressToContinueActive, blackScreenFadeOut, blackScreenFadeIn = false;
         [NonSerialized] public float blackScreenFadeSpeed = 0;
+
         private void Awake()
         {
             if (instance == null)
@@ -43,7 +44,7 @@ namespace NoSideEffects
         }
         private void FixedUpdate()
         {
-            if (isSubTitleActive)
+            if (isPressToContinueActive)
             {
                 if (interactButton.WasPressedThisFrame())
                 {
@@ -61,13 +62,26 @@ namespace NoSideEffects
             }
 
             subTitleText.text = input;
+            isSubTitleActive = true;
             StartCoroutine(SubTitleBooleanTrueCoroutine());
         }
+        public void SetSubTitleTextWithoutContinueText(string input)
+        {
+            if (isSubTitleActive)
+            {
+                ClearSubTitleText();
+            }
+
+            subTitleText.text = input;
+            isSubTitleActive = true;
+        }
+
         public void ClearSubTitleText()
         {
             subTitleText.text = "";
             pressToContinue.text = "";
             isSubTitleActive = false;
+            isPressToContinueActive = false;
         }
         public void SetPickUpText(string itemName, string action = "Pick Up")
         {
@@ -88,8 +102,11 @@ namespace NoSideEffects
         public IEnumerator SubTitleBooleanTrueCoroutine()
         {
             yield return new WaitForSeconds(1f);
-            isSubTitleActive = true;
-            pressToContinue.text = "(gamepad)A/(k&m)E/left mouseclick"; // We should make it so it differs depending on controller type used.
+            if (isSubTitleActive)
+            {
+                isPressToContinueActive = true;
+                pressToContinue.text = "(gamepad)A/(k&m)E/left mouseclick"; // We should make it so it differs depending on controller type used.
+            }
         }
         public IEnumerator PickUpTimeOutCoroutine(float timer)
         {
@@ -101,10 +118,13 @@ namespace NoSideEffects
             yield return new WaitForSeconds(timer);
             ClearSubTitleText();
         }
-        public IEnumerator SetTimerUntilSubTitle(float timer, string text)
+        public IEnumerator SetTimerUntilSubTitle(float timer, string text, bool continueTextOn)
         {
             yield return new WaitForSeconds(timer);
-            SetSubTitleText(text);
+            if (continueTextOn)
+                SetSubTitleText(text);
+            else
+                SetSubTitleTextWithoutContinueText(text);
         }
         public IEnumerator SetTimerUntilItemText(float timer, string text)
         {

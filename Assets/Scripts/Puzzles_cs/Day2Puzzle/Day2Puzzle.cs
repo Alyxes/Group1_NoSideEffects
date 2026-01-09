@@ -6,7 +6,7 @@ namespace NoSideEffects
     public class SceneChecker : MonoBehaviour
     {
         public CombinationPickUp combinationItem;
-        public PhoneScreen Button;
+        public PhoneScreen puzzle;
         public PlayerController Camera;
         [Header("UI Elements")]
         [SerializeField] private GameObject phoneButton;
@@ -33,7 +33,13 @@ namespace NoSideEffects
 
         private void Update()
         {
-            if (interactButton == null) return;
+            // if (interactButton == null) return;
+            if (puzzle.isPuzzleDone)
+            {
+                if (InZone)
+                    InZone = false;
+                return;
+            }
 
             if (InZone && interactButton.WasPressedThisFrame())
             {
@@ -48,7 +54,7 @@ namespace NoSideEffects
                     Camera.canMove = false;
                     if (!enteredPhonePuzzle)
                     {
-                        StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "Whoah, that's... Jeezus, that's some bad handwriting there... \nCouldn't they have printed that number as well? They don't seem to want people to call..."));
+                        StartCoroutine(HUD.instance.SetTimerUntilSubTitle(0.7f, "Whoah, that's... Jeezus, that's some weird handwriting there... \nCouldn't they have printed that number as well? They don't seem to want people to call...", true));
                         enteredPhonePuzzle = true;
                     }
                 }
@@ -62,7 +68,7 @@ namespace NoSideEffects
                     }
                     else
                         HUD.instance.SetSubTitleText("I still need to find the missing buttons.");
-                        
+
                 }
                 else if (LostButtons.totalButtonsPickedUp == 2 && !combinationItem.HasCombination)
                 {
@@ -94,15 +100,22 @@ namespace NoSideEffects
 
         private void OnTriggerEnter(Collider other)
         {
+            if (puzzle.isPuzzleDone)
+                return;
+
             if (other.CompareTag("InteractZone"))
             {
                 InZone = true;
-                HUD.instance.SetUniqueItemText("Call Dr. Raphael.");
+                if (!puzzle.isPuzzleDone)
+                    HUD.instance.SetUniqueItemText("Call Dr. Raphael.");
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            if (puzzle.isPuzzleDone)
+                return;
+
             if (other.CompareTag("InteractZone"))
             {
                 InZone = false;
@@ -114,8 +127,16 @@ namespace NoSideEffects
         {
             phoneButton?.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
-            Camera.ToggleCameraRotationOn();
-            Camera.canMove = true;
+            PlayerMovementEnabler(true);
+        }
+        public void PlayerMovementEnabler(bool enabled)
+        {
+            if (enabled)
+                Camera.ToggleCameraRotationOn();
+            else
+                Camera.ToggleCameraRotationOff();
+
+            Camera.canMove = enabled;
         }
     }
 }

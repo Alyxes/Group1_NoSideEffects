@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,7 @@ namespace NoSideEffects
 {
     public class CombinationPickUp : MonoBehaviour
     {
-        public bool HasCombination = false;
+        [NonSerialized] public bool HasCombination = false;
         private bool InZone = false;
 
         private InputAction interactButton;
