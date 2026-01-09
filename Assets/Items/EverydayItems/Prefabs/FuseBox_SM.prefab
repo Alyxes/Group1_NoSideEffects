@@ -48,9 +48,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8145798594536398582, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3068193499542812403, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
       propertyPath: m_Name
       value: FuseBox_SM
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145045848129016001, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2857082030554122452, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360538690872367603, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013224408450993635, guid: acefafd55be66f542b6ea4331c7650ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

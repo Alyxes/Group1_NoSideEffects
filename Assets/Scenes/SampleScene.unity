@@ -843,7 +843,9 @@ MonoBehaviour:
   - {fileID: 741208449}
   meshChanges: []
   lightSwitch: {fileID: 0}
+  door: {fileID: 0}
   playerInventory: {fileID: 0}
+  keyZone: {fileID: 0}
   InTaskZone: 0
 --- !u!114 &228226133 stripped
 MonoBehaviour:
@@ -2623,6 +2625,10 @@ MonoBehaviour:
   IsMovable: 1
   player: {fileID: 228226133}
   playerPosition: {fileID: 228226134}
+  XAxis: 0
+  ZAxis: 0
+  mat: {fileID: 0}
+  mat2: {fileID: 0}
 --- !u!1 &741208446
 GameObject:
   m_ObjectHideFlags: 0
@@ -4272,7 +4278,6 @@ MonoBehaviour:
   objectID: the weirdest cube
   infoText: Uuuuuuuhhhhhh.....
   player: {fileID: 228226133}
-  objectToLookAt: {fileID: 0}
   oneTimeUse: 0
   lockPlayerView: 0
   lockViewTime: 0
