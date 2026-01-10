@@ -42,18 +42,18 @@ namespace NoSideEffects
             {
                 Debug.Log(gameObject.name + " picked up!");
 
-                // Add this object to the static list
                 totalButtonsPickedUp++;
-                // pickedUpObjects.Add(gameObject.name);
                 HUD.instance.ClearPickUpText();
 
                 inZone = false;
                 Destroy(gameObject);
 
-                if (totalButtonsPickedUp == 2)
-                {
-                    HUD.instance.SetSubTitleText("I think that's all the missing buttons.");
-                }
+                if (totalButtonsPickedUp == 1)
+                    HUD.instance.SetSubTitleText("That's one...");
+                else if (totalButtonsPickedUp == 2)
+                    HUD.instance.SetSubTitleText("Two buttons found. Now where's the last one...?");
+                else if (totalButtonsPickedUp == 3)
+                    HUD.instance.SetSubTitleText("Ok, that's all of them.");
             }
         }
     }

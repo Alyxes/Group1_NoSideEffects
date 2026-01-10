@@ -34,66 +34,62 @@ namespace NoSideEffects
         private void Update()
         {
             // if (interactButton == null) return;
-            if (puzzle.isPuzzleDone)
+            if (!puzzle.isPuzzleDone)
             {
-                if (InZone)
-                    InZone = false;
-                return;
-            }
-
-            if (InZone && interactButton.WasPressedThisFrame())
-            {
-                if (LostButtons.totalButtonsPickedUp == 2 && combinationItem.HasCombination)
+                if (InZone && interactButton.WasPressedThisFrame())
                 {
-                    // Player has all buttons and the phone number card — show UI and allow interaction
-                    HUD.instance.ClearPickUpText();
-                    combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
-                    phoneButton?.SetActive(true);
-                    Cursor.lockState = CursorLockMode.None;
-                    Camera.ToggleCameraRotationOff();
-                    Camera.canMove = false;
-                    if (!enteredPhonePuzzle)
+                    if (LostButtons.totalButtonsPickedUp == 3 && combinationItem.HasCombination)
                     {
-                        StartCoroutine(HUD.instance.SetTimerUntilSubTitle(0.7f, "Whoah, that's... Jeezus, that's some weird handwriting there... \nCouldn't they have printed that number as well? They don't seem to want people to call...", true));
-                        enteredPhonePuzzle = true;
+                        // Player has all buttons and the phone number card — show UI and allow interaction
+                        HUD.instance.ClearPickUpText();
+                        combination?.SetActive(combinationItem != null && combinationItem.HasCombination);
+                        phoneButton?.SetActive(true);
+                        Cursor.lockState = CursorLockMode.None;
+                        Camera.ToggleCameraRotationOff();
+                        Camera.canMove = false;
+                        if (!enteredPhonePuzzle)
+                        {
+                            StartCoroutine(HUD.instance.SetTimerUntilSubTitle(0.7f, "Whoah, that's... Jeezus, that's some weird handwriting there... \nDoes he really want people to call...?", true));
+                            enteredPhonePuzzle = true;
+                        }
                     }
-                }
-                else if (LostButtons.totalButtonsPickedUp < 2 && combinationItem.HasCombination)
-                {
-                    // Player has the phone number card but is missing buttons
-                    if (!checkedPhoneOnce)
+                    else if (LostButtons.totalButtonsPickedUp < 3 && combinationItem.HasCombination)
                     {
-                        HUD.instance.SetSubTitleText("Some of the buttons are gone...? \n I have to find them too before I can call him...");
-                        checkedPhoneOnce = true;
-                    }
-                    else
-                        HUD.instance.SetSubTitleText("I still need to find the missing buttons.");
+                        // Player has the phone number card but is missing buttons
+                        if (!checkedPhoneOnce)
+                        {
+                            HUD.instance.SetSubTitleText("Some of the buttons are gone...? \n I have to find them too before I can call him...");
+                            checkedPhoneOnce = true;
+                        }
+                        else
+                            HUD.instance.SetSubTitleText("I still need to find the three missing buttons.");
 
-                }
-                else if (LostButtons.totalButtonsPickedUp == 2 && !combinationItem.HasCombination)
-                {
-                    // Player is missing the phone number card but has all buttons
-                    if (!checkedPhoneOnce)
-                    {
-                        HUD.instance.SetSubTitleText("Right. I need his card with the number.\nDidn't I put that on my desk?");
-                        checkedPhoneOnce = true;
                     }
-                    else
-                        HUD.instance.SetSubTitleText("I still need to find his card. I think it's on my desk, by my flowers.");
-
-                }
-                else
-                {
-                    // Player is missing buttons
-                    Debug.Log("You need to collect all LostButtons first!");
-                    if (!checkedPhoneOnce)
+                    else if (LostButtons.totalButtonsPickedUp == 3 && !combinationItem.HasCombination)
                     {
-                        HUD.instance.SetSubTitleText("Some of the buttons are gone...? \n I have to find them before I can call him.\nAnd I need his card, for the number.");
-                        checkedPhoneOnce = true;
+                        // Player is missing the phone number card but has all buttons
+                        if (!checkedPhoneOnce)
+                        {
+                            HUD.instance.SetSubTitleText("Right. I need his card with the number.\nDidn't I put that on my desk?");
+                            checkedPhoneOnce = true;
+                        }
+                        else
+                            HUD.instance.SetSubTitleText("I still need to find his card. I think it's on my desk, by my flowers.");
+
                     }
                     else
-                        HUD.instance.SetSubTitleText("I still need to find the missing buttons and his card with the number.");
+                    {
+                        // Player is missing buttons
+                        Debug.Log("You need to collect all LostButtons first!");
+                        if (!checkedPhoneOnce)
+                        {
+                            HUD.instance.SetSubTitleText("Three of the buttons are gone...? \n I have to find them before I can call him.\nAnd I need his card, for the number.");
+                            checkedPhoneOnce = true;
+                        }
+                        else
+                            HUD.instance.SetSubTitleText("I still need to find the three missing buttons and his card with the number.");
 
+                    }
                 }
             }
         }
@@ -106,8 +102,7 @@ namespace NoSideEffects
             if (other.CompareTag("InteractZone"))
             {
                 InZone = true;
-                if (!puzzle.isPuzzleDone)
-                    HUD.instance.SetUniqueItemText("Call Dr. Raphael.");
+                HUD.instance.SetUniqueItemText("Call Dr. Raphael.");
             }
         }
 

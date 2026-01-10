@@ -116,8 +116,8 @@ namespace NoSideEffects
         private void SetupDay4()
         {
             dayWalkSpeed = 2.5f;
-            wakeUpMonologue = "Power outage? Crap..";
-            monolougeTimer = 2f;
+            wakeUpMonologue = "Great, the power's out now too...\nWell... I think my flashlight is on the dresser in here.";
+            monolougeTimer = 3f;
             endDayMonologue = "All that rummaging in the dark... I'm done for today.";
             nextDay = Days.Day6; // As of discussions, Day 5 is skipped.
             BaseStartOfDay("Day4");

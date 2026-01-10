@@ -163,7 +163,6 @@ namespace NoSideEffects
             }
         }
 
-
 private void Day1Task()
         {
             switch (taskState)
