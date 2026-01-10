@@ -250,6 +250,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &275664752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626349439050794467, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+  m_PrefabInstance: {fileID: 1138684935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &275664757
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275664752}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.28
+  m_Center: {x: 1.52, y: 0.4, z: 0.95}
 --- !u!4 &557582215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8cd481c9b5ca393409369f4144bf9bf0, type: 3}
@@ -288,8 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: TV
-  infoText: I used to watch so many VHSes on this thing. Now it barely seems to work
-    at all.
+  infoText: A movie is always nice, but I don't wanna sit around today.
   player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
@@ -463,6 +488,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8e685f162d3c3439339d99005debb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &1120223590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1120223594}
+  - component: {fileID: 1120223593}
+  - component: {fileID: 1120223591}
+  - component: {fileID: 1120223595}
+  m_Layer: 0
+  m_Name: PlantZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1120223591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120223590}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1120223593
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120223590}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1120223594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120223590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.3042, y: 1.0822, z: 10.534}
+  m_LocalScale: {x: 2.409134, y: 0.6076862, z: 2.3134232}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1120223595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120223590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740fce3bd7878604ba6eccf35252a0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
+  objectID: plants
+  infoText: Hey little fellas. Yeah... You should have some water.\nMy watering can's
+    in the bathroom.
+  player: {fileID: 0}
+  oneTimeUse: 1
+  lockPlayerView: 0
+  lockViewTime: 0
 --- !u!1001 &1138684935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -471,14 +578,126 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5455
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1572
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.9834
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.82443744
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5659531
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33172581895960034, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -68.937
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08106211
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.171
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5408142
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.47847894
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.8780991
+      objectReference: {fileID: 0}
+    - target: {fileID: 53636253208402847, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -237.172
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08128275
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1706
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.53912634
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.47847894
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.8780991
+      objectReference: {fileID: 0}
+    - target: {fileID: 526613758302590956, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -237.172
+      objectReference: {fileID: 0}
+    - target: {fileID: 714185053309293584, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.659
+      objectReference: {fileID: 0}
+    - target: {fileID: 714185053309293584, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.561
+      objectReference: {fileID: 0}
     - target: {fileID: 810096961679044440, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169353688155320181, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.546
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169353688155320181, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.158
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169353688155320181, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.981
       objectReference: {fileID: 0}
     - target: {fileID: 1782554922210376690, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2557364294513728532, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: plantsInfoZone
+      value: 
+      objectReference: {fileID: 1120223590}
     - target: {fileID: 3767213589169543755, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.38
@@ -523,14 +742,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_PlantTask (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4808754686754416228, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.171
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197002427200861807, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_Radius
+      value: 0.46191058
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197002427200861807, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_Center.x
+      value: -0.15492992
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197002427200861807, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_Center.y
+      value: 0.42360163
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197002427200861807, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_Center.z
+      value: 0.3882973
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197002427200861807, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6470585313493294293, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9029261440851267899, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1706
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626349439050794467, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 275664757}
   m_SourcePrefab: {fileID: 100100000, guid: a9bc5bb341cfcc241b5923568bb66447, type: 3}
 --- !u!1 &1290455670
 GameObject:
@@ -711,7 +961,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: wardrobe
-  infoText: Nothing of note in here.
+  infoText: No... I don't want to look at my old Ranger suit, yet.\nIt's far from
+    certain if I can ever do that again...
   player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
@@ -957,7 +1208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: milk
-  infoText: mmmmm milk. oh wait i'm lactose intolerant *dies*
+  infoText: mmmmm milk. Oh wait I'm lactose intolerant\n*dies*
   player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
@@ -1676,7 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoSideEffects.InfoZone
   objectID: bath
-  infoText: "I can take a bath later. I\u2019ve got more important things to do."
+  infoText: I can take a bath later. I wanna feel my legs working again more.
   player: {fileID: 0}
   oneTimeUse: 1
   lockPlayerView: 0
@@ -1767,7 +2018,7 @@ Transform:
   m_GameObject: {fileID: 2129372544}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.481, y: 0.686, z: 5.868}
+  m_LocalPosition: {x: -4.276, y: 0.686, z: 6.012}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2275,6 +2526,9 @@ PrefabInstance:
     - {fileID: 6413018907159997592, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     - {fileID: 412296317329048783, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     - {fileID: 9071657129929079509, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+    - {fileID: 4409105279703887968, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+    - {fileID: 8849848051619243929, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+    - {fileID: 5626976860691607869, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4317000201914645568, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       insertIndex: 3
@@ -2308,3 +2562,4 @@ SceneRoots:
   - {fileID: 2129372549}
   - {fileID: 673381214}
   - {fileID: 1520031875}
+  - {fileID: 1120223594}

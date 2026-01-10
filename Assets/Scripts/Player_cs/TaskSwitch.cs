@@ -14,6 +14,7 @@ namespace NoSideEffects
         [Header("Mesh Change")]
         public List<MeshChange> meshChanges;
 
+        public GameObject plantsInfoZone;
         public Lightswitch lightSwitch;
         public Door door;
         [Header("Player Inventory")]
@@ -45,7 +46,8 @@ namespace NoSideEffects
         private void Start()
         {
             var keyZone = transform.Find("KeyZone");
-            if (keyZone != null) keyZone.gameObject.SetActive(false);
+            if (keyZone != null)
+                keyZone.gameObject.SetActive(false);
 
             DisableAllTriggers();
             if (SceneManager.GetActiveScene().name == "Day4")
@@ -169,6 +171,8 @@ private void Day1Task()
             {
                 case TaskState.None:
                     ActivateTrigger("Sink");
+                    if (plantsInfoZone != null)
+                        plantsInfoZone.SetActive(false);
                     Debug.Log("Go to the Sink to start filling water.");
                     HUD.instance.SetSubTitleText("Let's give the plants some water.\nGotta fill this up in the kitchen.");
                     taskState = TaskState.StepOne;
@@ -224,7 +228,8 @@ private void Day1Task()
                     }
 
                     Debug.Log("Watering the plant... Task Complete!");
-                    HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
+                    if (!DSM.instance.isDoneForTheDay)
+                        HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
                     DeactivateTrigger("Plant");
                     DSM.instance.isDoneForTheDay = true;
                     break;
