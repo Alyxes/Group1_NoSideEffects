@@ -62,6 +62,8 @@ namespace NoSideEffects
                     ToggleDoor(true);
                     if (showInteractionText)
                         HUD.instance.SetUniqueItemText("Close door");
+
+                    AudioManager.PlaySound(SoundType.DOOROPEN, AudioManager.instance.audSrc_DoorSound);
                 }
             }
         }

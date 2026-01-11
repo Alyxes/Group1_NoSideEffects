@@ -110,21 +110,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 57088416933eb75499ba8b65426d12c2, type: 3}
   - {fileID: 8300000, guid: d4985b01c5d27f14193afb9cb2ac1e00, type: 3}
   - {fileID: 8300000, guid: 40817093f04298f45a53c99f4c5ffd6e, type: 3}
-  audSrc_Music: {fileID: 0}
-  audSrc_ApartmentNoise: {fileID: 0}
-  audSrc_NeighbourNoise: {fileID: 0}
-  audSrc_WindowNoise: {fileID: 0}
-  audSrc_FanNoise: {fileID: 0}
-  audSrc_MovingFurniture: {fileID: 0}
-  audSrc_DoorSound: {fileID: 0}
-  audSrc_InteractSound: {fileID: 0}
-  audSrc_PlayerVoice: {fileID: 0}
-  audSrc_PlayerMovement: {fileID: 0}
-  audSrc_OtherVoice: {fileID: 0}
-  audSrc_NoisyVoices: {fileID: 0}
-  audSrc_SuddenSound: {fileID: 0}
-  audSrc_OtherSound: {fileID: 0}
-  audSrc_DistantSound: {fileID: 0}
+  - {fileID: 8300000, guid: 4add204c27547b74ba6aa9824816c4cd, type: 3}
+  - {fileID: 8300000, guid: 56363438cf082c446a4aa32cb8072765, type: 3}
+  - {fileID: 8300000, guid: a481479846136ec45a21145a247f0941, type: 3}
+  - {fileID: 8300000, guid: 95ab7f59e14c71f4c896758198a830f3, type: 3}
 --- !u!82 &72238178083436328
 AudioSource:
   m_ObjectHideFlags: 0

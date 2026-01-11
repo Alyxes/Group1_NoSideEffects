@@ -1590,18 +1590,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
-      propertyPath: soundList.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
-      propertyPath: 'soundList.Array.data[4]'
-      value: 
-      objectReference: {fileID: 8300000, guid: d4985b01c5d27f14193afb9cb2ac1e00, type: 3}
-    - target: {fileID: 2954911313000385380, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
-      propertyPath: 'soundList.Array.data[5]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 40817093f04298f45a53c99f4c5ffd6e, type: 3}
     - target: {fileID: 7070216211405653924, guid: 27724f32626cf5d489c969c9bab00fa0, type: 3}
       propertyPath: m_Name
       value: SoundSystemBox

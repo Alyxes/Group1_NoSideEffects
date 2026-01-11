@@ -12,7 +12,10 @@ namespace NoSideEffects
         GETTINGUPFROMBED,
         DOORCLOSE,
         FURNITUREMOVE,
-        PILLRATTLE
+        PILLRATTLE,
+        DOOROPEN,
+        FILLINGWATERCAN,
+        WATERINGPLANT
     }
 
     [RequireComponent(typeof(AudioSource))]

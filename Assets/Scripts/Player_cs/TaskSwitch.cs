@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NoSideEffects
 {
@@ -11,10 +12,14 @@ namespace NoSideEffects
         [Header("Child Triggers")]
         public List<ChildTrigger> childTriggers;
 
+        [Header("Day 1 necessities")]
+        public PlayerController player;
+        public GameObject sinkZone;
+        public GameObject plantsInfoZone;
+
         [Header("Mesh Change")]
         public List<MeshChange> meshChanges;
 
-        public GameObject plantsInfoZone;
         public Lightswitch lightSwitch;
         public Door door;
         [Header("Player Inventory")]
@@ -33,18 +38,21 @@ namespace NoSideEffects
         private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, Done }
         private TaskState taskState = TaskState.None;
 
-        [System.Obsolete]
+        //[System.Obsolete]
         private void Awake()
         {
             interactButton = InputSystem.actions.FindAction("Interact");
 
             // Ensure playerInventory is assigned
             if (playerInventory == null)
-                playerInventory = FindObjectOfType<PlayerInventory>();
+                playerInventory = FindAnyObjectByType<PlayerInventory>();
         }
 
         private void Start()
         {
+            if (sinkZone != null)
+                sinkZone.SetActive(false);
+
             var keyZone = transform.Find("KeyZone");
             if (keyZone != null)
                 keyZone.gameObject.SetActive(false);
@@ -165,16 +173,17 @@ namespace NoSideEffects
             }
         }
 
-private void Day1Task()
+        private void Day1Task()
         {
             switch (taskState)
             {
                 case TaskState.None:
+                    sinkZone.SetActive(true);
                     ActivateTrigger("Sink");
                     if (plantsInfoZone != null)
                         plantsInfoZone.SetActive(false);
                     Debug.Log("Go to the Sink to start filling water.");
-                    HUD.instance.SetSubTitleText("Let's give the plants some water.\nGotta fill this up in the kitchen.");
+                    HUD.instance.SetSubTitleText("My plants should have some water.\nGotta fill this up in the kitchen.");
                     taskState = TaskState.StepOne;
                     break;
                 case TaskState.StepOne:
@@ -185,9 +194,14 @@ private void Day1Task()
                     }
 
                     Debug.Log("Filling watering can...");
+                    player.ToggleCameraRotationOff();
+                    player.canMove = false;
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
-                    HUD.instance.SetSubTitleText("Some nice water for my little planties...");
+                    AudioManager.PlaySound(SoundType.FILLINGWATERCAN, AudioManager.instance.audSrc_InteractSound);
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "Some nice water for my little planties...", true));
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(4.3f));
+                    StartCoroutine(player.SwitchOnPlayerMovementTimer(4.3f));
                     taskState = TaskState.StepTwo;
                     break;
 
@@ -199,9 +213,14 @@ private void Day1Task()
                     }
 
                     Debug.Log("Watering the plant...");
+                    player.ToggleCameraRotationOff();
+                    player.canMove = false;
                     DeactivateTrigger("Plant");
                     ActivateTrigger("Sink");
-                    HUD.instance.SetSubTitleText("Oh, water's out. They'll need a little more...\nLet's fill this up again.");
+                    AudioManager.PlaySound(SoundType.WATERINGPLANT, AudioManager.instance.audSrc_InteractSound, 0.7f);
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(3.3f, "Oh, water's out. They'll need a little more...\nLet's fill this up again.", true));
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(3.6f));
+                    StartCoroutine(player.SwitchOnPlayerMovementTimer(3.6f));
                     taskState = TaskState.StepThree;
                     Debug.Log("I need more water");
                     break;
@@ -215,9 +234,14 @@ private void Day1Task()
                     Debug.Log("Filling watering can...");
                     DeactivateTrigger("Sink");
                     ActivateTrigger("Plant");
+                    player.ToggleCameraRotationOff();
+                    player.canMove = false;
                     DeactivateMesh("HealthyPlant_SM (1)"); DeactivateMesh("HealthyPlant_SM (2)"); DeactivateMesh("HealthyPlant_SM (3)");
                     ActivateMesh("DeadPlant_SM (1)"); ActivateMesh("DeadPlant_SM (2)"); ActivateMesh("DeadPlant_SM (3)");
-                    HUD.instance.SetSubTitleText("Theeere we go.");
+                    AudioManager.PlaySound(SoundType.FILLINGWATERCAN, AudioManager.instance.audSrc_InteractSound);
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "Theeere we go.", true));
+                    StartCoroutine(player.SwitchCameraRotationOnTimer(4.3f));
+                    StartCoroutine(player.SwitchOnPlayerMovementTimer(4.3f));
                     taskState = TaskState.Done;
                     break;
                 case TaskState.Done:
@@ -226,10 +250,16 @@ private void Day1Task()
                         Debug.Log("Go to the Plant to water it.");
                         return;
                     }
-
                     Debug.Log("Watering the plant... Task Complete!");
                     if (!DSM.instance.isDoneForTheDay)
-                        HUD.instance.SetSubTitleText("...Are you finally giving up on me as well?\nI guess I don't deserve any living company...");
+                    {
+                        player.ToggleCameraRotationOff();
+                        player.canMove = false;
+                        sinkZone.SetActive(false);
+                        StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1f, "...I actually thought I was taking good care of you guys...\nMaybe I've bored you to death... Not even your company do I deserve...", true));
+                        StartCoroutine(player.SwitchCameraRotationOnTimer(3.5f));
+                        StartCoroutine(player.SwitchOnPlayerMovementTimer(3.5f));
+                    }
                     DeactivateTrigger("Plant");
                     DSM.instance.isDoneForTheDay = true;
                     break;
