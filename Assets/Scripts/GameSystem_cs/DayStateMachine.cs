@@ -88,7 +88,7 @@ namespace NoSideEffects
         }
         private void SetupDay1()
         {
-            dayWalkSpeed = 1.5f;
+            dayWalkSpeed = 1.2f;
             wakeUpMonologue = "The medicine is working! I can walk again!\nThis... this is amazing. I really didn't think it would have nearly this much effect.";
             monolougeTimer = 3f;
             endDayMonologue = "Being able to walk has exhausted me... Hopefully that gets better tomorrow.";
@@ -97,11 +97,11 @@ namespace NoSideEffects
         }
         private void SetupDay2()
         {
-            dayWalkSpeed = 2f;
+            dayWalkSpeed = 1.8f;
             wakeUpMonologue = "I think I feel even more nimble today.\nI should call the doctor to tell him about the results.";
             monolougeTimer = 5f;
             endDayMonologue = "Took forever to read Dr. Raphael's handwriting... My mind's all worn out. Gotta sleep.";
-            nextDay = Days.Day4;
+            nextDay = Days.Day4; // Day 3 is skipped.
             BaseStartOfDay("Day2");
         }
         private void SetupDay3()
@@ -115,11 +115,11 @@ namespace NoSideEffects
         }
         private void SetupDay4()
         {
-            dayWalkSpeed = 2.5f;
-            wakeUpMonologue = "Great, the power's out now too...\nWell... I think my flashlight is on the dresser in here.";
-            monolougeTimer = 3f;
+            dayWalkSpeed = 1.5f;
+            wakeUpMonologue = "Ugh, the power's out...\nWell... I think my flashlight is on the dresser in here.\nI'll get it and check the fusebox in the hallway next.";
+            monolougeTimer = 2f;
             endDayMonologue = "All that rummaging in the dark... I'm done for today.";
-            nextDay = Days.Day6; // As of discussions, Day 5 is skipped.
+            nextDay = Days.Day6; // Day 5 is skipped.
             BaseStartOfDay("Day4");
         }
         private void SetupDay5()
@@ -187,16 +187,16 @@ namespace NoSideEffects
                     dayString = "day three";
                     break;
                 case Days.Day4:
-                    dayString = "day four";
+                    dayString = "day three";
                     break;
                 case Days.Day5:
-                    dayString = "day five";
+                    dayString = "day four";
                     break;
                 case Days.Day6:
-                    dayString = "day five";
+                    dayString = "day four";
                     break;
                 case Days.Day7:
-                    dayString = "day six";
+                    dayString = "day five";
                     break;
                 default:
                     dayString = "unknown day";

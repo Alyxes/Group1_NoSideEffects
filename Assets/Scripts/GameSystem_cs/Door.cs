@@ -7,6 +7,7 @@ namespace NoSideEffects
     public class Door : MonoBehaviour
     {
         public Transform doorTransform;
+        public string doorName;
         public float currentRotation;
         public float openRotationAngle;
         public float closedRotationAngle;
@@ -16,12 +17,17 @@ namespace NoSideEffects
         public bool open, canBeOpened = true;
         public bool showInteractionText = true;
         private bool inZone = false;
+        private bool isRegularDoor = true;
 
         private InputAction interactButton;
 
         private void Awake()
         {
             interactButton = InputSystem.actions.FindAction("Interact");
+            if (doorName == null)
+                doorName = "door";
+            if (doorName != "door")
+                isRegularDoor = false;
         }
         void FixedUpdate()
         {
@@ -44,7 +50,7 @@ namespace NoSideEffects
                 if (Mathf.Approximately(currentRotation, wantedRotation))
                 {
                     currentRotation = wantedRotation;
-                    if (!open)
+                    if (!open && isRegularDoor)
                         AudioManager.PlaySound(SoundType.DOORCLOSE, AudioManager.instance.audSrc_DoorSound);
                 }
             }
@@ -55,15 +61,15 @@ namespace NoSideEffects
                 {
                     ToggleDoor(false);
                     if (showInteractionText)
-                        HUD.instance.SetUniqueItemText("Open door");
+                        HUD.instance.SetUniqueItemText("Open " + doorName);
                 }
                 else
                 {
                     ToggleDoor(true);
                     if (showInteractionText)
-                        HUD.instance.SetUniqueItemText("Close door");
-
-                    AudioManager.PlaySound(SoundType.DOOROPEN, AudioManager.instance.audSrc_DoorSound);
+                        HUD.instance.SetUniqueItemText("Close " + doorName);
+                    if (isRegularDoor)
+                        AudioManager.PlaySound(SoundType.DOOROPEN, AudioManager.instance.audSrc_DoorSound);
                 }
             }
         }
@@ -80,9 +86,9 @@ namespace NoSideEffects
                     if (showInteractionText)
                     {
                         if (open)
-                            HUD.instance.SetUniqueItemText("Close door");
+                            HUD.instance.SetUniqueItemText("Close " + doorName);
                         else
-                            HUD.instance.SetUniqueItemText("Open door");
+                            HUD.instance.SetUniqueItemText("Open " + doorName);
                     }
                 }
             }

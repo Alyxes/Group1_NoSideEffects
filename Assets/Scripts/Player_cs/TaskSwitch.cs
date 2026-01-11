@@ -26,6 +26,7 @@ namespace NoSideEffects
         public PlayerInventory playerInventory;
         public GameObject keyZone;
 
+        public GameObject fuseLid;
         public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
         public static bool Item2TaskDone = false;
@@ -33,7 +34,7 @@ namespace NoSideEffects
 
         private InputAction interactButton;
         private string currentTrigger = "";
-        private bool fuse1Collected, fuse2Collected = false;
+        private bool fuse1Collected, fuse2Collected, fuse3Collected = false;
 
         private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, Done }
         private TaskState taskState = TaskState.None;
@@ -164,9 +165,9 @@ namespace NoSideEffects
                 case "Key":
                     if (!Item3TaskDone) KeyTask();
                     break;
-                //case "Flashlight":
-                  //  if (!Item2TaskDone) Day4Task();
-                    //break;
+                case "Flashlight":
+                    if (!Item2TaskDone) Day4Task();
+                    break;
                 default:
                     Debug.Log("No task assigned for this item: " + itemID);
                     break;
@@ -275,7 +276,7 @@ namespace NoSideEffects
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start task.");
-                    HUD.instance.SetSubTitleText("Great, the power's out now too...\nI need to find and change the fuses.");
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "What? It's dark...? I always leave some lamp on.", false));
                     break;
                 case TaskState.StepOne:
                     if (currentTrigger != "FuseBox")
@@ -283,14 +284,17 @@ namespace NoSideEffects
                         Debug.Log("You must be at the FuseBox to proceed.");
                         return;
                     }
+                    fuseLid.SetActive(false);
                     Debug.Log("I need to find the fuses...");
+                    HUD.instance.SetSubTitleText("Ok, three fuses has popped? Just my luck...\nDo I even have three extra somewhere?\n*sigh* Well, I just have to start looking for'em I guess.");
                     DeactivateTrigger("FuseBox");
                     ActivateTrigger("Fuse1");
                     ActivateTrigger("Fuse2");
+                    ActivateTrigger("Fuse3");
                     taskState = TaskState.StepTwo;
                     break;
                 case TaskState.StepTwo:
-                    if (currentTrigger != "Fuse1" && currentTrigger != "Fuse2")
+                    if (currentTrigger != "Fuse1" && currentTrigger != "Fuse2" && currentTrigger != "Fuse3")
                     {
                         Debug.Log("Go to one of the fuses to pick it up.");
                         return;
@@ -317,23 +321,31 @@ namespace NoSideEffects
                             Destroy(child.gameObject);
                         }
                     }
+                    else if (currentTrigger == "Fuse3")
+                    {
+                        fuse3Collected = true;
+                        DeactivateTrigger("Fuse3");
+                        Transform child = transform.Find("Fuse3");
+                        if (child != null)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
 
                     // Only proceed when both are collected
-                    if (fuse1Collected && fuse2Collected)
+                    if (fuse1Collected && fuse2Collected && fuse3Collected)
                     {
                         ActivateTrigger("FuseBox");
                         taskState = TaskState.Done;
-                        HUD.instance.SetSubTitleText("Got the fuses. Let's put them back in the box.");
+                        HUD.instance.SetSubTitleText("That's three fuses. Let's put them back in the box.");
                     }
                     else
                     {
-                        HUD.instance.SetSubTitleText("Got one fuse. Find the other one.");
+                        HUD.instance.SetSubTitleText("There's one... Dumb place to have a fuse lying around, man...");
                     }
                     break;
 
                 case TaskState.Done:
-
-
                     if (currentTrigger != "FuseBox")
                     {
                         Debug.Log("You must be at the FuseBox to proceed.");
@@ -345,6 +357,7 @@ namespace NoSideEffects
                     lightSwitch.ResetMaterials();
                     Item2TaskDone = true;
                     HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
+                    fuseLid.SetActive(true);
                     DSM.instance.isDoneForTheDay = true;
                     break;
             }
