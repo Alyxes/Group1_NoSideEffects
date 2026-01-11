@@ -19,14 +19,11 @@ namespace NoSideEffects
         private bool inZone = false;
         private InputAction interactButton;
         private Transform holdPoint;
-        private Collider triggerCollider;
 
         private void Awake()
         {
             originalPosition = model.transform.position;
             originalRotation = model.transform.rotation;
-
-            triggerCollider = GetComponent<Collider>();
 
             interactButton = InputSystem.actions.FindAction("Interact");
         }
@@ -55,6 +52,9 @@ namespace NoSideEffects
                     Debug.Log("You're already holding something else!");
                 }
             }
+
+            if (DSM.instance.isDoneForTheDay)
+                Flashlight.SetActive(false);
         }
         private void PickUpItem()
         {

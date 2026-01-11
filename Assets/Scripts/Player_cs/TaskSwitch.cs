@@ -34,7 +34,7 @@ namespace NoSideEffects
 
         private InputAction interactButton;
         private string currentTrigger = "";
-        private bool fuse1Collected, fuse2Collected, fuse3Collected = false;
+        private bool fuse1Collected, fuse2Collected, fuse3Collected, fuseMessageSaid = false;
 
         private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, Done }
         private TaskState taskState = TaskState.None;
@@ -276,7 +276,7 @@ namespace NoSideEffects
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start task.");
-                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "What? It's dark...? I always leave some lamp on.", false));
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "What? It's dark...? I always leave some lamp on.", true));
                     break;
                 case TaskState.StepOne:
                     if (currentTrigger != "FuseBox")
@@ -286,7 +286,7 @@ namespace NoSideEffects
                     }
                     fuseLid.SetActive(false);
                     Debug.Log("I need to find the fuses...");
-                    HUD.instance.SetSubTitleText("Ok, three fuses has popped? Just my luck...\nDo I even have three extra somewhere?\n*sigh* Well, I just have to start looking for'em I guess.");
+                    HUD.instance.SetSubTitleText("Ok, three fuses is busted? Just my luck...\nDo I even have three extra somewhere?\n*sigh* Well, I just have to start looking for'em I guess.");
                     DeactivateTrigger("FuseBox");
                     ActivateTrigger("Fuse1");
                     ActivateTrigger("Fuse2");
@@ -303,31 +303,34 @@ namespace NoSideEffects
 
                     if (currentTrigger == "Fuse1")
                     {
-                        fuse1Collected = true;
-                        DeactivateTrigger("Fuse1");
                         Transform child = transform.Find("Fuse1");
                         if (child != null)
                         {
+                            fuse1Collected = true;
+                            fuseMessageSaid = false;
+                            DeactivateTrigger("Fuse1");
                             Destroy(child.gameObject);
                         }
                     }
                     else if (currentTrigger == "Fuse2")
                     {
-                        fuse2Collected = true;
-                        DeactivateTrigger("Fuse2");
                         Transform child = transform.Find("Fuse2");
                         if (child != null)
                         {
+                            fuse2Collected = true;
+                            fuseMessageSaid = false;
+                            DeactivateTrigger("Fuse2");
                             Destroy(child.gameObject);
                         }
                     }
                     else if (currentTrigger == "Fuse3")
                     {
-                        fuse3Collected = true;
-                        DeactivateTrigger("Fuse3");
                         Transform child = transform.Find("Fuse3");
                         if (child != null)
                         {
+                            fuse3Collected = true;
+                            fuseMessageSaid = false;
+                            DeactivateTrigger("Fuse3");
                             Destroy(child.gameObject);
                         }
                     }
@@ -341,7 +344,11 @@ namespace NoSideEffects
                     }
                     else
                     {
-                        HUD.instance.SetSubTitleText("There's one... Dumb place to have a fuse lying around, man...");
+                        if (!fuseMessageSaid)
+                        {
+                            HUD.instance.SetSubTitleText("There's one... Dumb place to have a fuse lying around, man...");
+                            fuseMessageSaid = true;
+                        } 
                     }
                     break;
 

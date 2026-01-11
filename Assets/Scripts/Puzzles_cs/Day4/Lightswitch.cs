@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace NoSideEffects
 {
     public class Lightswitch : MonoBehaviour
     {
         public List<Light> lights;
-        private bool isOn = false;
+        private bool isOn = true;
 
         [SerializeField] private Material materialToSwapFrom; // the material you want to replace
         [SerializeField] private Material materialToSwapTo;   // the new material
@@ -30,8 +31,23 @@ namespace NoSideEffects
         public void ToggleLights()
         {
             isOn = !isOn;
-            foreach (var light in lights)
-                if (light != null) light.enabled = isOn;
+            foreach (var rootLight in lights)
+            {
+                if (rootLight == null)
+                    continue;
+
+                // Find all Light components in the root's children (include inactive)
+                var childLights = rootLight.GetComponentsInChildren<Light>(true);
+                for (int i = 0; i < childLights.Length; ++i)
+                {
+                    var child = childLights[i];
+                    // If this child is a Point light, toggle it.
+                    if (child != null && child.type == UnityEngine.LightType.Point)
+                    {
+                        child.enabled = isOn;
+                    }
+                }
+            }
         }
 
         public void SetLights(bool on)
