@@ -135,7 +135,7 @@ namespace NoSideEffects
         private void SetupDay6()
         {
             dayWalkSpeed = 2.5f;
-            wakeUpMonologue = "Oh my god... What do they want!?";
+            wakeUpMonologue = "Oh my god... What's going on? What do these things want!?";
             monolougeTimer = 2f;
             endDayMonologue = "Help! Someone, please...! Help...";
             nextDay = Days.Day7;

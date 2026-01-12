@@ -136,7 +136,6 @@ namespace NoSideEffects
         private bool ZpositionDone = true;
         private bool hasChangedWantedZposition = false;
 
-
         // Cinemachine input controller(found at runtime)
         CinemachineInputAxisController inputAxisController;
 
@@ -237,6 +236,9 @@ namespace NoSideEffects
         public void Awakening()
         {
             wakingUp = true;
+
+            if (DSM.instance.currentDay == DSM.Days.Day6)
+                AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
 
             HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
             StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));

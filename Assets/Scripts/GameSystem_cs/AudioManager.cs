@@ -96,7 +96,7 @@ namespace NoSideEffects
             {
                 audioSource.Stop();
                 audioSource.loop = false;
-                audioSource.volume = 0;
+                audioSource.volume = 1; // Resetting volume in case it was changed
             }
         }
         public static void PlayFadeInSound(SoundType sound, AudioSource audioSource, float fadeInDuration, bool isLooping = true, float startVolume = 0f, float goalVolume = 1f)
@@ -128,6 +128,7 @@ namespace NoSideEffects
             }
             audioSource.Stop();
             audioSource.loop = false;
+            audioSource.volume = 1; // Resetting volume in case it was changed
         }
         public static IEnumerator FadeInSound(AudioSource audioSource, float fadeInDuration, float goalVolume = 1f)
         {

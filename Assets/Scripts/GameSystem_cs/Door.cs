@@ -23,6 +23,27 @@ namespace NoSideEffects
         {
             interactButton = InputSystem.actions.FindAction("Interact");
         }
+
+        private void Update()
+        {
+            if (inZone && canBeOpened && interactButton.WasPressedThisFrame())
+            {
+                if (open)
+                {
+                    ToggleDoor(false);
+                    if (showInteractionText)
+                        HUD.instance.SetUniqueItemText("Open door");
+                }
+                else
+                {
+                    ToggleDoor(true);
+                    if (showInteractionText)
+                        HUD.instance.SetUniqueItemText("Close door");
+
+                    AudioManager.PlaySound(SoundType.DOOROPEN, AudioManager.instance.audSrc_DoorSound);
+                }
+            }
+        }
         void FixedUpdate()
         {
             if (open)
@@ -46,24 +67,6 @@ namespace NoSideEffects
                     currentRotation = wantedRotation;
                     if (!open)
                         AudioManager.PlaySound(SoundType.DOORCLOSE, AudioManager.instance.audSrc_DoorSound);
-                }
-            }
-
-            if (inZone && canBeOpened && interactButton.WasPressedThisFrame())
-            {
-                if (open)
-                {
-                    ToggleDoor(false);
-                    if (showInteractionText)
-                        HUD.instance.SetUniqueItemText("Open door");
-                }
-                else
-                {
-                    ToggleDoor(true);
-                    if (showInteractionText)
-                        HUD.instance.SetUniqueItemText("Close door");
-
-                    AudioManager.PlaySound(SoundType.DOOROPEN, AudioManager.instance.audSrc_DoorSound);
                 }
             }
         }

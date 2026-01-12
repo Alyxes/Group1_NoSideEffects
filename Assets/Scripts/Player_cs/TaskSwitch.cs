@@ -54,7 +54,7 @@ namespace NoSideEffects
             if (sinkZone != null)
                 sinkZone.SetActive(false);
 
-            var keyZone = transform.Find("KeyZone");
+            // var keyZone = transform.Find("KeyZone");
             if (keyZone != null)
                 keyZone.gameObject.SetActive(false);
 
@@ -375,8 +375,7 @@ namespace NoSideEffects
             {
                 case TaskState.None:
                     ActivateTrigger("Eye1");
-                    HUD.instance.SetSubTitleText("Woahh... What are those things?\n" +
-                        "They look like eyes... I need to get rid of them.");
+                    HUD.instance.SetSubTitleText("Woahh... What are those things!?\nThey're staring at me!... I need to get rid of them!");
                     taskState = TaskState.StepOne;
                     break;
                 case TaskState.StepOne:
@@ -387,7 +386,8 @@ namespace NoSideEffects
                     }
                     HUD.instance.SetSubTitleText("Bye bye mister eye.");
                     DeactivateTrigger("Eye1");
-                    DeactivateMesh("Eye1"); ActivateMesh("Eye1Dmg");
+                    DeactivateMesh("Eye1");
+                    // ActivateMesh("Eye1Dmg");
                     ActivateTrigger("Eye2");
                     taskState = TaskState.StepTwo;
                     break;
@@ -399,7 +399,8 @@ namespace NoSideEffects
                     }
                     HUD.instance.SetSubTitleText("Another one bites the dust.");
                     DeactivateTrigger("Eye2");
-                    DeactivateMesh("Eye2"); ActivateMesh("Eye2Dmg");
+                    DeactivateMesh("Eye2"); 
+                    // ActivateMesh("Eye2Dmg");
                     ActivateTrigger("Eye3");
                     ActivateTrigger("Eye4");
                     taskState = TaskState.StepThree;
@@ -419,13 +420,15 @@ namespace NoSideEffects
                     {
                         fuse1Collected = true;
                         DeactivateTrigger("Eye3");
-                        DeactivateMesh("Eye3"); ActivateMesh("Eye3Dmg");
+                        DeactivateMesh("Eye3");
+                        // ActivateMesh("Eye3Dmg");
                     }
                     else if (currentTrigger == "Eye4")
                     {
                         fuse2Collected = true;
                         DeactivateTrigger("Eye4");
-                        DeactivateMesh("Eye4"); ActivateMesh("Eye4Dmg");
+                        DeactivateMesh("Eye4");
+                        // ActivateMesh("Eye4Dmg");
                     }
                     // Only proceed when both are destroyed
                     if (fuse1Collected && fuse2Collected)
@@ -451,7 +454,7 @@ namespace NoSideEffects
                     transform.Find("EyeTrigger5").gameObject.SetActive(false);
                     keyZone.SetActive(true);
                     taskState = TaskState.Done;
-                    HUD.instance.SetSubTitleText("All eyes are gone. And... \n" + "it dropped a mysterious key?");
+                    HUD.instance.SetSubTitleText("All eyes are gone. And... \nIt dropped a mysterious key?");
                     break;
 
                 case TaskState.Done:

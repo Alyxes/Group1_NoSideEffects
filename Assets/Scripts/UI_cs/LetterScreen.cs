@@ -28,9 +28,9 @@ namespace NoSideEffects
         {
             if (canPressContinue && interactButton.WasPressedThisFrame())
             {
-                AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 3f);
-                AudioManager.StopSound(AudioManager.instance.audSrc_OtherVoice, true, 2f);
-                StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day1, 1f));
+                // AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 3f);
+                AudioManager.StopSound(AudioManager.instance.audSrc_OtherVoice, true, 1f);
+                StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day1, 1.1f));
             }
         }
         public IEnumerator ShowContinueTextAfterDelay()
