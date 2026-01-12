@@ -15,7 +15,9 @@ namespace NoSideEffects
         PILLRATTLE,
         DOOROPEN,
         FILLINGWATERCAN,
-        WATERINGPLANT
+        WATERINGPLANT,
+        OPENLETTER,
+        DOCTORLETTER
     }
 
     [RequireComponent(typeof(AudioSource))]

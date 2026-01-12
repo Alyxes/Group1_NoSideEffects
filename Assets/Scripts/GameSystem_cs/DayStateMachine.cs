@@ -97,9 +97,9 @@ namespace NoSideEffects
         }
         private void SetupDay2()
         {
-            dayWalkSpeed = 1.8f;
+            dayWalkSpeed = 1.5f;
             wakeUpMonologue = "I think I feel even more nimble today.\nI should call the doctor to tell him about the results.";
-            monolougeTimer = 5f;
+            monolougeTimer = 4.5f;
             endDayMonologue = "Took forever to read Dr. Raphael's handwriting... My mind's all worn out. Gotta sleep.";
             nextDay = Days.Day4; // Day 3 is skipped.
             BaseStartOfDay("Day2");
@@ -115,9 +115,9 @@ namespace NoSideEffects
         }
         private void SetupDay4()
         {
-            dayWalkSpeed = 1.5f;
+            dayWalkSpeed = 1.35f;
             wakeUpMonologue = "Ugh, the power's out...\nWell... I think my flashlight is on the dresser in here.\nI'll get it and check the fusebox in the hallway next.";
-            monolougeTimer = 2f;
+            monolougeTimer = 1.5f;
             endDayMonologue = "All that rummaging in the dark... I'm done for today.";
             nextDay = Days.Day6; // Day 5 is skipped.
             BaseStartOfDay("Day4");
@@ -134,7 +134,7 @@ namespace NoSideEffects
         }
         private void SetupDay6()
         {
-            dayWalkSpeed = 3.5f;
+            dayWalkSpeed = 2.5f;
             wakeUpMonologue = "Oh my god... What do they want!?";
             monolougeTimer = 2f;
             endDayMonologue = "Help! Someone, please...! Help...";

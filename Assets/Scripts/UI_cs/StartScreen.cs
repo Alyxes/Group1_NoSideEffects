@@ -37,12 +37,9 @@ namespace NoSideEffects
             if (!DSM.instance.hasShownLogos)
                 return;
 
-            AudioManager.StopSound(AudioManager.instance.audSrc_Music, true, 3f);
-            // Stop title music and play button click sound
             AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
 
-            // StartCoroutine(WaitAndLoadScene("Day1"));
-            StartCoroutine(DSM.instance.WaitAndStartNewDay(DSM.Days.Day1, 1f));
+            StartCoroutine(WaitAndLoadScene("LetterScreen", 1f));
         }
         public void CreditsPage()
         {
@@ -51,11 +48,11 @@ namespace NoSideEffects
 
             AudioManager.PlaySound(SoundType.BUTTONCLICK, AudioManager.instance.audSrc_InteractSound);
 
-            StartCoroutine(WaitAndLoadScene("CreditsPage"));
+            StartCoroutine(WaitAndLoadScene("CreditsPage", 0.1f));
         }
-        private IEnumerator WaitAndLoadScene(string scene)
+        private IEnumerator WaitAndLoadScene(string scene, float timer)
         {
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(timer);
             SceneManager.LoadScene(scene);
         }
         public void ExitGame()
