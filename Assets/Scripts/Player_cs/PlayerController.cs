@@ -240,7 +240,7 @@ namespace NoSideEffects
             if (DSM.instance.currentDay == DSM.Days.Day6)
                 AudioManager.StartLoopingSound(SoundType.TITLESONG, AudioManager.instance.audSrc_Music);
 
-            HUD.instance.SetUniqueItemText("Waking up on " + DSM.instance.GetCurrentDayString());
+            HUD.instance.SetUniqueItemText("Waking up" + DSM.instance.GetCurrentDayString());
             StartCoroutine(HUD.instance.PickUpTimeOutCoroutine(6f));
 
             HUD.instance.blackScreenFadeOut = true;

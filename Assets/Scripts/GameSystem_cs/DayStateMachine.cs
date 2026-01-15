@@ -178,25 +178,25 @@ namespace NoSideEffects
             switch (currentDay)
             {
                 case Days.Day1:
-                    dayString = "day one";
+                    dayString = " on day one";
                     break;
                 case Days.Day2:
-                    dayString = "day two";
+                    dayString = " on day two";
                     break;
                 case Days.Day3:
-                    dayString = "day three";
+                    dayString = " on day three";
                     break;
                 case Days.Day4:
-                    dayString = "day three";
+                    dayString = " in the middle of night";
                     break;
                 case Days.Day5:
-                    dayString = "day four";
+                    dayString = " on day four";
                     break;
                 case Days.Day6:
-                    dayString = "day four";
+                    dayString = " in a nightmare?";
                     break;
                 case Days.Day7:
-                    dayString = "day five";
+                    dayString = " in your peaceful home";
                     break;
                 default:
                     dayString = "unknown day";
