@@ -112,7 +112,7 @@ namespace NoSideEffects
         [SerializeField] GameObject playerBody;
         [SerializeField] Transform Head;
         [SerializeField] Transform FPViewCamera;
-        [SerializeField] GameObject pillBottle;
+        [SerializeField] GameObject pillBottleZone;
         public GameObject flashlight;
         InputAction moveAction, crouchButton;
         [NonSerialized] public float playerDaySpeed = 1.5f;
@@ -195,7 +195,7 @@ namespace NoSideEffects
             if (DSM.instance.isDoneForTheDay)
             {
                 // Activates the zone around the pill bottle that lets the player end the day.
-                pillBottle.SetActive(true);
+                pillBottleZone.SetActive(true);
             }
 
             moveValue = moveAction.ReadValue<Vector2>();

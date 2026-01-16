@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,34 +10,42 @@ namespace NoSideEffects
 {
     public class TaskSwitch : MonoBehaviour
     {
+        [Header("The player")]
+        public PlayerController player;
+        public PlayerInventory playerInventory;
+
         [Header("Child Triggers")]
         public List<ChildTrigger> childTriggers;
 
-        [Header("Day 1 necessities")]
-        public PlayerController player;
+        [Header("Day 1 stuff")]
         public GameObject sinkZone;
         public GameObject plantsInfoZone;
 
         [Header("Mesh Change")]
         public List<MeshChange> meshChanges;
 
+        [Header("Day 4 stuff")]
+        public GameObject DarkApartment;
+        public GameObject LightApartment;
         public Lightswitch lightSwitch;
-        public Door door;
-        [Header("Player Inventory")]
-        public PlayerInventory playerInventory;
-        public GameObject keyZone;
+        public GameObject fuseBoxShut;
+        public GameObject fuseBoxOpen;
+        public GameObject fusesRemoved;
 
-        public GameObject fuseLid;
-        public bool InTaskZone = false;
+        [NonSerialized] public bool InTaskZone = false;
         public static bool ItemTaskDone = false;
         public static bool Item2TaskDone = false;
         public static bool Item3TaskDone = false;
+
+        [Header("Day 6 stuff")]
+        public GameObject keyZone;
+        public Door door;
 
         private InputAction interactButton;
         private string currentTrigger = "";
         private bool fuse1Collected, fuse2Collected, fuse3Collected, fuseMessageSaid = false;
 
-        private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, Done }
+        private enum TaskState { None, StepOne, StepTwo, StepThree, StepFour, StepFive, StepSix, Done }
         private TaskState taskState = TaskState.None;
 
         //[System.Obsolete]
@@ -268,15 +277,18 @@ namespace NoSideEffects
         }
         public void Day4Task()
         {
-            if (Item2TaskDone) return;
+            // if (Item2TaskDone) return;
 
             switch (taskState)
             {
                 case TaskState.None:
+                    LightApartment.SetActive(false);
+                    fuseBoxOpen.SetActive(false);
+                    fusesRemoved.SetActive(false);
                     ActivateTrigger("FuseBox");
                     taskState = TaskState.StepOne;
                     Debug.Log("Go to Fusebox to start task.");
-                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "What? It's dark...? I always leave some lamp on.", true));
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(1.5f, "What? It's dark...? I always leave some lamp on...", true));
                     break;
                 case TaskState.StepOne:
                     if (currentTrigger != "FuseBox")
@@ -284,7 +296,8 @@ namespace NoSideEffects
                         Debug.Log("You must be at the FuseBox to proceed.");
                         return;
                     }
-                    fuseLid.SetActive(false);
+                    fuseBoxShut.SetActive(false);
+                    fuseBoxOpen.SetActive(true);
                     Debug.Log("I need to find the fuses...");
                     HUD.instance.SetSubTitleText("Ok, three fuses is busted? Just my luck...\nDo I even have three extra somewhere?\n*sigh* Well, I just have to start looking for'em I guess.");
                     DeactivateTrigger("FuseBox");
@@ -339,7 +352,7 @@ namespace NoSideEffects
                     if (fuse1Collected && fuse2Collected && fuse3Collected)
                     {
                         ActivateTrigger("FuseBox");
-                        taskState = TaskState.Done;
+                        taskState = TaskState.StepThree;
                         HUD.instance.SetSubTitleText("That's three fuses. Let's put them back in the box.");
                     }
                     else
@@ -348,23 +361,84 @@ namespace NoSideEffects
                         {
                             HUD.instance.SetSubTitleText("There's one... Dumb place to have a fuse lying around, man...");
                             fuseMessageSaid = true;
-                        } 
+                        }
                     }
                     break;
-
+                case TaskState.StepThree:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the fusebox to proceed.");
+                        return;
+                    }
+                    Debug.Log("Starting to insert fuses into FuseBox.");
+                    Item2TaskDone = true; // This is only so that the flashlight task UI updates correctly.
+                    player.ToggleCameraRotationOff();
+                    player.canMove = false;
+                    HUD.instance.SetSubTitleTextWithoutContinueText("Ok. Out with these three bad ones...");
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "Dammit... Get... Off, you!", false));
+                    taskState = TaskState.StepFour;
+                    Invoke(nameof(Day4Task), 8f);
+                    break;
+                case TaskState.StepFour:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the fusebox to proceed.");
+                        return;
+                    }
+                    Debug.Log("Letting the player experience time.");
+                    fuseBoxOpen.SetActive(false);
+                    fusesRemoved.SetActive(true);
+                    HUD.instance.SetSubTitleTextWithoutContinueText("Uuurgh. Right.\nLet's put these new ones in now.");
+                    StartCoroutine(HUD.instance.SetTimerUntilSubTitle(4f, "Really? Could you not fit in there a little less?\nIt's a screw, Brook... When did you get this butterfingered?", false));
+                    taskState = TaskState.StepFive;
+                    Invoke(nameof(Day4Task), 10f);
+                    break;
+                case TaskState.StepFive:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the fusebox to proceed.");
+                        return;
+                    }
+                    Debug.Log("Letting the player know it's done.");
+                    fusesRemoved.SetActive(false);
+                    fuseBoxOpen.SetActive(true);
+                    HUD.instance.SetSubTitleText("Finally! Now, let's just switch this old thing back on again, and see if this did the trick...");
+                    taskState = TaskState.StepSix;
+                    Invoke(nameof(Day4Task), 1f);
+                    break;
+                case TaskState.StepSix:
+                    if (currentTrigger != "FuseBox")
+                    {
+                        Debug.Log("You must be at the fusebox to proceed.");
+                        return;
+                    }
+                    Debug.Log("Waiting for the player to press interact.");
+                    Item2TaskDone = false;
+                    if (interactButton.WasPressedThisFrame())
+                    {
+                        taskState = TaskState.Done;
+                        Invoke(nameof(Day4Task), 0.1f);
+                    }
+                    break;
                 case TaskState.Done:
                     if (currentTrigger != "FuseBox")
                     {
                         Debug.Log("You must be at the FuseBox to proceed.");
                         return;
                     }
-                    Debug.Log("Inserting fuse into FuseBox... Task Complete!");
+                    fuseBoxOpen.SetActive(false);
+                    fuseBoxShut.SetActive(true);
+                    
+                    Debug.Log("Task Complete!");
                     DeactivateTrigger("FuseBox");
-                    lightSwitch.ToggleLights();
-                    lightSwitch.ResetMaterials();
-                    Item2TaskDone = true;
-                    HUD.instance.SetSubTitleText("The power's back on! Finally, some light in this gloomy place.");
-                    fuseLid.SetActive(true);
+                    LightApartment.SetActive(true);
+                    DarkApartment.SetActive(false);
+                    player.ToggleCameraRotationOn();
+                    player.canMove = true;
+
+                    Item2TaskDone = true; // For real this time...
+
+                    HUD.instance.SetSubTitleText("Yes! The power's back on!\nFinally, some light in this gloomy place.");
                     DSM.instance.isDoneForTheDay = true;
                     break;
             }

@@ -17,6 +17,7 @@ namespace NoSideEffects
         public TMP_Text subTitleText;
         public TMP_Text pressToContinue;
         public RawImage blackScreen;
+        public Image SubTiltleBGimage;
         InputAction interactButton;
         [NonSerialized] public bool isSubTitleActive, isPressToContinueActive, blackScreenFadeOut, blackScreenFadeIn = false;
         [NonSerialized] public float blackScreenFadeSpeed = 0;
@@ -29,6 +30,7 @@ namespace NoSideEffects
                 Destroy(gameObject);
 
             blackScreen.color = new Color(0, 0, 0, 0);
+            SubTiltleBGimage.enabled = false;
             interactButton = InputSystem.actions.FindAction("Interact");
         }
         void Update()
@@ -62,7 +64,8 @@ namespace NoSideEffects
             }
 
             subTitleText.text = input;
-            isSubTitleActive = true;
+            SetSubTitleActiveTrue();
+
             StartCoroutine(SubTitleBooleanTrueCoroutine());
         }
         public void SetSubTitleTextWithoutContinueText(string input)
@@ -73,14 +76,14 @@ namespace NoSideEffects
             }
 
             subTitleText.text = input;
-            isSubTitleActive = true;
+            SetSubTitleActiveTrue();
         }
 
         public void ClearSubTitleText()
         {
             subTitleText.text = "";
             pressToContinue.text = "";
-            isSubTitleActive = false;
+            SetSubTitleActiveFalse();
             isPressToContinueActive = false;
         }
         public void SetPickUpText(string itemName, string action = "Pick Up")
@@ -98,6 +101,16 @@ namespace NoSideEffects
         public void ClearPickUpText()
         {
             pickUptext.text = "";
+        }
+        private void SetSubTitleActiveTrue()
+        {
+            SubTiltleBGimage.enabled = true;
+            isSubTitleActive = true;
+        }
+        private void SetSubTitleActiveFalse()
+        {
+            SubTiltleBGimage.enabled = false;
+            isSubTitleActive = false;
         }
         public IEnumerator SubTitleBooleanTrueCoroutine()
         {
