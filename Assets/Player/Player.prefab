@@ -232,8 +232,8 @@ MonoBehaviour:
   playerBody: {fileID: 2419550440057724488}
   Head: {fileID: 3761074729845616084}
   FPViewCamera: {fileID: 6846272917935288821}
-  pillBottle: {fileID: 0}
-  flashlight: {fileID: 0}
+  pillBottleZone: {fileID: 0}
+  flashlight: {fileID: 8380483606172238876}
 --- !u!114 &7989836947901242678
 MonoBehaviour:
   m_ObjectHideFlags: 0

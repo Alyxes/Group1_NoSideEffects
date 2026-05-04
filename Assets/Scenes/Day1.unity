@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: pillBottle
       value: 
       objectReference: {fileID: 2086809525}
+    - target: {fileID: 7500013475040357777, guid: fbf83ee56ab8f794fac40a14190a3882, type: 3}
+      propertyPath: pillBottleZone
+      value: 
+      objectReference: {fileID: 2086809525}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

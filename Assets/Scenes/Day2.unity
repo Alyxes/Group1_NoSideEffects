@@ -2462,6 +2462,10 @@ PrefabInstance:
       propertyPath: pillBottle
       value: 
       objectReference: {fileID: 4437907652021922330}
+    - target: {fileID: 5493929314320791318, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
+      propertyPath: pillBottleZone
+      value: 
+      objectReference: {fileID: 4437907652021922330}
     - target: {fileID: 6599822621421111968, guid: bc7f1d6bb5622394ca7c4092bb837250, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
